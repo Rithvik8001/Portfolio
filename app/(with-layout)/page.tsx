@@ -4,14 +4,10 @@ import React, { Suspense } from "react";
 import {
   ArrowRight,
   ArrowUpRight,
-  Copy,
   ScribbleLoop,
 } from "@phosphor-icons/react/dist/ssr/index";
 import { Accordion, AccordionItem } from "@/components/collapsible";
-import Contact, {
-  ContactCopyItem,
-  ContactItem,
-} from "@/components/contact-link";
+import Contact from "@/components/contact-link";
 import { experiences } from "@/content";
 import LinkPrimitive from "@/components/link-primitive";
 import Section from "@/components/section";
@@ -21,15 +17,15 @@ import { useState, useEffect } from "react";
 const fadeInUp = (delay: number) => ({
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, delay }
+  transition: { duration: 0.5, delay },
 });
 
 const stagger = {
   animate: {
     transition: {
-      staggerChildren: 0.1
-    }
-  }
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 const Items = () => {
@@ -46,14 +42,12 @@ const Items = () => {
         <div className="flex flex-col mt-4 gap-y-2">
           <p>
             Crafting memorable interfaces with a deep attention to detail. I
-            dedicate most my time to continuous learning and refining my skillset.
+            dedicate most my time to continuous learning and refining my
+            skillset.
           </p>
           <p>
             I'm a creative{" "}
-            <LinkPrimitive
-              href=""
-              external
-            >
+            <LinkPrimitive href="" external>
               doing what I can't
             </LinkPrimitive>
             .
@@ -68,11 +62,14 @@ const Items = () => {
               Contact me
               <ScribbleLoop size={12} aria-hidden={true} />
             </LinkPrimitive>
-            <LinkPrimitive external href="https://drive.google.com/file/d/1botb0V7nhWGQZSF5vUdcws-DOkbGIzuv/view" variant="route" >
+            <LinkPrimitive
+              external
+              href="https://drive.google.com/file/d/1botb0V7nhWGQZSF5vUdcws-DOkbGIzuv/view"
+              variant="route"
+            >
               Resume
               <ScribbleLoop size={12} aria-hidden={true} />
             </LinkPrimitive>
-            
           </div>
         </div>
       </Section>
@@ -84,22 +81,22 @@ const Skills = () => {
   return (
     <motion.div {...fadeInUp}>
       <Section className="mt-3" heading="Skills">
-        <motion.div 
+        <motion.div
           variants={stagger}
           initial="initial"
           animate="animate"
           className="flex flex-wrap gap-x-4 gap-y-6 mt-3"
         >
           {[
-            "HTML", 
-            "CSS", 
-            "JavaScript", 
-            "TypeScript", 
-            "React", 
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "TypeScript",
+            "React",
             "Next.js",
-            "Tailwind CSS", 
-            "Node.js", 
-            "Express.js"
+            "Tailwind CSS",
+            "Node.js",
+            "Express.js",
           ].map((skill) => (
             <motion.div
               key={skill}
@@ -147,7 +144,7 @@ const Projects = () => {
   return (
     <motion.div {...fadeInUp(0.3)}>
       <Section heading="Projects">
-        <motion.ul 
+        <motion.ul
           variants={stagger}
           initial="initial"
           animate="animate"
@@ -155,12 +152,19 @@ const Projects = () => {
         >
           <motion.li variants={fadeInUp(0.3)}>
             <p>
-              <LinkPrimitive href="https://www.npmjs.com/package/lume-ui" external>
+              <LinkPrimitive
+                href="https://www.npmjs.com/package/lume-ui"
+                external
+              >
                 LumeUI
               </LinkPrimitive>{" "}
-              is a React component library with 84+ variants across 6 core components, accelerating UI development with pre-built, customizable solutions.
+              is a React component library with 84+ variants across 6 core
+              components, accelerating UI development with pre-built,
+              customizable solutions.
             </p>
-            <p className="text-gray-10 mt-2">React.js, Next.js, TypeScript, Tailwind CSS, Radix UI, npm</p>
+            <p className="text-gray-10 mt-2">
+              React.js, Next.js, TypeScript, Tailwind CSS, Radix UI, npm
+            </p>
             <div className="flex items-center mt-2 gap-x-4">
               <a
                 className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
@@ -195,12 +199,18 @@ const Projects = () => {
 
           <motion.li variants={fadeInUp(0.3)}>
             <p>
-              <LinkPrimitive href="https://snippet-vault-beta.vercel.app/" external>
+              <LinkPrimitive
+                href="https://snippet-vault-beta.vercel.app/"
+                external
+              >
                 SnippetVault
               </LinkPrimitive>{" "}
-              is a full-stack snippet management app built with Next.js, allows users to securely create, organize, and share code snippets.
+              is a full-stack snippet management app built with Next.js, allows
+              users to securely create, organize, and share code snippets.
             </p>
-            <p className="text-gray-10 mt-2">Next.js, React.js, Supabase, TypeScript, Shadcn</p>
+            <p className="text-gray-10 mt-2">
+              Next.js, React.js, Supabase, TypeScript, Shadcn
+            </p>
             <div className="flex items-center mt-2 gap-x-4">
               <a
                 className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
@@ -238,9 +248,12 @@ const Projects = () => {
               <LinkPrimitive href="https://notesey.vercel.app/" external>
                 Notesey
               </LinkPrimitive>{" "}
-              is a full stack Next.js-powered study platform with an AI QA system, smart note-taking editor, and a focus timer.
+              is a full stack Next.js-powered study platform with an AI QA
+              system, smart note-taking editor, and a focus timer.
             </p>
-            <p className="text-gray-10 mt-2">Next.js, React.js, Firebase, Tailwind CSS, OpenAI, TypeScript</p>
+            <p className="text-gray-10 mt-2">
+              Next.js, React.js, Firebase, Tailwind CSS, OpenAI, TypeScript
+            </p>
             <div className="flex items-center mt-3 gap-x-4">
               <a
                 className="flex gap-x-1.5 items-center text-gray-10 cursor-pointer text-sm"
@@ -279,7 +292,16 @@ const Currently = () => {
   return (
     <motion.div {...fadeInUp(0.2)}>
       <Section heading="Currently">
-        <p>Diving deep into <span className="items-center gap-x-0.5 w-fit hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative inline-flex bg-accent/20 mt-0.5">Next.js</span> and exploring the <span className="items-center gap-x-0.5 w-fit hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative inline-flex bg-accent/20 mt-0.5">world of design.</span></p>
+        <p>
+          Diving deep into{" "}
+          <span className="items-center gap-x-0.5 w-fit hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative inline-flex bg-accent/20 mt-0.5">
+            Next.js
+          </span>{" "}
+          and exploring the{" "}
+          <span className="items-center gap-x-0.5 w-fit hover:bg-accent hover:text-gray-12 after:content-[''] after:absolute after:bottom-px after:left-0 after:w-full after:h-px after:bg-accent relative inline-flex bg-accent/20 mt-0.5">
+            world of design.
+          </span>
+        </p>
       </Section>
     </motion.div>
   );
@@ -300,7 +322,7 @@ export default function Home() {
 
   return (
     <>
-      <motion.div 
+      <motion.div
         initial="initial"
         animate="animate"
         variants={stagger}

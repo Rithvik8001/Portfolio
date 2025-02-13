@@ -1,6 +1,5 @@
 import Photo from "@/components/photo";
-import LinkPrimitive from "@/components/link-primitive";
-import { beliefs, bucketList, Status } from "@/content";
+import { beliefs, Status } from "@/content";
 import { ArrowLeft } from "@phosphor-icons/react/dist/ssr/ArrowLeft";
 import { cva } from "class-variance-authority";
 import Link from "next/link";
@@ -76,16 +75,27 @@ const About = () => {
         <Section heading="Hi there, this is Rithvik">
           <div className="space-y-4">
             <p>
-              A self taught web developer following his dream of delivering smiles with delightful experiences ☻
+              A self taught web developer following his dream of delivering
+              smiles with delightful experiences ☻
             </p>
             <p>
-              Learning to code has felt like a superpower for me, it allows me to bring any idea I can imagine to life. I love creating and focusing on the little things that enhance our experiences as we dive into the abyss of the web.
+              Learning to code has felt like a superpower for me, it allows me
+              to bring any idea I can imagine to life. I love creating and
+              focusing on the little things that enhance our experiences as we
+              dive into the abyss of the web.
             </p>
             <p>
-              When I'm not coding, I love to watch football ⚽️. You could call me a football fanatic. I started watching this beautiful sport when I was 16 years old, and my favorite club is the biggest in England, Manchester United, GGMU❤️.
+              When I'm not coding, I love to watch football ⚽️. You could call
+              me a football fanatic. I started watching this beautiful sport
+              when I was 16 years old, and my favorite club is the biggest in
+              England, Manchester United, GGMU❤️.
             </p>
             <p>
-              My goal is to leverage my skills and knowledge to create impactful web applications that solve real-world problems. I am excited about opportunities in frontend development and look forward to collaborating with like-minded professionals to build innovative solutions.
+              My goal is to leverage my skills and knowledge to create impactful
+              web applications that solve real-world problems. I am excited
+              about opportunities in frontend development and look forward to
+              collaborating with like-minded professionals to build innovative
+              solutions.
             </p>
           </div>
         </Section>
@@ -122,10 +132,16 @@ const About = () => {
         <Section heading="Bucket List">
           <ul className="flex flex-col gap-y-1">
             {[
-              { item: "Watch Man Utd lift the premier league live", status: "" },
+              {
+                item: "Watch Man Utd lift the premier league live",
+                status: "",
+              },
               { item: "Travel the world", status: "progress" },
               { item: "Help my parents retire", status: "progress" },
-              { item: "Visit Apple Park in Cupertino, and meet Tim Cook", status: "completed" }
+              {
+                item: "Visit Apple Park in Cupertino, and meet Tim Cook",
+                status: "completed",
+              },
             ].map((item) => (
               <BucketItem
                 key={item.item}
