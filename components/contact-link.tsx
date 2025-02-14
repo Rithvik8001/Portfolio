@@ -63,17 +63,17 @@ const Contact = () => {
     <Section>
       <div className="flex flex-wrap mt-12 md:flex-col md:gap-y-0 gap-y-2 gap-x-6 md:items-end md:mt-0">
         <ContactItem icon={<Copy />} className="">
-              <ContactCopyItem 
-                title="Email" 
-                copy="rithvik.pallamreddy@gmail.com"
-              />
-            </ContactItem>
+          <ContactCopyItem title="Email" copy="rithvik.pallamreddy@gmail.com" />
+        </ContactItem>
         <ContactItem icon={<ArrowUpRight />}>
           <Link href="/contact">Contact me</Link>
         </ContactItem>
 
         <ContactItem icon={<ArrowUpRight />}>
-          <a href="https://www.linkedin.com/in/rithvik-pallamreddy/" target="_blank">
+          <a
+            href="https://www.linkedin.com/in/rithvik-pallamreddy/"
+            target="_blank"
+          >
             Linkedin
           </a>
         </ContactItem>

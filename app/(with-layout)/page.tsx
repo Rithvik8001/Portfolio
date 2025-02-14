@@ -46,7 +46,7 @@ const Items = () => {
             skillset.
           </p>
           <p>
-            I'm a creative{" "}
+            I'm a creative at{" "}
             <LinkPrimitive href="" external>
               doing what I can't
             </LinkPrimitive>
@@ -64,7 +64,7 @@ const Items = () => {
             </LinkPrimitive>
             <LinkPrimitive
               external
-              href="https://drive.google.com/file/d/1botb0V7nhWGQZSF5vUdcws-DOkbGIzuv/view"
+              href="https://drive.google.com/file/d/1VUS1zpJQRRKtLk3kaW7dfehsskowKXbj/view?usp=sharing"
               variant="route"
             >
               Resume

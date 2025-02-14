@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import ScrollRestoration from '@/components/scroll-restoration'
+import ScrollRestoration from "@/components/scroll-restoration";
 
 const monument = localFont({
   src: [
