@@ -13,7 +13,7 @@ const AboutPage = () => {
       <div className="mt-4 flex flex-col gap-4">
         <p>
           Hey, my name is Rithvik and welcome to my space on the internet. I'm a
-          self-taught React Native / Web developer based in Louisville,KY.
+          self-taught IOS / Web developer based in Louisville,KY.
         </p>
         <p>
           Learning to code has felt like a superpower for me, it allows me to
