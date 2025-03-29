@@ -14,7 +14,7 @@ const HomePage = () => {
       </h1>
       <Tags />
       <p className="mt-4 text-muted-foreground">
-        A self taught IOS / Web Developer following his dream of delivering smiles
+        A self taught Web Developer following his dream of delivering smiles
         with delightful experiences ☻
       </p>
       <section className="grid w-fit grid-cols-3 gap-x-6 gap-y-2 pt-4 tracking-tight md:flex md:flex-row md:items-start">
