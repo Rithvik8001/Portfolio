@@ -56,13 +56,14 @@ export const experiences: Experience[] = [
         company: "Tata Consultancy Services",
         duration:   "June 2021 - July 2022",
         responsibilities: [
-            "Built and maintained web applications using React.js, focusing on developing interactive components, managing state, and ensuring responsiveness to enhance user experience across all devices.",
-            "Optimized page performance by 20% through asset optimization, lazy loading, and code splitting, enhancing user retention and SEO.",
-            "Implemented advanced form validation techniques, reducing user errors by 15% and ensuring seamless user interactions.",
-            "Collaborated with design and development teams to ensure pixel-perfect UI designs and accessibility compliance across devices.",
+            "Contributed to the development of key React.js components and features, including dynamic dashboards and interactive forms, which improved user engagement metrics and received positive client feedback.",
+            "Optimized application performance by 20% through implementing lazy loading, code splitting, and asset management, resulting in faster load times, better SEO rankings, and increased user retention.",
+            "Designed and implemented advanced form validation techniques that reduced user errors by 15%, leading to smoother data entry processes and fewer support tickets.",
+            "Developed reusable UI components like buttons, modals, and form elements that were adopted across various projects. This approach cut down development time for new features by 30%, enhanced design consistency and user experience,and sped up onboarding for new team members.",
         ],
         role: "Junior Frontend Developer",
     },
+    /*
     {
         company: "Elorce",
         duration: "Jan 2021 - April 2021",
@@ -72,5 +73,6 @@ export const experiences: Experience[] = [
             "Developed and maintained interactive dashboards by integrating data visualization libraries i.e D3.js, providing users with insightful visual feedback and improving decision-making through clear, real-time data representation.",
         ],
         role: "Frontend Intern",
-    }
+    } */
+    
 ]
