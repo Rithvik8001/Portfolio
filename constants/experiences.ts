@@ -41,7 +41,7 @@ export type Experience = {
 }
 
 export const experiences: Experience[] = [
-    {
+    /*{
         company: "Tata Consultancy Services",
         duration: "July 2024 - Present",
         responsibilities: [
@@ -51,7 +51,7 @@ export const experiences: Experience[] = [
             "Designed and developed reusable SwiftUI components and interactive animations, improving UI consistency, reducing development time for new features, and significantly boosting user engagement with a more polished in-app experience.",
         ],
         role: "Associate App Developer",
-    },
+    }, */
     {
         company: "Tata Consultancy Services",
         duration:   "June 2021 - July 2022",
