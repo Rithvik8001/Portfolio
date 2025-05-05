@@ -1,7 +1,7 @@
 import { UIMessage } from "ai";
 import { marked } from "marked";
 import MotionWrapper from "../shared/motion-wrapper";
-import { messageVariants } from "@/constants/animations";
+import { messageVariants } from "@/constants/animation";
 
 const ChatBubble = ({ content, role }: UIMessage) => {
   if (role === "user") {

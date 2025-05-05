@@ -5,7 +5,7 @@ import { ChevronDown } from "lucide-react";
 import MotionWrapper from "../shared/motion-wrapper";
 import { Dispatch, SetStateAction, useState } from "react";
 import { AnimatePresence } from "motion/react";
-import { accordionVariants } from "@/constants/animations";
+import { accordionVariants } from "@/constants/animation";
 
 type ExperienceCardProps = {
   setToggledExperience: Dispatch<SetStateAction<Experience | null>>;

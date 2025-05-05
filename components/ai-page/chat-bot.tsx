@@ -6,7 +6,7 @@ import { useEffect, useRef } from "react";
 import { AnimatePresence } from "motion/react";
 import { marked } from "marked";
 import MotionWrapper from "../shared/motion-wrapper";
-import { messageVariants } from "@/constants/animations";
+import { messageVariants } from "@/constants/animation";
 
 type ChatBoxProps = {
   messages: UIMessage[];
