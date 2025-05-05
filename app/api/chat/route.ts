@@ -12,7 +12,7 @@ export async function POST(req: Request) {
   const { messages } = await req.json();
 
   const result = streamText({
-    model: openAI("gpt-4o-mini"),
+    model: openAI("gpt-4.1-nano"),
     temperature: 0.5,
     messages: convertToCoreMessages(messages),
     system: aboutMe(),

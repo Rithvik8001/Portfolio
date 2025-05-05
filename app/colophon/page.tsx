@@ -46,12 +46,6 @@ const Colophon = () => {
           {" "}
           <span className="text-black">Warp</span> — Better terminal for MacOS.
         </li>{" "}
-        <li>
-          {" "}
-          <span className="text-black">XCode</span>
-          {` - What options do i
-          really have :)`}
-        </li>{" "}
         <p>And many more...</p>{" "}
       </ul>
       <Footer />

@@ -17,7 +17,7 @@ const serif = Instrument_Serif({
 
 export const metadata: Metadata = {
   title: "Rithvik",
-  description: "Rithvik Pallamreddiy | Front-end Web Developer",
+  description: "Rithvik Pallamreddiy | Full Stack Developer",
 };
 
 export default function RootLayout({
