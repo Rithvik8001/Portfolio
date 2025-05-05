@@ -27,7 +27,7 @@ const AIChatPage = () => {
           rel="noopener noreferrer"
           className="text-foreground underline-offset-4 transition duration-150 ease-in-out md:hover:text-primary md:hover:underline"
         >
-          GPT 4o Mini
+          GPT 4.1 Nano
         </Link>{" "}
         and{" "}
         <Link
