@@ -1,21 +1,17 @@
-import { Project } from "@/constants/projects";
-import { ArrowUpRight } from "lucide-react";
-import Link from "next/link";
+import { projects } from "@/constants/projects";
+import ProjectCard from "./project-card";
 
-const ProjectCard = ({ title, description, url }: Project) => {
+const ProjectsSection = () => {
   return (
-    <Link href={url} target="_blank" rel="noopener noreferrer">
-      <article className="group rounded-lg px-4 py-2 transition-all md:hover:scale-[1.05] md:hover:bg-primary-foreground">
-        <div className="flex items-center justify-between">
-          <h2 className="text-sm font-medium transition-colors md:group-hover:text-primary">
-            {title}
-          </h2>
-          <ArrowUpRight className="size-[14px] text-primary opacity-0 transition-opacity md:group-hover:opacity-100" />
-        </div>
-        <p>{description}</p>
-      </article>
-    </Link>
+    <section className="-mx-4 mt-8">
+      <h2 className="ml-4 text-base font-semibold">Projects</h2>
+      <div className="mt-4 flex flex-col gap-4">
+        {projects.map((project) => (
+          <ProjectCard key={project.url} {...project} />
+        ))}
+      </div>
+    </section>
   );
 };
 
-export default ProjectCard;
+export default ProjectsSection;

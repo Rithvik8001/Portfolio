@@ -1,34 +1,34 @@
-import { UIMessage } from "ai";
-import { marked } from "marked";
-import MotionWrapper from "../shared/motion-wrapper";
-import { messageVariants } from "@/constants/animation";
+"use client";
 
-const ChatBubble = ({ content, role }: UIMessage) => {
-  if (role === "user") {
-    return (
-      <MotionWrapper
-        type="article"
-        variants={messageVariants}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        dangerouslySetInnerHTML={{ __html: marked(content) }}
-        className="ml-auto flex max-w-xs flex-col gap-2 rounded-lg bg-blue-100 px-2.5 py-1.5 !text-sm text-blue-700"
-      ></MotionWrapper>
-    );
-  }
+import ChatBox from "./chat-bot";
+import ChatForm from "./chat-form";
+import PremadePrompts from "./premade-prompts";
+import { useChat } from "@ai-sdk/react";
+
+const ChatContainer = () => {
+  const {
+    messages,
+    input,
+    handleInputChange,
+    handleSubmit,
+    setInput,
+    status,
+    stop,
+  } = useChat({});
 
   return (
-    <MotionWrapper
-      type="article"
-      variants={messageVariants}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      dangerouslySetInnerHTML={{ __html: marked(content) }}
-      className="flex max-w-xs flex-col gap-2 rounded-lg bg-green-100 px-2.5 py-1.5 !text-sm text-emerald-700"
-    ></MotionWrapper>
+    <div className="mt-4">
+      <ChatBox messages={messages} />
+      <PremadePrompts setInput={setInput} />
+      <ChatForm
+        value={input}
+        handleSubmit={handleSubmit}
+        onChange={handleInputChange}
+        status={status}
+        stop={stop}
+      />
+    </div>
   );
 };
 
-export default ChatBubble;
+export default ChatContainer;
