@@ -7,11 +7,9 @@ const Tags = () => {
 
   return isMobile ? (
     <div className="mt-2 flex items-center gap-1.5 font-semibold tracking-tight">
-      <h2>iOS dev</h2>{" "}
+      <h2>Web Developer</h2>{" "}
       <div className="mt-1.5 size-1 rounded bg-foreground"></div>{" "}
-      <h2>frontend enthusiast</h2>{" "}
-      <div className="mt-1.5 size-1 rounded bg-foreground"></div>{" "}
-      <h2>loves football</h2>{" "}
+      <h2>Football Aficinado</h2>{" "}
     </div>
   ) : (
     <div className="mt-2 flex items-center gap-1.5 font-semibold tracking-tight">

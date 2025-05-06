@@ -13,7 +13,7 @@ const AboutPage = () => {
       <div className="mt-4 flex flex-col gap-4">
         <p>
           Hey, my name is Rithvik and welcome to my space on the internet. I'm a
-          self-taught IOS/ Web developer based in Louisville,KY.
+          self-taught Full Stack Web developer.
         </p>
         <p>
           Learning to code has felt like a superpower for me, it allows me to
@@ -22,7 +22,7 @@ const AboutPage = () => {
           abyss of the web.
         </p>
         <p>
-          When I'm not coding, I love to watch football ⚽️. You could call me a
+          When I'm not coding, I love to watch football. You can call me a
           football fanatic. I started watching this beautiful sport when I was
           16 years old, and my favorite club is the biggest in England,
           Manchester United, GGMU❤️.
