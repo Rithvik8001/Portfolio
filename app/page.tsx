@@ -61,7 +61,7 @@ const HomePage = () => {
           >
             GitHub
           </Link>{" "}
-          for more projects. Most of them are open-source.
+          for more projects.
         </p>
       </div>
       <div className="flex w-full items-center justify-center pt-8">

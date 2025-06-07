@@ -25,7 +25,7 @@ const Nav = () => {
             <Image
               src={icon}
               alt="Icon"
-              className="size-[18px] transition-all hover:rotate-180"
+              className="size-[18px] transition-all hover:rotate-180 cursor-pointer"
             />
           </MotionWrapper>
         ) : (

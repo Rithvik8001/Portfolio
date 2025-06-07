@@ -8,7 +8,7 @@ const PremadePrompts = ({ setInput }: PremadePromptsProps) => {
   return (
     <div className="flex w-full justify-between gap-2 pt-4 !text-xs font-light">
       <button
-        onClick={() => setInput("What is your design philosophy?")}
+        onClick={() => setInput("What are your skills?")}
         className="rounded-lg bg-rose-100 px-2.5 py-1.5 text-rose-700 transition duration-300 ease-in-out md:hover:scale-95 md:hover:bg-rose-200 md:hover:text-rose-900"
       >
         What are your skills?
