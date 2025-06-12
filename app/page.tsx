@@ -20,7 +20,7 @@ const HomePage = () => {
       <section className="grid w-fit grid-cols-3 gap-x-6 gap-y-2 pt-4 tracking-tight md:flex md:flex-row md:items-start">
         <Link
           target="_blank"
-          href="https://drive.google.com/file/d/1QGxKRBIIePFyle_9AWbZ9RCpX8m1XK4X/view?usp=sharing"
+          href="https://drive.google.com/file/d/1-OP-OnCP7Ocjm3THzsFkE0_3mMQrpvSL/view?usp=sharing"
           className="flex items-center gap-1.5 underline-offset-2 transition-colors hover:text-primary hover:underline"
         >
           <FileUser className="size-[14px]" /> <p>resume</p>
