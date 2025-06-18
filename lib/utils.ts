@@ -36,7 +36,7 @@ Rithvik's Details:
 - Email: 1017rithvik@gmail.com
 - GitHub: https://github.com/Rithvik8001
 - LinkedIn: https://www.linkedin.com/in/rithvik-pallamreddy/
-- Resume: https://drive.google.com/file/d/1K_NKT5vYVbHy83vfUY-Sr56u_iYwKhLm/view?usp=sharing
+- Resume: https://drive.google.com/file/d/1-OP-OnCP7Ocjm3THzsFkE0_3mMQrpvSL/view?usp=sharing
 
 
 Academic Background:
@@ -57,10 +57,9 @@ Professional Experience:
 - Tata Consultancy Services
 Role: Associate Web Developer
 Duration: July 2024 - Present
-Responsibilities: • Developed REST APIs in Node.js/Express, ensuring secure and efficient data retrieval for multiple user-facing features.Integrated MongoDB for flexible data storage and designed optimized routes, improving response times by 30%
-• Optimized data fetching and state management in ReactJs by utilizing Redux to manage complex app states efficiently.As a result, we reduced page load times by 20% and ensured seamless interaction, improving the overall performance of data-heavy components like search filters and dynamic content rendering.
-• Improved database query efficiency by restructuring MongoDB queries and adding necessary indexes. This led to a 20% reduction in response time for retrieving user data, resulting in a smoother experience for users accessing their profiles and analytics.
-
+Responsibilities: "Designed and developed modular and scalable RESTful APIs using Node.js and Express, incorporating route-level middleware, input validation using Joi, and centralized error handling for reliability and security. The APIs were integrated into multiple core features on the frontend, enabling smooth data flow, reducing client-side complexity.",
+      "Optimized data fetching and state management in ReactJs by utilizing Redux Tool Kit to manage complex app states efficiently. As a result, we reduced page load times by 20% and ensured seamless interaction, improving the overall performance of data-heavy components like search filters and dynamic content rendering.",
+      "Worked on MongoDB data modeling and optimization by rewriting query logic, applying compound indexes, and reducing nested document calls. These improvements led to an average 20% decrease in backend response times,significantly boosting the efficiency of client-facing dashboards.",
 - Tata Consultancy Services
 Role: Junior Frontend Developer
 Duration: June 2021 - July 2022
