@@ -23,7 +23,9 @@ const Nav = () => {
 
   return (
     <AnimatePresence>
+      {/* Each direct child of AnimatePresence must have a unique key */}
       <MotionWrapper
+        key="mobile-nav"
         initial={{ y: "100%", opacity: 0 }}
         animate={{
           y: 0,
@@ -194,7 +196,7 @@ const Nav = () => {
           </MotionWrapper>
         </nav>
       </MotionWrapper>
-      <div className="left-1/2 absolute w-full">
+      <div className="left-1/2 absolute w-full" key="desktop-nav">
         <MotionWrapper
           type="nav"
           initial={{ y: "-100%", opacity: 0 }}
