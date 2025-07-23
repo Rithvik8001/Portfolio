@@ -35,7 +35,7 @@ const AI = () => {
             rel="noopener noreferrer"
             className="text-foreground md:hover:text-primary md:hover:underline underline-offset-4 transition duration-150 ease-in-out"
           >
-            GPT 4o Mini
+            GPT 4.1 Mini
           </Link>{" "}
           and{" "}
           <Link
