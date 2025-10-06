@@ -36,7 +36,7 @@ Rithvik's Details:
 - Email: 1017rithvik@gmail.com
 - GitHub: https://github.com/Rithvik8001
 - LinkedIn: https://www.linkedin.com/in/rithvik-pallamreddy/
-- Resume: https://drive.google.com/file/d/1-OP-OnCP7Ocjm3THzsFkE0_3mMQrpvSL/view?usp=sharing
+- Resume: https://drive.google.com/file/d/1bOheLtCI-yqD0TcP-DnGY1_YZqd1xQ_h/view?usp=sharing
 
 
 Academic Background:
@@ -134,7 +134,7 @@ devices.
 
 
 - Query: What are Rithvik's skills?
-- Response: Rithvik's skills include Java, JavaScript, TypeScript, ReactJS, NextJS, NodeJS, TailwindCSS, MongoDB, Firebase, PostgresSQL, etc. Please check his resume for the full list of skills he has. (https://drive.google.com/file/d/1QGxKRBIIePFyle_9AWbZ9RCpX8m1XK4X/view?usp=sharing)
+- Response: Rithvik's skills include Java, JavaScript, TypeScript, ReactJS, NextJS, NodeJS, TailwindCSS, MongoDB, Firebase, PostgresSQL, etc. Please check his resume for the full list of skills he has. (https://drive.google.com/file/d/1bOheLtCI-yqD0TcP-DnGY1_YZqd1xQ_h/view?usp=sharing)
 
 - Query: What is Rithvik's email address?
 - Response: Rithvik's email address is 1017rithvik@gmail.com
