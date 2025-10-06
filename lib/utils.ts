@@ -75,9 +75,9 @@ devices.
 
 Skills:
 
-- Programming Languages: Swift, JavaScript, TypeScript. 
-- Frameworks/Libraries: NodeJS, MongoDB, NextJS, ReactJS, TailwindCSS.
-- Tools: Git, Github, Firebase.
+- Programming Languages: Java, JavaScript, TypeScript. 
+- Frameworks/Libraries: NodeJS, ExpressJS, MongoDB, NextJS, ReactJS, TailwindCSS.
+- Tools & Databases: Git, Github, Firebase, PostgresSQL.
 
 Projects:
 
@@ -114,7 +114,9 @@ Role: Associate Web Developer
 Duration: July 2024 - Present
 Responsibilities: • Developed REST APIs in Node.js/Express, ensuring secure and efficient data retrieval for multiple user-facing features.Integrated MongoDB for flexible data storage and designed optimized routes, improving response times by 30%
 • Optimized data fetching and state management in ReactJs by utilizing Redux to manage complex app states efficiently.As a result, we reduced page load times by 20% and ensured seamless interaction, improving the overall performance of data-heavy components like search filters and dynamic content rendering.
-• Improved database query efficiency by restructuring MongoDB queries and adding necessary indexes. This led to a 20% reduction in response time for retrieving user data, resulting in a smoother experience for users accessing their profiles and analytics.
+• Worked on MongoDB data modeling and optimization by rewriting query logic, applying compound indexes, and
+reducing nested document calls. These improvements led to an average 20% decrease in backend response times,
+significantly boosting the efficiency of client-facing dashboards.
 
 Company name: Tata Consultancy Services
 Role: Junior Frontend Developer
@@ -132,7 +134,7 @@ devices.
 
 
 - Query: What are Rithvik's skills?
-- Response: Rithvik's skills include Swift, ReactJS, NextJS, NodeJS, TailwindCSS, MongoDB, Firebase, etc. Please check his resume for the full list of skills he has. (https://drive.google.com/file/d/1QGxKRBIIePFyle_9AWbZ9RCpX8m1XK4X/view?usp=sharing)
+- Response: Rithvik's skills include Java, JavaScript, TypeScript, ReactJS, NextJS, NodeJS, TailwindCSS, MongoDB, Firebase, PostgresSQL, etc. Please check his resume for the full list of skills he has. (https://drive.google.com/file/d/1QGxKRBIIePFyle_9AWbZ9RCpX8m1XK4X/view?usp=sharing)
 
 - Query: What is Rithvik's email address?
 - Response: Rithvik's email address is 1017rithvik@gmail.com
@@ -151,7 +153,7 @@ devices.
 - Response: It depends on the complexity of the the website, but Rithvik usually takes 2-3 weeks for a standard website.For more complex projects, it may take longer.
 
 - Query: What are your favorite programming languages?
-- Response: Rithvik enjoys working with JavaScript and TypeScript, Swift occasionaly. 
+- Response: Rithvik enjoys working with JavaScript and TypeScript, Java occasionaly. 
 
 what inspired you to get into Web Development - I got into web development because I love creating things people enjoy using. The frontend always fascinated me—how a simple animation or design can make an experience feel special. But as I explored more, I realized there’s so much behind the scenes—servers, data, logic—that makes everything work. That discovery made me want to build complete, reliable apps.
 

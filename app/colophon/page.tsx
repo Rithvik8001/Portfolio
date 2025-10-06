@@ -20,31 +20,33 @@ const Colophon = () => {
         {" "}
         <li>
           {" "}
-          <span className="text-black">Brave</span> — A better way to browse the
-          web.
+          <span className="text-black">Comet</span> — Clean, fast, and exactly
+          how I like browsing to feel.
         </li>{" "}
         <li>
           {" "}
-          <span className="text-black">Raycast</span> — Mac's spotlight on
-          steroids.
+          <span className="text-black">Alfred</span> — My daily command center.
+          Everything's just a few keystrokes away.
         </li>{" "}
         <li>
           {" "}
-          <span className="text-black">Apple Music</span> — Music for every
-          moment.
+          <span className="text-black">Apple Music</span> — My Favorite music
+          app of all time.
         </li>{" "}
         <li>
           {" "}
-          <span className="text-black">Notion</span> — My personal note taking
-          app.
+          <span className="text-black">Notion</span> — The vault for all my
+          ideas and half-finished thoughts.
         </li>{" "}
         <li>
           {" "}
-          <span className="text-black">VSCode</span> — Developer's best friend.
+          <span className="text-black">VSCode</span> — Where most of my ideas
+          start, break, and eventually work.
         </li>{" "}
         <li>
           {" "}
-          <span className="text-black">Warp</span> — Better terminal for MacOS.
+          <span className="text-black">Warp</span> — My favorite terminal for
+          MacOS.
         </li>{" "}
         <p>And many more...</p>{" "}
       </ul>

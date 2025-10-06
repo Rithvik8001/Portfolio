@@ -1,4 +1,3 @@
-
 export type Experience = {
   company: string;
   duration: string;

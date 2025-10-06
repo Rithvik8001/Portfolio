@@ -22,12 +22,12 @@ const AIChatPage = () => {
       <p className="pt-4 text-sm text-muted-foreground">
         Everyone makes mistakes, including this AI powered by{" "}
         <Link
-          href="https://openai.com/index/gpt-4o-mini-advancing-cost-efficient-intelligence/"
+          href="https://openai.com/index/gpt-4-1-mini-introducing-the-latest-generation-of-open-source-models/"
           target="_blank"
           rel="noopener noreferrer"
           className="text-foreground underline-offset-4 transition duration-150 ease-in-out md:hover:text-primary md:hover:underline"
         >
-          GPT 4.1 Nano
+          GPT 4.1 Mini
         </Link>{" "}
         and{" "}
         <Link
