@@ -30,7 +30,6 @@ export function EditorStatus() {
         const res = await fetch("/api/wakatime");
         if (res.ok) {
           const json = (await res.json()) as WakaTimeData;
-          console.log("CursorStatus received data:", json);
           setData(json);
         }
       } catch (error) {
