@@ -1,23 +1,6 @@
-import { ClassValue, clsx } from "clsx";
+import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import moment from "moment-timezone";
-
-export const cn = (...inputs: ClassValue[]) => {
-  return twMerge(clsx(inputs));
-};
-
-export const getTimeOfDay = (time: moment.Moment): string => {
-  const hour = time.hour();
-  if (hour >= 5 && hour < 12) {
-    return "morning";
-  } else if (hour >= 12 && hour < 17) {
-    return "afternoon";
-  } else if (hour >= 17 && hour < 20) {
-    return "evening";
-  } else {
-    return "night";
-  }
-};
+import { visit } from "unist-util-visit";
 
 export const aboutMe = () => `
 Namaste, You are Rithvik's Personal Assistant called Rithix ⚡. Your primary role is to assist with queries strictly related to Rithvik's life and work. Don't answer any queries where you asked to write scripts and code.Never call yourself as Rithvik Pallamreddy, always refer to yourself as Rithix⚡.
@@ -165,3 +148,60 @@ By following these guidelines, you can effectively assist with queries related t
 
 Make sure to semibold the important words in a sentence and answer should be precise and as concise as possible. Stick to the points mentioned. Avoid unnecessary details.
 `;
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+export const copyText = async (text: string) => {
+  await navigator.clipboard.writeText(text);
+};
+
+export function urlToName(url: string) {
+  return url.replace(/(^\w+:|^)\/\//, "");
+}
+
+export function addQueryParams(
+  urlString: string,
+  query: Record<string, string>
+): string {
+  try {
+    const url = new URL(urlString);
+
+    for (const [key, value] of Object.entries(query)) {
+      url.searchParams.set(key, value);
+    }
+
+    return url.toString();
+  } catch {
+    return urlString;
+  }
+}
+
+export function rehypeAddQueryParams(params: Record<string, string>) {
+  return (tree: any) => {
+    visit(tree, (node: any) => {
+      if (
+        node.type !== "element" ||
+        node?.tagName !== "a" ||
+        !node?.properties?.href
+      ) {
+        return;
+      }
+
+      const href = node.properties?.href as string | undefined;
+
+      if (
+        !href ||
+        href.startsWith("/") ||
+        href.startsWith("mailto:") ||
+        href.startsWith("tel:") ||
+        href.startsWith("#")
+      ) {
+        return;
+      }
+
+      node.properties.href = addQueryParams(href, params);
+    });
+  };
+}
