@@ -1,30 +1,76 @@
-export type Experience = {
-  company: string;
-  duration: string;
-  responsibilities: string[];
-  role: string;
-};
+import type { Experience } from "@/types";
 
-export const experiences: Experience[] = [
+export const EXPERIENCES: Experience[] = [
   {
-    company: "Tata Consultancy Services",
-    duration: "July 2024 - Present",
-    responsibilities: [
-      "Designed and developed modular and scalable RESTful APIs using Node.js and Express, incorporating route-level middleware, input validation using Joi, and centralized error handling for reliability and security. The APIs were integrated into multiple core features on the frontend, enabling smooth data flow, reducing client-side complexity.",
-      "Optimized data fetching and state management in ReactJs by utilizing Redux Tool Kit to manage complex app states efficiently. As a result, we reduced page load times by 20% and ensured seamless interaction, improving the overall performance of data-heavy components like search filters and dynamic content rendering.",
-      "Worked on MongoDB data modeling and optimization by rewriting query logic, applying compound indexes, and reducing nested document calls. These improvements led to an average 20% decrease in backend response times,significantly boosting the efficiency of client-facing dashboards.",
+    id: "tcs-ky",
+    companyName: "Tata Consultancy Services",
+    companyLogo: "/images/tcs.png",
+    positions: [
+      {
+        id: "tcs-associate-web-dev",
+        title: "Associate Web Developer",
+        employmentPeriod: {
+          start: "07.2024",
+        },
+        employmentType: "Full-time",
+        icon: "code",
+        description: `- Developed Restful API endpoints for user analytics dashboard using Node.js and Express, implementing pagination, filtering, and data aggregation logic that enabled real-time reporting and improved data retrieval performance.
+- Contributed to state management migration by implementing Redux Toolkit slices for critical features, optimizing data fetching with RTK Query, and reducing unnecessary re-renders by 15% in dashboard components.
+- Optimized MongoDB performance by writing aggregation pipelines for complex reporting queries and implementing compound indexes, reducing query execution time from 1.2s to 300ms for analytics endpoints.
+- Developed API integration layer with axios interceptors handling token refresh, request retries, and error recovery, improving reliability and user experience across frontend applications.`,
+        skills: ["Node.js", "Express", "Redux Toolkit", "MongoDB", "REST APIs"],
+        isExpanded: true,
+      },
     ],
-    role: "Associate Web Developer",
+    isCurrentEmployer: true,
   },
   {
-    company: "Tata Consultancy Services",
-    duration: "June 2021 - July 2022",
-    responsibilities: [
-      "Built and maintained web applications using React.js, focusing on developing interactive components, managing state, and ensuring responsiveness to enhance user experience across all devices.",
-      "Optimized page performance by 20% through asset optimization, lazy loading, and code splitting, enhancing user retention and SEO.",
-      "Implemented advanced form validation techniques, reducing user errors by 15% and ensuring seamless user interactions.",
-      "Collaborated with design and development teams to ensure pixel-perfect UI designs and accessibility compliance across devices.",
+    id: "tcs-in",
+    companyName: "Tata Consultancy Services",
+    companyLogo: "/images/tcs.png",
+    positions: [
+      {
+        id: "tcs-junior-frontend-dev",
+        title: "Junior Frontend Developer",
+        employmentPeriod: {
+          start: "06.2021",
+          end: "07.2022",
+        },
+        employmentType: "Full-time",
+        icon: "code",
+        description: `- Developed responsive React components using hooks and functional patterns, building reusable dashboard widgets and form components that improved development velocity by 30%.
+- Optimized React application performance by identifying and refactoring expensive rendering operations, implementing code splitting for route-based lazy loading, and reducing initial bundle size by 35%.
+- Built robust form validation system with real-time error handling and custom validation rules, improving data quality for critical user registration and data entry workflows.
+- Developed reusable UI component library including buttons, modals, and form inputs that were standardized across multiple projects, ensuring consistent user experience and faster feature development.`,
+        skills: [
+          "React",
+          "Hooks",
+          "Performance Optimization",
+          "Form Validation",
+          "UI Components",
+        ],
+      },
     ],
-    role: "Junior Frontend Developer",
+    isCurrentEmployer: false,
+  },
+  {
+    id: "education",
+    companyName: "Education",
+    positions: [
+      {
+        id: "wichita-state-university",
+        title: "Wichita State University",
+        employmentPeriod: {
+          start: "08.2022",
+          end: "12.2023",
+        },
+        icon: "education",
+        description: `- Masters in Computer Science
+- Specialized in Software Engineering and Algorithms
+- Worked as a teaching assistant for web programming
+- Completed capstone project on Distributed Systems`,
+        cgpa: "3.9 / 4.0",
+      },
+    ],
   },
 ];
