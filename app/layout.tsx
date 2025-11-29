@@ -45,6 +45,11 @@ export const metadata: Metadata = {
       url: "https://rithvikpallamreddy.com",
     },
   ],
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
