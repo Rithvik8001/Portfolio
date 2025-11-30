@@ -21,11 +21,11 @@ import {
 import { USER } from "@/constants/user";
 
 export function GitHubContributionGraph({
-  contributions,
+  dataPromise,
 }: {
-  contributions: Promise<Activity[]>;
+  dataPromise: Promise<{ contributions: Activity[]; total: number }>;
 }) {
-  const data = use(contributions);
+  const { contributions: data, total: totalCount } = use(dataPromise);
 
   if (!data) {
     return <GitHubContributionFallback />;
@@ -38,6 +38,7 @@ export function GitHubContributionGraph({
       blockSize={11}
       blockMargin={3}
       blockRadius={0}
+      totalCount={totalCount}
     >
       <ContributionGraphCalendar
         className="no-scrollbar px-2"

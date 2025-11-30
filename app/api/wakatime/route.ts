@@ -79,7 +79,7 @@ export async function GET() {
 
     const responseData = {
       isOnline,
-      status: isOnline ? `Online in Zed` : "Offline",
+      status: isOnline ? `Online in VSCode` : "Offline",
       yesterdayCodingTime,
       todayCodingTime,
     };

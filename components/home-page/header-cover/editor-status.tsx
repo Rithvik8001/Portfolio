@@ -14,7 +14,7 @@ import Image from "next/image";
 
 type WakaTimeData = {
   isOnline: boolean;
-  editor: "Cursor" | "Zed" | null;
+  editor: "VSCode" | null;
   status: string;
   yesterdayCodingTime: string;
   todayCodingTime: string;
@@ -30,6 +30,7 @@ export function EditorStatus() {
         const res = await fetch("/api/wakatime");
         if (res.ok) {
           const json = (await res.json()) as WakaTimeData;
+          console.log("Editor status received data:", json);
           setData(json);
         }
       } catch (error) {
@@ -56,8 +57,6 @@ export function EditorStatus() {
         />
       </div>
     );
-
-  const isZed = data.editor === "Zed";
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -90,16 +89,16 @@ export function EditorStatus() {
             <span className="flex flex-wrap gap-3 font-medium">
               {data.isOnline ? "Online" : "Offline"} in{" "}
               <Image
-                src={`/assets/tech-icons/zed-light.svg`}
-                alt="Zed light icon"
+                src={`/assets/tech-icons/vs-code.svg`}
+                alt="VS Code light icon"
                 width={12}
                 height={12}
                 className="hidden [html.dark_&]:block"
                 unoptimized
               />
               <Image
-                src={`/assets/tech-icons/zed-dark.svg`}
-                alt="Zed dark icon"
+                src={`/assets/tech-icons/vs-code.svg`}
+                alt="VS Code dark icon"
                 width={12}
                 height={12}
                 className="hidden [html.light_&]:block"

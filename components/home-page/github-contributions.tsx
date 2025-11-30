@@ -7,14 +7,14 @@ import {
 } from "../ui/github-contribution-graph";
 
 export function GitHubContributions() {
-  const contributions = getGitHubContributions();
+  const dataPromise = getGitHubContributions();
 
   return (
     <Panel>
       <h2 className="sr-only">GitHub Contributions</h2>
 
       <Suspense fallback={<GitHubContributionFallback />}>
-        <GitHubContributionGraph contributions={contributions} />
+        <GitHubContributionGraph dataPromise={dataPromise} />
       </Suspense>
     </Panel>
   );

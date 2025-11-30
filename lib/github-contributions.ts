@@ -9,5 +9,8 @@ export async function getGitHubContributions() {
     }
   );
   const data = (await res.json()) as GitHubContributionsResponse;
-  return data.contributions;
+  return {
+    contributions: data.contributions,
+    total: data.total.lastYear,
+  };
 }

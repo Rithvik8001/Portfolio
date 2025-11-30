@@ -44,6 +44,9 @@ export type Skill = {
 };
 
 export type GitHubContributionsResponse = {
+  total: {
+    lastYear: number;
+  };
   contributions: Activity[];
 };
 
