@@ -89,16 +89,16 @@ export function EditorStatus() {
             <span className="flex flex-wrap gap-3 font-medium">
               {data.isOnline ? "Online" : "Offline"} in{" "}
               <Image
-                src={`/assets/tech-icons/vs-code.svg`}
-                alt="VS Code light icon"
+                src={`/assets/tech-icons/zed-light.svg`}
+                alt="Zed light icon"
                 width={12}
                 height={12}
                 className="hidden [html.dark_&]:block"
                 unoptimized
               />
               <Image
-                src={`/assets/tech-icons/vs-code.svg`}
-                alt="VS Code dark icon"
+                src={`/assets/tech-icons/zed-dark.svg`}
+                alt="Zed dark icon"
                 width={12}
                 height={12}
                 className="hidden [html.light_&]:block"
