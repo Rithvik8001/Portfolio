@@ -32,6 +32,8 @@ export function EditorStatus() {
           const json = (await res.json()) as WakaTimeData;
           console.log("Editor status received data:", json);
           setData(json);
+        } else {
+          console.error("Failed to fetch WakaTime status:", res.statusText);
         }
       } catch (error) {
         console.error("Error fetching WakaTime status:", error);
@@ -86,31 +88,38 @@ export function EditorStatus() {
                 data.isOnline ? "bg-emerald-500" : "bg-zinc-500"
               )}
             />
-            <span className="flex flex-wrap gap-3 font-medium">
-              {data.isOnline ? "Online" : "Offline"} in{" "}
-              <Image
-                src={`/assets/tech-icons/cursor-light.svg`}
-                alt="Cursor light icon"
-                width={12}
-                height={12}
-                className="hidden [html.dark_&]:block"
-                unoptimized
-              />
-              <Image
-                src={`/assets/tech-icons/cursor-dark.svg`}
-                alt="Cursor dark icon"
-                width={12}
-                height={12}
-                className="hidden [html.light_&]:block"
-                unoptimized
-              />
+            <span className="flex flex-wrap items-center gap-2 font-medium">
+              {data.isOnline ? "Online" : "Offline"}
+              {data.isOnline && (
+                <>
+                  {" "}
+                  in{" "}
+                  <Image
+                    src="/assets/tech-icons/cursor-light.svg"
+                    alt="Cursor"
+                    width={16}
+                    height={16}
+                    className="hidden dark:block"
+                    unoptimized
+                  />
+                  <Image
+                    src="/assets/tech-icons/cursor-dark.svg"
+                    alt="Cursor"
+                    width={16}
+                    height={16}
+                    className="block dark:hidden"
+                    unoptimized
+                  />
+                </>
+              )}
             </span>
           </div>
           <p className="text-xs text-muted-foreground">
-            {data.isOnline ? "Today worked" : "Yesterday worked"}{" "}
+            {data.isOnline ? "Coded for" : "Coded"}{" "}
             <span className="font-medium">
               {data.isOnline ? data.todayCodingTime : data.yesterdayCodingTime}
             </span>
+            {!data.isOnline && " yesterday"}
           </p>
         </TooltipContent>
       </Tooltip>
