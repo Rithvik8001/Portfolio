@@ -89,37 +89,28 @@ export function EditorStatus() {
               )}
             />
             <span className="flex flex-wrap items-center gap-2 font-medium">
-              {data.isOnline ? "Online" : "Offline"}
-              {data.isOnline && (
-                <>
-                  {" "}
-                  in{" "}
-                  <Image
-                    src="/assets/tech-icons/cursor-light.svg"
-                    alt="Cursor"
-                    width={16}
-                    height={16}
-                    className="hidden dark:block"
-                    unoptimized
-                  />
-                  <Image
-                    src="/assets/tech-icons/cursor-dark.svg"
-                    alt="Cursor"
-                    width={16}
-                    height={16}
-                    className="block dark:hidden"
-                    unoptimized
-                  />
-                </>
-              )}
+              {data.isOnline ? "Online" : "Offline"} in{" "}
+              <Image
+                src="/assets/tech-icons/cursor-light.svg"
+                alt="Cursor"
+                width={16}
+                height={16}
+                className="hidden dark:block"
+                unoptimized
+              />
+              <Image
+                src="/assets/tech-icons/cursor-dark.svg"
+                alt="Cursor"
+                width={16}
+                height={16}
+                className="block dark:hidden"
+                unoptimized
+              />
             </span>
           </div>
           <p className="text-xs text-muted-foreground">
-            {data.isOnline ? "Coded for" : "Coded"}{" "}
-            <span className="font-medium">
-              {data.isOnline ? data.todayCodingTime : data.yesterdayCodingTime}
-            </span>
-            {!data.isOnline && " yesterday"}
+            Yesterday Worked for{" "}
+            <span className="font-medium">{data.yesterdayCodingTime}</span>
           </p>
         </TooltipContent>
       </Tooltip>
