@@ -14,7 +14,7 @@ import Image from "next/image";
 
 type WakaTimeData = {
   isOnline: boolean;
-  editor: "Cursor" | null;
+  editor: "Zed" | null;
   status: string;
   yesterdayCodingTime: string;
   todayCodingTime: string;
@@ -91,21 +91,22 @@ export function EditorStatus() {
             <span className="flex flex-wrap items-center gap-2 font-medium">
               {data.isOnline ? "Online" : "Offline"} in{" "}
               <Image
-                src="/assets/tech-icons/cursor-light.svg"
-                alt="Cursor"
+                src="/assets/tech-icons/zed-light.svg"
+                alt="Zed"
                 width={16}
                 height={16}
                 className="hidden dark:block"
                 unoptimized
               />
               <Image
-                src="/assets/tech-icons/cursor-dark.svg"
-                alt="Cursor"
+                src="/assets/tech-icons/zed-dark.svg"
+                alt="Zed"
                 width={16}
                 height={16}
                 className="block dark:hidden"
                 unoptimized
               />
+              Zed
             </span>
           </div>
           <p className="text-xs text-muted-foreground">

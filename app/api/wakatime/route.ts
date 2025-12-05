@@ -75,7 +75,7 @@ export async function GET() {
       }
     }
     if (!editor && isOnline) {
-      editor = "cursor";
+      editor = "zed";
     }
 
     const yesterday = new Date();
@@ -113,9 +113,9 @@ export async function GET() {
       ? editor.charAt(0).toUpperCase() + editor.slice(1)
       : "Editor";
 
-    let editorType: "Cursor" | null = null;
-    if (editor && (editor === "cursor" || editor.includes("cursor"))) {
-      editorType = "Cursor";
+    let editorType: "Zed" | null = null;
+    if (editor && (editor === "zed" || editor.includes("zed"))) {
+      editorType = "Zed";
     }
     const responseData = {
       isOnline,
