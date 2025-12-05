@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import { USER } from "@/constants/user";
 
 export const runtime = "edge";
+const EDITOR_NAME = "Cursor";
+const EDITOR_NAME_LOWER = EDITOR_NAME.toLowerCase();
 
 function getDateInTimezone(timezone: string): string {
   const now = new Date();
@@ -16,6 +18,13 @@ function getDateInTimezone(timezone: string): string {
 export async function GET() {
   const apiKey = process.env.WAKATIME_API_KEY;
 
+  const encodeBase64 = (value: string) => {
+    if (typeof btoa === "function") return btoa(value);
+    if (typeof Buffer !== "undefined")
+      return Buffer.from(value).toString("base64");
+    throw new Error("No base64 encoder available");
+  };
+
   if (!apiKey) {
     return NextResponse.json(
       { error: "WakaTime API key not configured" },
@@ -24,7 +33,7 @@ export async function GET() {
   }
 
   const headers = {
-    Authorization: `Basic ${btoa(apiKey)}`,
+    Authorization: `Basic ${encodeBase64(apiKey)}`,
   };
 
   try {
@@ -41,31 +50,27 @@ export async function GET() {
     }
 
     const heartbeatsData = (await heartbeatsRes.json()) as {
-      data: { time: number; editor: string }[];
+      data: { time: number; editor?: string }[];
     };
     const heartbeats = heartbeatsData.data || [];
 
     const fifteenMinutesAgo = Date.now() - 15 * 60 * 1000;
 
     let isOnline = false;
-    let lastZedHeartbeat = null;
+    let lastEditorHeartbeat: { time: number; editor?: string } | null = null;
 
     for (let i = heartbeats.length - 1; i >= 0; i--) {
       const heartbeat = heartbeats[i];
-      if (heartbeat?.editor?.toLowerCase().includes("zed")) {
-        lastZedHeartbeat = heartbeat;
+      if (heartbeat?.editor?.toLowerCase().includes(EDITOR_NAME_LOWER)) {
+        lastEditorHeartbeat = heartbeat;
         break;
       }
     }
 
-    if (lastZedHeartbeat) {
+    if (lastEditorHeartbeat) {
       const lastHeartbeatTime = new Date(
-        lastZedHeartbeat.time * 1000
+        lastEditorHeartbeat.time * 1000
       ).getTime();
-      const minutesAgo = Math.floor((Date.now() - lastHeartbeatTime) / 60000);
-
-      console.log("Last Zed heartbeat was", minutesAgo, "minutes ago");
-
       if (lastHeartbeatTime > fifteenMinutesAgo) {
         isOnline = true;
       }
@@ -92,7 +97,11 @@ export async function GET() {
     }
 
     const summariesData = (await summariesRes.json()) as {
-      data: { grand_total: { text: string }; range: { date: string } }[];
+      data: {
+        grand_total: { text: string };
+        editors?: { name: string; text: string }[];
+        range: { date: string };
+      }[];
     };
 
     const yesterdaySummary = summariesData.data.find(
@@ -100,13 +109,27 @@ export async function GET() {
     );
     const todaySummary = summariesData.data.find((d) => d.range.date === today);
 
-    const yesterdayCodingTime = yesterdaySummary?.grand_total?.text || "0 mins";
-    const todayCodingTime = todaySummary?.grand_total?.text || "0 mins";
+    const getEditorTime = (
+      summary:
+        | {
+            grand_total: { text: string };
+            editors?: { name: string; text: string }[];
+          }
+        | undefined
+    ) => {
+      const editor = summary?.editors?.find(
+        (e) => e.name.toLowerCase() === EDITOR_NAME_LOWER
+      );
+      return editor?.text || "0 mins";
+    };
+
+    const yesterdayCodingTime = getEditorTime(yesterdaySummary);
+    const todayCodingTime = getEditorTime(todaySummary);
 
     const responseData = {
       isOnline,
-      editor: "Zed" as const,
-      status: isOnline ? "Online in Zed" : "Offline",
+      editor: "Cursor" as const,
+      status: isOnline ? `Online in ${EDITOR_NAME}` : "Offline",
       yesterdayCodingTime,
       todayCodingTime,
     };

@@ -14,7 +14,7 @@ import Image from "next/image";
 
 type WakaTimeData = {
   isOnline: boolean;
-  editor: "Zed" | null;
+  editor: "Cursor" | null;
   status: string;
   yesterdayCodingTime: string;
   todayCodingTime: string;
@@ -30,7 +30,7 @@ export function EditorStatus() {
         const res = await fetch("/api/wakatime");
         if (res.ok) {
           const json = (await res.json()) as WakaTimeData;
-          console.log("Editor status received data:", json);
+
           setData(json);
         } else {
           console.error("Failed to fetch WakaTime status:", res.statusText);
@@ -91,22 +91,22 @@ export function EditorStatus() {
             <span className="flex flex-wrap items-center gap-2 font-medium">
               {data.isOnline ? "Online" : "Offline"} in{" "}
               <Image
-                src="/assets/tech-icons/zed-light.svg"
-                alt="Zed"
+                src="/assets/tech-icons/cursor-light.svg"
+                alt="Cursor"
                 width={16}
                 height={16}
                 className="hidden dark:block"
                 unoptimized
               />
               <Image
-                src="/assets/tech-icons/zed-dark.svg"
-                alt="Zed"
+                src="/assets/tech-icons/cursor-dark.svg"
+                alt="Cursor"
                 width={16}
                 height={16}
                 className="block dark:hidden"
                 unoptimized
               />
-              Zed
+              Cursor
             </span>
           </div>
           <p className="text-xs text-muted-foreground">
