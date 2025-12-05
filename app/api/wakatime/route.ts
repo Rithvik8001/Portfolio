@@ -46,36 +46,29 @@ export async function GET() {
     const heartbeats = heartbeatsData.data || [];
 
     const fifteenMinutesAgo = Date.now() - 15 * 60 * 1000;
-    const lastHeartbeat =
-      heartbeats.length > 0 ? heartbeats[heartbeats.length - 1] : null;
 
     let isOnline = false;
-    let editor: string | null = null;
+    let lastZedHeartbeat = null;
 
-    if (lastHeartbeat) {
-      const lastHeartbeatTime = new Date(lastHeartbeat.time * 1000).getTime();
+    for (let i = heartbeats.length - 1; i >= 0; i--) {
+      const heartbeat = heartbeats[i];
+      if (heartbeat?.editor?.toLowerCase().includes("zed")) {
+        lastZedHeartbeat = heartbeat;
+        break;
+      }
+    }
+
+    if (lastZedHeartbeat) {
+      const lastHeartbeatTime = new Date(
+        lastZedHeartbeat.time * 1000
+      ).getTime();
+      const minutesAgo = Math.floor((Date.now() - lastHeartbeatTime) / 60000);
+
+      console.log("Last Zed heartbeat was", minutesAgo, "minutes ago");
 
       if (lastHeartbeatTime > fifteenMinutesAgo) {
         isOnline = true;
-        editor = lastHeartbeat.editor?.toLowerCase() || null;
       }
-    }
-
-    if (!editor && heartbeats.length > 0) {
-      const recentEditor = heartbeats[heartbeats.length - 1]?.editor;
-      editor = recentEditor?.toLowerCase() || null;
-
-      if (!editor) {
-        for (let i = heartbeats.length - 1; i >= 0; i--) {
-          if (heartbeats[i]?.editor) {
-            editor = heartbeats[i].editor.toLowerCase();
-            break;
-          }
-        }
-      }
-    }
-    if (!editor && isOnline) {
-      editor = "zed";
     }
 
     const yesterday = new Date();
@@ -109,18 +102,11 @@ export async function GET() {
 
     const yesterdayCodingTime = yesterdaySummary?.grand_total?.text || "0 mins";
     const todayCodingTime = todaySummary?.grand_total?.text || "0 mins";
-    const editorDisplayName = editor
-      ? editor.charAt(0).toUpperCase() + editor.slice(1)
-      : "Editor";
 
-    let editorType: "Zed" | null = null;
-    if (editor && (editor === "zed" || editor.includes("zed"))) {
-      editorType = "Zed";
-    }
     const responseData = {
       isOnline,
-      editor: editorType,
-      status: isOnline ? `Online in ${editorDisplayName}` : "Offline",
+      editor: "Zed" as const,
+      status: isOnline ? "Online in Zed" : "Offline",
       yesterdayCodingTime,
       todayCodingTime,
     };
