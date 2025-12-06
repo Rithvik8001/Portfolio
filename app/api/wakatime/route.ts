@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { USER } from "@/constants/user";
 
 export const runtime = "edge";
-const EDITOR_NAME = "Zed";
+const EDITOR_NAME = "Cursor";
 const EDITOR_NAME_LOWER = EDITOR_NAME.toLowerCase();
 
 function getDateInTimezone(timezone: string): string {
@@ -122,7 +122,7 @@ export async function GET() {
 
     const responseData = {
       isOnline,
-      editor: "Zed" as const,
+      editor: "Cursor" as const,
       status: isOnline ? `Online in ${EDITOR_NAME}` : "Offline",
       yesterdayCodingTime,
       todayCodingTime,
