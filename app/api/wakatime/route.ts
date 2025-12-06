@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { USER } from "@/constants/user";
 
 export const runtime = "edge";
-const EDITOR_NAME = "Cursor";
+const EDITOR_NAME = "Zed";
 const EDITOR_NAME_LOWER = EDITOR_NAME.toLowerCase();
 
 function getDateInTimezone(timezone: string): string {
@@ -109,26 +109,20 @@ export async function GET() {
     );
     const todaySummary = summariesData.data.find((d) => d.range.date === today);
 
-    const getEditorTime = (
+    const getTotalTime = (
       summary:
         | {
             grand_total: { text: string };
-            editors?: { name: string; text: string }[];
           }
         | undefined
-    ) => {
-      const editor = summary?.editors?.find(
-        (e) => e.name.toLowerCase() === EDITOR_NAME_LOWER
-      );
-      return editor?.text || "0 mins";
-    };
+    ) => summary?.grand_total?.text || "0 mins";
 
-    const yesterdayCodingTime = getEditorTime(yesterdaySummary);
-    const todayCodingTime = getEditorTime(todaySummary);
+    const yesterdayCodingTime = getTotalTime(yesterdaySummary);
+    const todayCodingTime = getTotalTime(todaySummary);
 
     const responseData = {
       isOnline,
-      editor: "Cursor" as const,
+      editor: "Zed" as const,
       status: isOnline ? `Online in ${EDITOR_NAME}` : "Offline",
       yesterdayCodingTime,
       todayCodingTime,
