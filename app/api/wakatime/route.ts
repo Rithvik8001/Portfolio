@@ -3,7 +3,6 @@ import { USER } from "@/constants/user";
 
 export const runtime = "edge";
 const EDITOR_NAME = "Cursor";
-const EDITOR_NAME_LOWER = EDITOR_NAME.toLowerCase();
 
 function getDateInTimezone(timezone: string): string {
   const now = new Date();
@@ -57,22 +56,17 @@ export async function GET() {
     const fifteenMinutesAgo = Date.now() - 15 * 60 * 1000;
 
     let isOnline = false;
-    let lastEditorHeartbeat: { time: number; editor?: string } | null = null;
 
-    for (let i = heartbeats.length - 1; i >= 0; i--) {
-      const heartbeat = heartbeats[i];
-      if (heartbeat?.editor?.toLowerCase().includes(EDITOR_NAME_LOWER)) {
-        lastEditorHeartbeat = heartbeat;
-        break;
-      }
-    }
-
-    if (lastEditorHeartbeat) {
-      const lastHeartbeatTime = new Date(
-        lastEditorHeartbeat.time * 1000
-      ).getTime();
-      if (lastHeartbeatTime > fifteenMinutesAgo) {
-        isOnline = true;
+    // Check if there's any heartbeat in the last 15 minutes
+    if (heartbeats.length > 0) {
+      const mostRecentHeartbeat = heartbeats[heartbeats.length - 1];
+      if (mostRecentHeartbeat) {
+        const lastHeartbeatTime = new Date(
+          mostRecentHeartbeat.time * 1000
+        ).getTime();
+        if (lastHeartbeatTime > fifteenMinutesAgo) {
+          isOnline = true;
+        }
       }
     }
 
