@@ -14,11 +14,11 @@ export const EXPERIENCES: Experience[] = [
         },
         employmentType: "Full-time",
         icon: "code",
-        description: `- Developed Restful API endpoints for user analytics dashboard using Node.js and Express, implementing pagination, filtering, and data aggregation logic that enabled real-time reporting and improved data retrieval performance.
-- Contributed to state management migration by implementing Redux Toolkit slices for critical features, optimizing data fetching with RTK Query, and reducing unnecessary re-renders by 15% in dashboard components.
-- Optimized MongoDB performance by writing aggregation pipelines for complex reporting queries and implementing compound indexes, reducing query execution time from 1.2s to 300ms for analytics endpoints.
-- Developed API integration layer with axios interceptors handling token refresh, request retries, and error recovery, improving reliability and user experience across frontend applications.`,
-        skills: ["Node.js", "Express", "Redux Toolkit", "MongoDB", "REST APIs"],
+        description: `- Built and maintained REST APIs for reporting/analytics workflows, implementing pagination, filtering, sorting, and aggregation to support dashboard use cases.
+- Optimized data access in MongoDB by refining aggregation pipelines (match early, projection trimming, stage ordering) and adding compound indexes aligned to query patterns to reduce slow queries and improve consistency under large datasets.
+- Implemented frontend data/state management using Redux Toolkit and RTK Query patterns (cache + invalidation + predictable loading/error handling) to keep UI data consistent and reduce repeated fetching across screens.
+- Built an API client layer with Axios interceptors to handle token refresh flow, normalize errors, and prevent repeated failure loops—improving session stability and reducing auth-related UI breakages.`,
+        skills: ["Node.js", "Express", "Redux Toolkit", "RTK Query", "MongoDB", "Axios", "REST APIs"],
         isExpanded: true,
       },
     ],
@@ -38,16 +38,16 @@ export const EXPERIENCES: Experience[] = [
         },
         employmentType: "Full-time",
         icon: "code",
-        description: `- Developed responsive React components using hooks and functional patterns, building reusable dashboard widgets and form components that improved development velocity by 30%.
-- Optimized React application performance by identifying and refactoring expensive rendering operations, implementing code splitting for route-based lazy loading, and reducing initial bundle size by 35%.
-- Built robust form validation system with real-time error handling and custom validation rules, improving data quality for critical user registration and data entry workflows.
-- Developed reusable UI component library including buttons, modals, and form inputs that were standardized across multiple projects, ensuring consistent user experience and faster feature development.`,
+        description: `- Built and maintained complex React dashboard pages with reusable component contracts (tables, filters, modals), emphasizing predictable props/state boundaries and maintainable composition patterns.
+- Improved perceived performance on data-heavy screens by profiling renders, minimizing unnecessary updates (memoization, stable props/selectors), and optimizing expensive UI computations during filtering/search.
+- Refactored legacy components to reduce state complexity and side effects, making behavior more predictable and lowering regression risk during feature changes.
+- Integrated analytics APIs into React dashboards with debounced filtering, request cancellation, and consistent loading/error/empty states to keep UI behavior predictable during rapid user interactions.`,
         skills: [
           "React",
-          "Hooks",
           "Performance Optimization",
-          "Form Validation",
-          "UI Components",
+          "Memoization",
+          "API Integration",
+          "Component Architecture",
         ],
       },
     ],
