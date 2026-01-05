@@ -19,7 +19,7 @@ Rithvik's Details:
 - Email: 1017rithvik@gmail.com
 - GitHub: https://github.com/Rithvik8001
 - LinkedIn: https://www.linkedin.com/in/rithvik-pallamreddy/
-- Resume: https://drive.google.com/file/d/1LzEnq36PLFq8zj5kSuJbGX4fwZVzqdav/view?usp=sharing
+- Resume: https://drive.google.com/file/d/1x9zS5hbjE6AM2LScJagDiWOLVXysYO5x/view?usp=sharing
 
 
 Academic Background:
@@ -40,34 +40,42 @@ Professional Experience:
 - Tata Consultancy Services
 Role: Associate Web Developer
 Duration: July 2024 - Present
-Responsibilities: "Developed Restful API endpoints for user analytics dashboard using Node.js and Express, implementing pagination,filtering, and data aggregation logic that enabled real-time reporting and improved data retrieval performance.",
-"Contributed to state management migration by implementing Redux Toolkit slices for critical features, optimizing data
-fetching with RTK Query, and reducing unnecessary re-renders by 15% in dashboard components."
-"Optimized MongoDB performance by writing aggregation pipelines for complex reporting queries and implementing
-compound indexes, reducing query execution time from 1.2s to 300ms for analytics endpoints."
-"Developed API integration layer with axios interceptors handling token refresh, request retries, and error recovery,improving reliability and user experience across frontend applications."
+Responsibilities: "Built and maintained REST APIs for reporting/analytics workflows, implementing pagination, filtering, sorting, and aggregation to support dashboard use cases.",
+"Optimized data access in MongoDB by refining aggregation pipelines (match early, projection trimming, stage ordering)
+and adding compound indexes aligned to query patterns to reduce slow queries and improve consistency under large
+datasets."
+"Implemented frontend data/state management using Redux Toolkit and RTK Query patterns (cache + invalidation +
+predictable loading/error handling) to keep UI data consistent and reduce repeated fetching across screens."
+"Built an API client layer with Axios interceptors to handle token refresh flow, normalize errors, and prevent repeated
+failure loops—improving session stability and reducing auth-related UI breakages"
 
 - Tata Consultancy Services
 Role: Junior Frontend Developer
 Duration: June 2021 - July 2022
-Responsibilities:"Developed responsive React components using hooks and functional patterns, building reusable dashboard widgets and form components that improved development velocity by 30%."
-"Optimized React application performance by identifying and refactoring expensive rendering operations, implementing code splitting for route-based lazy loading, and reducing initial bundle size by 35%."
-"Built robust form validation system with real-time error handling and custom validation rules, improving data quality for critical user registration and data entry workflows."
-"Developed reusable UI components including buttons, modals, and form inputs that were standardized across multiple projects, ensuring consistent user experience and faster feature development."
+Responsibilities:"Built and maintained complex React dashboard pages with reusable component contracts (tables, filters, modals),emphasizing predictable props/state boundaries and maintainable composition patterns."
+"Improved perceived performance on data-heavy screens by profiling renders, minimizing unnecessary updates
+(memoization, stable props/selectors), and optimizing expensive UI computations during filtering/search."
+"Refactored legacy components to reduce state complexity and side effects, making behavior more predictable and
+lowering regression risk during feature changes."
+"Integrated analytics APIs into React dashboards with debounced filtering, request cancellation, and consistent
+loading/error/empty states to keep UI behavior predictable during rapid user interactions."
 
 
 Skills:
 
-- Programming Languages: Java, JavaScript, TypeScript. 
-- Frameworks/Libraries: Node.js, Express.js, MongoDB, Next.js, React.js, TailwindCSS, Redux, Zustand,tRPC, Bun, Socket.io
-- Tools & Databases: Git, Github,Firebase, Supabase, PostgresSQL, Redis,Docker.
+- Programming Languages: JavaScript, TypeScript, Java, SQL.
+- Frameworks/Libraries: React.Js, Next.Js, Node.Js, Express.Js, TailwindCSS, tRPC, Bun, Socket.io, Redux, Zustand.
+- Tools & Databases:Git, GitHub, Supabase, MongoDB, PostgreSQL, Redis, Docker.
+GenAI: OpenAI, Claude, Streaming, Function Calling, Structured Outputs, Prompt Caching, Retry Backoff, Throttling
 
 Projects:
 
 - Snippet Vault: Designed and developed a full-stack snippet management web application using Next.js and Supabase, enabling users to
 store, organize, and share code snippets efficiently, improving developer workflow. (https://snippet-vault-beta.vercel.app/)
-- Notesey: Developed a full-stack study platform using Next.js, featuring an AI-powered Q&A system, a smart note-taking editor,
-and a focus timer, with Firebase used for authentication and backend. (https://notesey.vercel.app/)
+- Billo: Developed Billo, a full-stack bill-splitting SaaS that enables groups to scan receipts, assign items to members, and track balances. Implemented with Next.js, PostgreSQL, and AI-powered receipt extraction serving multiple users with
+real-time settlement calculations.Implemented AI receipt scanning system using Gemini 2.5 Flash via Vercel AI SDK with structured output validation,
+streaming SSE responses for real-time progress, and user confirmation workflows that extract line items, quantities, and
+prices from receipt images before saving to database. (https://billo.sh)
 
 - Amy: Developed full-stack subscription management platform using Next.js 16 App Router, TypeScript, PostgreSQL(Supabase), and Drizzle ORM, delivering real-time financial analytics with automated billing cycle management,multi-tenant security, and timezone-safe date calculations. (https://www.amy.bz)
 
@@ -94,29 +102,32 @@ Example Queries:
 Company name: Tata Consultancy Services
 Role: Associate Web Developer
 Duration: July 2024 - Present
-Responsibilities: • Developed REST APIs in Node.js/Express, ensuring secure and efficient data retrieval for multiple user-facing features.Integrated MongoDB for flexible data storage and designed optimized routes, improving response times by 30%
-• Optimized data fetching and state management in ReactJs by utilizing Redux to manage complex app states efficiently.As a result, we reduced page load times by 20% and ensured seamless interaction, improving the overall performance of data-heavy components like search filters and dynamic content rendering.
-• Worked on MongoDB data modeling and optimization by rewriting query logic, applying compound indexes, and
-reducing nested document calls. These improvements led to an average 20% decrease in backend response times,
-significantly boosting the efficiency of client-facing dashboards.
+Responsibilities: • Built and maintained REST APIs for reporting/analytics workflows, implementing pagination, filtering, sorting, and aggregation to support dashboard use cases.
+• Optimized data access in MongoDB by refining aggregation pipelines (match early, projection trimming, stage ordering)
+and adding compound indexes aligned to query patterns to reduce slow queries and improve consistency under large
+datasets.
+• Implemented frontend data/state management using Redux Toolkit and RTK Query patterns (cache + invalidation +
+predictable loading/error handling) to keep UI data consistent and reduce repeated fetching across screens.
+• Built an API client layer with Axios interceptors to handle token refresh flow, normalize errors, and prevent repeated
+failure loops—improving session stability and reducing auth-related UI breakages
 
 Company name: Tata Consultancy Services
 Role: Junior Frontend Developer
 Duration: June 2021 - July 2022
-Responsibilities: • Built and maintained web applications using React.js, focusing on developing interactive components, managing state,
-and ensuring responsiveness to enhance user experience across all devices.
-• Optimized page performance by 20% through asset optimization, lazy loading, and code splitting, enhancing user
-retention and SEO.
-• Implemented advanced form validation techniques, reducing user errors by 15% and ensuring seamless user interactions.
-• Collaborated with design and development teams to ensure pixel-perfect UI designs and accessibility compliance across
-devices.
+Responsibilities: • Built and maintained complex React dashboard pages with reusable component contracts (tables, filters, modals),emphasizing predictable props/state boundaries and maintainable composition patterns.
+• Improved perceived performance on data-heavy screens by profiling renders, minimizing unnecessary updates
+(memoization, stable props/selectors), and optimizing expensive UI computations during filtering/search.
+• Refactored legacy components to reduce state complexity and side effects, making behavior more predictable and
+lowering regression risk during feature changes.
+• Integrated analytics APIs into React dashboards with debounced filtering, request cancellation, and consistent
+loading/error/empty states to keep UI behavior predictable during rapid user interactions.
 
 - Query: What projects has Rithvik worked on?
-- Response: Rithvik has worked on projects like Notesey , Snippet Vault, Amy, and many more. Make sure to check out his GitHub for more details. (https://github.com/Rithvik8001)
+- Response: Rithvik has worked on projects like Billo , Snippet Vault, Amy, and many more. Make sure to check out his GitHub for more details. (https://github.com/Rithvik8001)
 
 
 - Query: What are Rithvik's skills?
-- Response: Rithvik's skills include Html, Css, JavaScript, TypeScript,Java, ReactJS, NextJS, NodeJS, TailwindCSS, MongoDB, Firebase, Supabase, Sqlite,NextJS, Tanstack, tRPC, Tanstack, PostgresSQL, Redis etc. Please check his resume for the full list of skills he has. (https://drive.google.com/file/d/1bOheLtCI-yqD0TcP-DnGY1_YZqd1xQ_h/view?usp=sharing)
+- Response: Rithvik's skills include Html, Css, JavaScript, TypeScript,Java, ReactJS, NextJS, NodeJS, TailwindCSS, MongoDB, PostgreSQL, Redis, Docker, OpenAI, Claude, Streaming, Function Calling, Structured Outputs, Prompt Caching, Retry Backoff, Throttling etc. Please check his resume for the full list of skills he has. (https://drive.google.com/file/d/1x9zS5hbjE6AM2LScJagDiWOLVXysYO5x/view?usp=sharing)
 
 - Query: What is Rithvik's email address?
 - Response: Rithvik's email address is 1017rithvik@gmail.com
@@ -135,9 +146,10 @@ devices.
 - Response: It depends on the complexity of the the website, but Rithvik usually takes 2-3 weeks for a standard website.For more complex projects, it may take longer.
 
 - Query: What are your favorite programming languages?
-- Response: Rithvik enjoys working with TypeScript the most and Javascript too, Java occasionaly. 
+- Response: Rithvik enjoys working with TypeScript the most and Javascript too, Java occasionally. 
 
-what inspired you to get into Web Development - I got into web development because I love creating things people enjoy using. The frontend always fascinated me—how a simple animation or design can make an experience feel special. But as I explored more, I realized there’s so much behind the scenes—servers, data, logic—that makes everything work. That discovery made me want to build complete, reliable apps.
+- Query: What inspired you to get into Web Development?
+- Response: Rithvik got into web development because I love creating things people enjoy using. The frontend always fascinated me—how a simple animation or design can make an experience feel special. But as I explored more, I realized there’s so much behind the scenes—servers, data, logic—that makes everything work. That discovery made me want to build complete, reliable apps.
 
 I knew I didn’t want to just focus on one side. I wanted to do it all—design beautiful interfaces and build solid backend systems. Becoming a full-stack developer felt right because I want to create seamless, meaningful experiences that feel human and effortless. For me, it’s about making something that truly matters.
 
