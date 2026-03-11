@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { USER } from "@/constants/user";
 
 export const runtime = "edge";
-const EDITOR_NAME = "Cursor";
+const EDITOR_NAME = "VSCode";
 
 function getDateInTimezone(timezone: string): string {
   const now = new Date();
@@ -27,7 +27,7 @@ export async function GET() {
   if (!apiKey) {
     return NextResponse.json(
       { error: "WakaTime API key not configured" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 
@@ -39,12 +39,12 @@ export async function GET() {
     const today = getDateInTimezone(USER.timeZone);
     const heartbeatsRes = await fetch(
       `https://wakatime.com/api/v1/users/current/heartbeats?date=${today}`,
-      { headers }
+      { headers },
     );
 
     if (!heartbeatsRes.ok) {
       throw new Error(
-        `WakaTime Heartbeats API error: ${heartbeatsRes.statusText}`
+        `WakaTime Heartbeats API error: ${heartbeatsRes.statusText}`,
       );
     }
 
@@ -62,7 +62,7 @@ export async function GET() {
       const mostRecentHeartbeat = heartbeats[heartbeats.length - 1];
       if (mostRecentHeartbeat) {
         const lastHeartbeatTime = new Date(
-          mostRecentHeartbeat.time * 1000
+          mostRecentHeartbeat.time * 1000,
         ).getTime();
         if (lastHeartbeatTime > fifteenMinutesAgo) {
           isOnline = true;
@@ -81,12 +81,12 @@ export async function GET() {
 
     const summariesRes = await fetch(
       `https://wakatime.com/api/v1/users/current/summaries?start=${yesterdayStr}&end=${today}`,
-      { headers }
+      { headers },
     );
 
     if (!summariesRes.ok) {
       throw new Error(
-        `WakaTime Summaries API error: ${summariesRes.statusText}`
+        `WakaTime Summaries API error: ${summariesRes.statusText}`,
       );
     }
 
@@ -99,7 +99,7 @@ export async function GET() {
     };
 
     const yesterdaySummary = summariesData.data.find(
-      (d) => d.range.date === yesterdayStr
+      (d) => d.range.date === yesterdayStr,
     );
     const todaySummary = summariesData.data.find((d) => d.range.date === today);
 
@@ -108,7 +108,7 @@ export async function GET() {
         | {
             grand_total: { text: string };
           }
-        | undefined
+        | undefined,
     ) => summary?.grand_total?.text || "0 mins";
 
     const yesterdayCodingTime = getTotalTime(yesterdaySummary);
@@ -116,7 +116,7 @@ export async function GET() {
 
     const responseData = {
       isOnline,
-      editor: "Cursor" as const,
+      editor: EDITOR_NAME as "VSCode",
       status: isOnline ? `Online in ${EDITOR_NAME}` : "Offline",
       yesterdayCodingTime,
       todayCodingTime,
@@ -127,7 +127,7 @@ export async function GET() {
 
     return NextResponse.json(
       { error: "Failed to fetch WakaTime data" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -14,7 +14,7 @@ import Image from "next/image";
 
 type WakaTimeData = {
   isOnline: boolean;
-  editor: "Cursor" | null;
+  editor: "VSCode" | null;
   status: string;
   yesterdayCodingTime: string;
   todayCodingTime: string;
@@ -54,7 +54,7 @@ export function EditorStatus() {
         <div
           className={cn(
             "size-full rounded-full border border-white/10",
-            "bg-zinc-500"
+            "bg-zinc-500",
           )}
         />
       </div>
@@ -68,7 +68,7 @@ export function EditorStatus() {
             <div
               className={cn(
                 "size-full rounded-full border border-white/10",
-                data.isOnline ? "bg-emerald-500" : "bg-zinc-500"
+                data.isOnline ? "bg-emerald-500" : "bg-zinc-500",
               )}
             />
             {data.isOnline && (
@@ -85,28 +85,19 @@ export function EditorStatus() {
             <div
               className={cn(
                 "size-2 rounded-full",
-                data.isOnline ? "bg-emerald-500" : "bg-zinc-500"
+                data.isOnline ? "bg-emerald-500" : "bg-zinc-500",
               )}
             />
             <span className="flex flex-wrap items-center gap-2 font-medium">
               {data.isOnline ? "Online" : "Offline"} in{" "}
               <Image
-                src="/assets/tech-icons/cursor-light.svg"
-                alt="Cursor"
+                src="/assets/tech-icons/vs-code.svg"
+                alt="VSCode"
                 width={16}
                 height={16}
-                className="hidden dark:block"
                 unoptimized
               />
-              <Image
-                src="/assets/tech-icons/cursor-dark.svg"
-                alt="Cursor"
-                width={16}
-                height={16}
-                className="block dark:hidden"
-                unoptimized
-              />
-              Cursor
+              VSCode
             </span>
           </div>
           <p className="text-xs text-muted-foreground">

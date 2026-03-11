@@ -30,11 +30,11 @@ export const TECH_STACK: TechStack[] = [
     theme: false,
   },
   {
-    key: "cursor",
-    title: "Favorite AI code editor of choice: Cursor",
-    href: "https://cursor.sh",
-    categories: ["Editor", "AI"],
-    theme: true,
+    key: "vs-code",
+    title: "Tried many editors but this is the OG: VSCode",
+    href: "https://code.visualstudio.com/",
+    categories: ["Editor"],
+    theme: false,
   },
   {
     key: "neovim",
