@@ -1,5 +1,5 @@
 import { aboutMe } from "@/lib/utils";
-import { google } from "@ai-sdk/google";
+import { openai } from "@ai-sdk/openai";
 import { convertToModelMessages, streamText, type UIMessage } from "ai";
 
 export const maxDuration = 30;
@@ -10,9 +10,9 @@ export async function POST(req: Request) {
     const { messages } = body as { messages: UIMessage[] };
 
     const result = streamText({
-      model: google("gemini-2.5-flash"),
+      model: openai.chat("gpt-5.4-nano"),
       system: aboutMe(),
-      messages: convertToModelMessages(messages),
+      messages: await convertToModelMessages(messages),
     });
 
     return result.toUIMessageStreamResponse();
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       {
         status: 500,
         headers: { "Content-Type": "application/json" },
-      }
+      },
     );
   }
 }

@@ -2,23 +2,16 @@ import { TechStack } from "@/types";
 
 export const TECH_STACK: TechStack[] = [
   {
-    key: "dia",
-    title: "Preferred browser: Dia",
-    href: "https://diabrowser.com",
-    categories: ["Browser", "AI"],
+    key: "chrome",
+    title: "Preferred browser: Chrome",
+    href: "https://www.google.com/chrome",
+    categories: ["Browser"],
     theme: false,
   },
   {
     key: "raycast",
     title: "First thing I install on a new mac: Raycast",
     href: "https://www.raycast.com",
-    categories: ["Productivity", "Tools"],
-    theme: false,
-  },
-  {
-    key: "craft",
-    title: "Preferred note-taking app: Craft",
-    href: "https://craft.do",
     categories: ["Productivity", "Tools"],
     theme: false,
   },
@@ -52,9 +45,9 @@ export const TECH_STACK: TechStack[] = [
     theme: false,
   },
   {
-    key: "spotify",
-    title: "Favorite Music Streaming Service: Spotify",
-    href: "https://www.spotify.com",
+    key: "apple-music-icon",
+    title: "Favorite Music Streaming Service: Apple Music",
+    href: "https://www.apple.com/apple-music",
     categories: ["Apps", "Music"],
     theme: false,
   },

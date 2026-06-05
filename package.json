@@ -9,7 +9,8 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^2.0.44",
-    "@ai-sdk/react": "^2.0.104",
+    "@ai-sdk/openai": "^3.0.68",
+    "@ai-sdk/react": "^3.0.199",
     "@bprogress/next": "^3.2.12",
     "@c15t/nextjs": "^1.8.1",
     "@date-fns/tz": "^1.4.1",
@@ -17,7 +18,7 @@
     "@toolwind/corner-shape": "^0.0.8-3",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
-    "ai": "^5.0.104",
+    "ai": "^6.0.197",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",

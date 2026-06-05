@@ -57,12 +57,12 @@
   --animate-fade-in: fade-in var(--tw-duration, 200ms) ease-out;
   --animate-fade-out: fade-out var(--tw-duration, 200ms) ease-out;
 
-  --animate-collapsible-fade-down: collapsible-down var(--tw-duration, 200ms)
-      ease-out,
+  --animate-collapsible-fade-down:
+    collapsible-down var(--tw-duration, 200ms) ease-out,
     fade-in var(--tw-duration, 200ms) ease-out;
 
-  --animate-collapsible-fade-up: collapsible-up var(--tw-duration, 200ms)
-      ease-out,
+  --animate-collapsible-fade-up:
+    collapsible-up var(--tw-duration, 200ms) ease-out,
     fade-out var(--tw-duration, 200ms) ease-out;
 
   @keyframes fade-in {
@@ -508,20 +508,27 @@
   --scroll-buffer: 2rem;
 
   /* Set up the mask layers */
-  mask-image: linear-gradient(to top, transparent, var(--foreground) 90%),
+  mask-image:
+    linear-gradient(to top, transparent, var(--foreground) 90%),
     linear-gradient(to bottom, transparent 0%, var(--foreground) 100%),
     linear-gradient(var(--background), var(--background));
 
-  mask-size: 100% var(--top-mask-height), 100% var(--bottom-mask-height),
+  mask-size:
+    100% var(--top-mask-height),
+    100% var(--bottom-mask-height),
     100% 100%;
   mask-repeat: no-repeat, no-repeat, no-repeat;
-  mask-position: 0 0, 0 100%, 0 0;
+  mask-position:
+    0 0,
+    0 100%,
+    0 0;
   /* Exclude the gradient areas from the solid mask */
   mask-composite: exclude;
 
   animation-name: show-top-mask, hide-bottom-mask;
   animation-timeline: scroll(self), scroll(self);
-  animation-range: 0 var(--scroll-buffer),
+  animation-range:
+    0 var(--scroll-buffer),
     calc(100% - var(--scroll-buffer)) 100%;
   animation-fill-mode: both;
 }
@@ -532,20 +539,26 @@
   --mask-offset-right: 0px;
   --scroll-buffer: 2rem;
 
-  mask-image: linear-gradient(to left, transparent, var(--foreground) 90%),
+  mask-image:
+    linear-gradient(to left, transparent, var(--foreground) 90%),
     linear-gradient(to right, transparent 0%, var(--foreground) 100%),
     linear-gradient(var(--background), var(--background));
 
-  mask-size: var(--left-mask-width) 100%, var(--right-mask-width) 100%,
+  mask-size:
+    var(--left-mask-width) 100%,
+    var(--right-mask-width) 100%,
     100% 100%;
   mask-repeat: no-repeat, no-repeat, no-repeat;
-  mask-position: var(--mask-offset-left) 0,
-    calc(100% - var(--mask-offset-right)) 0, 0 0;
+  mask-position:
+    var(--mask-offset-left) 0,
+    calc(100% - var(--mask-offset-right)) 0,
+    0 0;
   mask-composite: exclude;
 
   animation-name: show-left-mask, hide-right-mask;
   animation-timeline: scroll(self inline), scroll(self inline);
-  animation-range: 0 var(--scroll-buffer),
+  animation-range:
+    0 var(--scroll-buffer),
     calc(100% - var(--scroll-buffer)) 100%;
   animation-fill-mode: both;
 }

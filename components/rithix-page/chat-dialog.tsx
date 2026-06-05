@@ -64,7 +64,7 @@ export function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
       className={cn(
         "fixed right-4 bottom-20 z-50 w-full max-w-[400px] rounded-2xl bg-popover shadow-popover ring ring-popover-border transition-all duration-200",
         "animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-4",
-        "md:right-6"
+        "md:right-6",
       )}
     >
       {/* Header */}

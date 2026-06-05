@@ -3,7 +3,6 @@ import { ProseMono } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import SectionSeparator from "@/components/ui/section-separator";
-import { SpotifyNowPlaying } from "@/components/about-page/spotify-now-playing";
 import { TechStack } from "@/components/about-page/tech-stack";
 import { Beliefs } from "@/components/about-page/beliefs";
 import { BucketList } from "@/components/about-page/bucket-list";
@@ -21,7 +20,7 @@ export default function Page() {
           "h-8 px-2",
           "screen-line-after",
           "before:absolute before:-left-[100vw] before:-z-1 before:h-full before:w-[200vw]",
-          "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-edge)]/56"
+          "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-edge)]/56",
         )}
       />
       <div className="min-h-svh">
@@ -74,8 +73,6 @@ export default function Page() {
             </ProseMono>
           </PanelContent>
         </Panel>
-        <SectionSeparator />
-        <SpotifyNowPlaying />
         <SectionSeparator />
         <TechStack />
         <SectionSeparator />
