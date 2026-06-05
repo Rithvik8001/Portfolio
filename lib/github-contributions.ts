@@ -6,7 +6,7 @@ export async function getGitHubContributions() {
   const res = await fetch(
     `https://github-contributions-api.jogruber.de/v4/${USER.github}?y=${year}`,
     {
-      cache: "no-store",
+      next: { revalidate: 3600 },
     },
   );
 

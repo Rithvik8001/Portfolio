@@ -10,6 +10,16 @@ import { BucketList } from "@/components/about-page/bucket-list";
 export const metadata: Metadata = {
   title: "About me",
   description: "All about me, my background, skills, and interests.",
+  openGraph: {
+    title: "About — Rithvik Pallamreddy",
+    description: "All about me, my background, skills, and interests.",
+    url: "https://rithvikpallamreddy.com/about",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About — Rithvik Pallamreddy",
+    description: "All about me, my background, skills, and interests.",
+  },
 };
 
 export default function Page() {

@@ -4,7 +4,7 @@ import {
   IBM_Plex_Sans as FontSans,
 } from "next/font/google";
 import "./globals.css";
-import ConstentManagerWrapper from "@/components/wrappers/constent-manager-wrapper";
+import ConsentManagerWrapper from "@/components/wrappers/consent-manager-wrapper";
 import { LoaderWrapper } from "@/components/wrappers/loader-wrapper";
 import { ThemeProvider } from "next-themes";
 import { AppProgressProvider } from "@bprogress/next";
@@ -32,12 +32,15 @@ const fontMono = FontMono({
 
 export const metadata: Metadata = {
   title: "Rithvik's Portfolio",
-  description: "My Personal Portfolio",
+  description: "Full Stack Engineer",
   keywords: [
-    "Rithvik's Portfolio",
+    "Rithvik Pallamreddy",
     "Portfolio",
-    "Full Stack Developer",
+    "Full Stack Engineer",
     "Web Developer",
+    "Next.js",
+    "React",
+    "TypeScript",
   ],
   authors: [
     {
@@ -45,10 +48,24 @@ export const metadata: Metadata = {
       url: "https://rithvikpallamreddy.com",
     },
   ],
+  metadataBase: new URL("https://rithvikpallamreddy.com"),
+  openGraph: {
+    title: "Rithvik Pallamreddy — Full Stack Engineer",
+    description: "Full Stack Engineer",
+    url: "https://rithvikpallamreddy.com",
+    siteName: "Rithvik's Portfolio",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rithvik Pallamreddy — Full Stack Engineer",
+    description: "Full Stack Engineer",
+    creator: "@Rithvik_1017",
+  },
   icons: {
-    icon: "/img.jpeg",
-    shortcut: "/img.jpeg",
-    apple: "/img.jpeg",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
 };
 
@@ -72,14 +89,14 @@ export default function RootLayout({
         >
           <AppProgressWrapper>
             <LoaderWrapper>
-              <ConstentManagerWrapper>
+              <ConsentManagerWrapper>
                 <SiteHeader />
                 <main className="max-w-screen overflow-x-hidden px-2">
                   {children}
                 </main>
                 <Footer />
                 <ScrollToTop />
-              </ConstentManagerWrapper>
+              </ConsentManagerWrapper>
             </LoaderWrapper>
           </AppProgressWrapper>
           <ToasterWrapper />

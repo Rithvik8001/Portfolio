@@ -101,7 +101,11 @@ export function EditorStatus() {
             </span>
           </div>
           <p className="text-xs text-muted-foreground">
-            Yesterday Worked for{" "}
+            Today{" "}
+            <span className="font-medium">{data.todayCodingTime}</span>
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Yesterday{" "}
             <span className="font-medium">{data.yesterdayCodingTime}</span>
           </p>
         </TooltipContent>

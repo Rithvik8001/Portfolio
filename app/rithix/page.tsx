@@ -7,6 +7,18 @@ export const metadata: Metadata = {
   title: "Rithix ⚡️",
   description:
     "Chat with my AI assistant to learn more about my work and experience.",
+  openGraph: {
+    title: "Rithix ⚡️ — Rithvik Pallamreddy",
+    description:
+      "Chat with my AI assistant to learn more about my work and experience.",
+    url: "https://rithvikpallamreddy.com/rithix",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rithix ⚡️ — Rithvik Pallamreddy",
+    description:
+      "Chat with my AI assistant to learn more about my work and experience.",
+  },
 };
 
 export default function Page() {
@@ -17,7 +29,7 @@ export default function Page() {
           "h-8 px-2",
           "screen-line-after",
           "before:absolute before:-left-[100vw] before:-z-1 before:h-full before:w-[200vw]",
-          "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-edge)]/56"
+          "before:bg-[repeating-linear-gradient(315deg,var(--pattern-foreground)_0,var(--pattern-foreground)_1px,transparent_0,transparent_50%)] before:bg-size-[10px_10px] before:[--pattern-foreground:var(--color-edge)]/56",
         )}
       />
       <div className="min-h-svh">
