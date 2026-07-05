@@ -2,9 +2,9 @@ import { TechStack } from "@/types";
 
 export const TECH_STACK: TechStack[] = [
   {
-    key: "chrome",
-    title: "Preferred browser: Chrome",
-    href: "https://www.google.com/chrome",
+    key: "dia",
+    title: "Preferred browser: Dia",
+    href: "https://www.diabrowser.com/",
     categories: ["Browser"],
     theme: false,
   },
@@ -23,20 +23,12 @@ export const TECH_STACK: TechStack[] = [
     theme: false,
   },
   {
-    key: "vs-code",
-    title: "Tried many editors but this is the OG: VSCode",
-    href: "https://code.visualstudio.com/",
+    key: "cursor",
+    title: "Tried many editors but this is the OG: Cursor",
+    href: "https://cursor.com/",
     categories: ["Editor"],
     theme: false,
   },
-  {
-    key: "neovim",
-    title: "I use Vim by the way: Neovim",
-    href: "https://neovim.io/",
-    categories: ["Editor"],
-    theme: false,
-  },
-
   {
     key: "ghostty",
     title: "Favorite Terminal: Ghostty",

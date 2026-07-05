@@ -86,13 +86,6 @@ export const SKILLS: Skill[] = [
     categories: ["State Management"],
   },
   {
-    key: "tanstack",
-    title: "TanStack",
-    href: "https://tanstack.com/",
-    categories: ["Library"],
-    theme: true,
-  },
-  {
     key: "trpc",
     title: "tRPC",
     href: "https://trpc.io/",

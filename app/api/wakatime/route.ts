@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { USER } from "@/constants/user";
 
 export const runtime = "edge";
-const EDITOR_NAME = "VSCode";
+const EDITOR_NAME = "Cursor";
 
 function getDateInTimezone(timezone: string): string {
   const now = new Date();
@@ -116,7 +116,7 @@ export async function GET() {
 
     const responseData = {
       isOnline,
-      editor: EDITOR_NAME as "VSCode",
+      editor: EDITOR_NAME as "Cursor",
       status: isOnline ? `Online in ${EDITOR_NAME}` : "Offline",
       yesterdayCodingTime,
       todayCodingTime,

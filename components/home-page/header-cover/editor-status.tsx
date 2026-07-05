@@ -14,7 +14,7 @@ import Image from "next/image";
 
 type WakaTimeData = {
   isOnline: boolean;
-  editor: "VSCode" | null;
+  editor: "Cursor" | null;
   status: string;
   yesterdayCodingTime: string;
   todayCodingTime: string;
@@ -91,13 +91,13 @@ export function EditorStatus() {
             <span className="flex flex-wrap items-center gap-2 font-medium">
               {data.isOnline ? "Online" : "Offline"} in{" "}
               <Image
-                src="/assets/tech-icons/vs-code.svg"
-                alt="VSCode"
+                src="/assets/tech-icons/cursor.svg"
+                alt="Cursor"
                 width={16}
                 height={16}
                 unoptimized
               />
-              VSCode
+              Cursor
             </span>
           </div>
           <p className="text-xs text-muted-foreground">
