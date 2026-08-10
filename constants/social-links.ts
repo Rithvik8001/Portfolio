@@ -4,8 +4,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     icon: "/assets/social-icons/x.webp",
     title: "X (Formerly Twitter)",
-    description: "@Rithvik_1017",
-    href: "https://x.com/Rithvik_1017",
+    description: "@rithvik_reddy10",
+    href: "https://x.com/rithvik_reddy10",
   },
   {
     icon: "/assets/social-icons/github.webp",
