@@ -9,6 +9,7 @@ import {
 } from "ai";
 
 import { SYSTEM_PROMPT } from "@/lib/chat-prompt";
+import { getPostHogServer, readAnalyticsHeaders } from "@/lib/posthog-server";
 
 export const maxDuration = 30;
 
@@ -34,6 +35,17 @@ function countTextChars(messages: UIMessage[]) {
 }
 
 export async function POST(req: Request) {
+  const posthog = getPostHogServer();
+  const { distinctId, sessionId } = readAnalyticsHeaders(req);
+
+  const capture = (event: string, properties: Record<string, unknown>) => {
+    posthog?.capture({
+      distinctId,
+      event,
+      properties: { ...properties, $session_id: sessionId },
+    });
+  };
+
   let messages: UIMessage[];
 
   try {
@@ -41,7 +53,8 @@ export async function POST(req: Request) {
     messages = await validateUIMessages({
       messages: (body as { messages?: unknown })?.messages,
     });
-  } catch {
+  } catch (error) {
+    posthog?.captureException(error, distinctId, { route: "/api/chat" });
     return badRequest("Invalid request body.");
   }
 
@@ -50,8 +63,15 @@ export async function POST(req: Request) {
   }
 
   if (countTextChars(messages) > MAX_INPUT_CHARS) {
+    capture("chat_request_rejected", { reason: "conversation_too_long" });
     return badRequest("Conversation is too long. Start a new chat.");
   }
+
+  capture("chat_completion_requested", {
+    model: MODEL,
+    turn: messages.length,
+    input_chars: countTextChars(messages),
+  });
 
   const result = streamText({
     model: openai.chat(MODEL),
@@ -74,6 +94,7 @@ export async function POST(req: Request) {
       sendReasoning: false,
       onError: (error) => {
         console.error("[chat] stream error:", error);
+        posthog?.captureException(error, distinctId, { route: "/api/chat" });
         return STREAM_ERROR_MESSAGE;
       },
     }),

@@ -13,6 +13,8 @@ import { Icons } from "@/components/ui/icons";
 import { addQueryParams } from "@/lib/utils";
 import { UTM_PARAMS } from "@/constants/utm-params";
 import { Markdown } from "@/components/ui/markdown";
+import { TrackedLink } from "@/components/analytics/tracked-link";
+import { ANALYTICS_EVENTS } from "@/lib/analytics";
 
 export function ProjectItem({
   className,
@@ -41,7 +43,9 @@ export function ProjectItem({
               </div>
 
               <SimpleTooltip content="Open Project Link">
-                <a
+                <TrackedLink
+                  event={ANALYTICS_EVENTS.projectLinkOpened}
+                  eventProperties={{ project: project.title }}
                   className="relative flex size-6 shrink-0 items-center justify-center text-muted-foreground after:absolute after:-inset-2 hover:text-foreground"
                   href={addQueryParams(project.link, UTM_PARAMS)}
                   target="_blank"
@@ -49,7 +53,7 @@ export function ProjectItem({
                 >
                   <LinkIcon className="pointer-events-none size-4" />
                   <span className="sr-only">Open Project Link</span>
-                </a>
+                </TrackedLink>
               </SimpleTooltip>
 
               <div

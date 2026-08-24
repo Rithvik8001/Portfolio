@@ -2,10 +2,14 @@ import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SocialLink } from "@/types";
+import { TrackedLink } from "@/components/analytics/tracked-link";
+import { ANALYTICS_EVENTS } from "@/lib/analytics";
 
 export function SocialLinkItem({ icon, title, description, href }: SocialLink) {
   return (
-    <a
+    <TrackedLink
+      event={ANALYTICS_EVENTS.socialLinkClicked}
+      eventProperties={{ platform: title }}
       className={cn(
         "group/link flex cursor-pointer items-center gap-4 p-4 pr-2 transition-colors select-none hover:bg-accent2",
         "max-sm:screen-line-before max-sm:screen-line-after",
@@ -39,6 +43,6 @@ export function SocialLinkItem({ icon, title, description, href }: SocialLink) {
       </div>
 
       <ArrowUpRightIcon className="size-4 text-muted-foreground" />
-    </a>
+    </TrackedLink>
   );
 }

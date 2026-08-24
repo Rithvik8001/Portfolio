@@ -4,6 +4,7 @@ import { TypeIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import { copyText } from "@/lib/utils";
+import { captureEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
 import { RithvikMark, getMarkSVG } from "./rithvik-mark";
 import { getWordmarkSVG } from "./rithvik-wordmark";
 import {
@@ -25,6 +26,7 @@ export function BrandContextMenu({ children }: { children: React.ReactNode }) {
           onClick={() => {
             const svg = getMarkSVG(resolvedTheme === "light" ? "#000" : "#fff");
             copyText(svg);
+            captureEvent(ANALYTICS_EVENTS.brandAssetCopied, { asset: "mark" });
             toast.success("Copied Mark as SVG");
           }}
         >
@@ -37,6 +39,7 @@ export function BrandContextMenu({ children }: { children: React.ReactNode }) {
               resolvedTheme === "light" ? "#000" : "#fff"
             );
             copyText(svg);
+            captureEvent(ANALYTICS_EVENTS.brandAssetCopied, { asset: "wordmark" });
             toast.success("Copied Logotype as SVG");
           }}
         >

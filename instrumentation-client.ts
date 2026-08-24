@@ -1,10 +1,19 @@
 import posthog from "posthog-js";
 
-posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
-  api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
-  ui_host: process.env.NEXT_PUBLIC_POSTHOG_UI_HOST,
-  defaults: "2025-05-24",
-  cookieless_mode: "on_reject",
-});
+import {
+  POSTHOG_HOST,
+  POSTHOG_MISSING_TOKEN_MESSAGE,
+  POSTHOG_TOKEN,
+  POSTHOG_UI_HOST,
+} from "@/lib/posthog-env";
 
-posthog.has_opted_out_capturing();
+if (POSTHOG_TOKEN) {
+  posthog.init(POSTHOG_TOKEN, {
+    api_host: POSTHOG_HOST,
+    ui_host: POSTHOG_UI_HOST,
+    defaults: "2025-05-24",
+    cookieless_mode: "on_reject",
+  });
+} else if (process.env.NODE_ENV === "development") {
+  throw new Error(POSTHOG_MISSING_TOKEN_MESSAGE);
+}

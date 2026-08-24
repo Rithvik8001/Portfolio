@@ -8,6 +8,12 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { USER } from "@/constants/user";
+import {
+  ANALYTICS_EVENTS,
+  captureError,
+  captureEvent,
+  getAnalyticsContext,
+} from "@/lib/analytics";
 import { Input } from "@/components/ui/input";
 
 import { ChatMessage } from "./chat-message";
@@ -24,7 +30,21 @@ export function ChatInterface() {
   const { messages, sendMessage, status } = useChat({
     transport: new DefaultChatTransport({
       api: "/api/chat",
+      headers: (): Record<string, string> => {
+        const context = getAnalyticsContext();
+        if (!context) return {};
+        return {
+          "x-posthog-distinct-id": context.distinctId,
+          "x-posthog-session-id": context.sessionId ?? "",
+        };
+      },
     }),
+    onError: (error) => {
+      captureError(error, { surface: "rithix_chat" });
+    },
+    onFinish: () => {
+      captureEvent(ANALYTICS_EVENTS.chatResponseReceived);
+    },
   });
 
   const messagesContainerRef = React.useRef<HTMLDivElement>(null);
@@ -43,6 +63,10 @@ export function ChatInterface() {
   const handleSend = (text: string) => {
     if (!text.trim()) return;
 
+    captureEvent(ANALYTICS_EVENTS.chatMessageSent, {
+      length: text.length,
+      turn: messages.length + 1,
+    });
     sendMessage({ text });
     setInput("");
   };
@@ -53,6 +77,7 @@ export function ChatInterface() {
   };
 
   const handleQuickQuestion = (question: string) => {
+    captureEvent(ANALYTICS_EVENTS.chatQuickQuestionClicked, { question });
     handleSend(question);
   };
 

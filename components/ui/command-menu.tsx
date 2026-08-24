@@ -29,6 +29,7 @@ import {
 // import { SOCIAL_LINKS } from "@/features/portfolio/data/social-links";
 import { useSound } from "@/hooks/use-sound";
 import { cn, copyText } from "@/lib/utils";
+import { captureEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
 import { RithvikMark, getMarkSVG } from "./rithvik-mark";
 import { getWordmarkSVG } from "./rithvik-wordmark";
 import { Icons } from "./icons";
@@ -126,7 +127,14 @@ export function CommandMenu() {
           }
 
           e.preventDefault();
-          setOpen((open) => !open);
+          setOpen((open) => {
+            if (!open) {
+              captureEvent(ANALYTICS_EVENTS.commandMenuOpened, {
+                source: "shortcut",
+              });
+            }
+            return !open;
+          });
         }
       },
       { signal }
@@ -137,6 +145,10 @@ export function CommandMenu() {
 
   const handleOpenLink = useCallback(
     (href: string, openInNewTab = false) => {
+      captureEvent(ANALYTICS_EVENTS.commandMenuItemSelected, { href });
+      if (href === "/api/vcard") {
+        captureEvent(ANALYTICS_EVENTS.vcardDownloaded, { source: "command_menu" });
+      }
       setOpen(false);
 
       if (openInNewTab) {
@@ -175,7 +187,10 @@ export function CommandMenu() {
       <Button
         variant="secondary"
         className="h-8 gap-1.5 rounded-full border border-input bg-white px-2.5 text-muted-foreground shadow-xs select-none hover:bg-white dark:bg-input/30 dark:hover:bg-input/30"
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          captureEvent(ANALYTICS_EVENTS.commandMenuOpened, { source: "button" });
+          setOpen(true);
+        }}
       >
         <Icons.search aria-hidden />
 

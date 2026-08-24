@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useSound } from "@/hooks/use-sound";
+import { captureEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
 import { MoonIcon } from "../animated-icons/moon";
 import { SunMediumIcon } from "../animated-icons/sun-medium";
 import { Button } from "./button";
@@ -13,8 +14,10 @@ export function ThemeToggle() {
   const playClick = useSound("/audio/ui-sounds/click.wav");
 
   const switchTheme = useCallback(() => {
+    const next = resolvedTheme === "dark" ? "light" : "dark";
     playClick();
-    setTheme(resolvedTheme === "dark" ? "light" : "dark");
+    captureEvent(ANALYTICS_EVENTS.themeChanged, { theme: next });
+    setTheme(next);
   }, [resolvedTheme, setTheme, playClick]);
 
   return (
