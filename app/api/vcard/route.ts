@@ -1,9 +1,19 @@
+import { readFile } from "node:fs/promises";
+import path from "node:path";
+
 import { NextResponse } from "next/server";
-import sharp from "sharp";
 import VCard from "vcard-creator";
+
 import { USER } from "@/constants/user";
 
 export const dynamic = "force-static";
+
+const PHOTO_TYPES: Record<string, string> = {
+  ".jpg": "jpeg",
+  ".jpeg": "jpeg",
+  ".png": "png",
+  ".gif": "gif",
+};
 
 export async function GET() {
   const card = new VCard();
@@ -14,10 +24,10 @@ export async function GET() {
     .addEmail(USER.email)
     .addURL(USER.website);
 
-  const photo = await getVCardPhoto(USER.avatar);
+  const photo = await readAvatar(USER.avatar);
 
   if (photo) {
-    card.addPhoto(photo.image, photo.mine);
+    card.addPhoto(photo.base64, photo.type);
   }
 
   return new NextResponse(card.toString(), {
@@ -29,49 +39,19 @@ export async function GET() {
   });
 }
 
-async function getVCardPhoto(url: string) {
-  try {
-    const res = await fetch(url);
+async function readAvatar(src: string) {
+  const type = PHOTO_TYPES[path.extname(src).toLowerCase()];
 
-    if (!res.ok) {
-      return null;
-    }
-
-    const buffer = Buffer.from(await res.arrayBuffer());
-    if (buffer.length === 0) {
-      return null;
-    }
-
-    const contentType = res.headers.get("Content-Type") || "";
-    if (!contentType.startsWith("image/")) {
-      return null;
-    }
-
-    const jpegBuffer = await convertImageToJpeg(buffer);
-    const image = jpegBuffer.toString("base64");
-
-    return {
-      image,
-      mine: "jpeg",
-    };
-  } catch {
+  if (!type) {
+    console.error(`[vcard] unsupported avatar format: ${src}`);
     return null;
   }
-}
 
-async function convertImageToJpeg(imageBuffer: Buffer): Promise<Buffer> {
   try {
-    const jpegBuffer = await sharp(imageBuffer)
-      .jpeg({
-        quality: 90,
-        progressive: true,
-        mozjpeg: true,
-      })
-      .toBuffer();
-
-    return jpegBuffer;
+    const file = await readFile(path.join(process.cwd(), "public", src));
+    return { base64: file.toString("base64"), type };
   } catch (error) {
-    console.error("Error converting image to JPEG:", error);
-    throw error;
+    console.error("[vcard] could not read avatar:", error);
+    return null;
   }
 }
