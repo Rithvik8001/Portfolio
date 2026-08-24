@@ -5,7 +5,6 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import ConsentManagerWrapper from "@/components/wrappers/consent-manager-wrapper";
-import { LoaderWrapper } from "@/components/wrappers/loader-wrapper";
 import { ThemeProvider } from "next-themes";
 import { AppProgressProvider } from "@bprogress/next";
 import { Analytics } from "@vercel/analytics/next";
@@ -88,16 +87,14 @@ export default function RootLayout({
           attribute="class"
         >
           <AppProgressWrapper>
-            <LoaderWrapper>
-              <ConsentManagerWrapper>
-                <SiteHeader />
-                <main className="max-w-screen overflow-x-hidden px-2">
-                  {children}
-                </main>
-                <Footer />
-                <ScrollToTop />
-              </ConsentManagerWrapper>
-            </LoaderWrapper>
+            <ConsentManagerWrapper>
+              <SiteHeader />
+              <main className="max-w-screen overflow-x-hidden px-2">
+                {children}
+              </main>
+              <Footer />
+              <ScrollToTop />
+            </ConsentManagerWrapper>
           </AppProgressWrapper>
           <ToasterWrapper />
           <Analytics />

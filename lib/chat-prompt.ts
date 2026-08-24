@@ -16,6 +16,7 @@ Rithvik's Details:
 - GitHub: https://github.com/Rithvik8001
 - LinkedIn: https://www.linkedin.com/in/rithvik-pallamreddy/
 - Resume: https://drive.google.com/file/d/1x9zS5hbjE6AM2LScJagDiWOLVXysYO5x/view?usp=sharing
+- X(Twitter): https://x.com/rithvik1907
 
 
 Academic Background:

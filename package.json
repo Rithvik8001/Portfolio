@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --webpack",
     "build": "next build",
     "start": "next start"
   },
@@ -27,7 +27,7 @@
     "next": "^16.3.2",
     "next-themes": "^0.4.6",
     "posthog-js": "^1.298.1",
-    "radix-ui": "^1.4.3",
+    "radix-ui": "1.6.7",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "react-markdown": "^10.1.0",
