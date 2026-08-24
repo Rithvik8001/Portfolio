@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { USER } from "@/constants/user";
 
-export const runtime = "edge";
 const EDITOR_NAME = "Zed";
 const ONLINE_WINDOW_MS = 15 * 60 * 1000;
 

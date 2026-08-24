@@ -1,29 +1,81 @@
-import { aboutMe } from "@/lib/utils";
 import { openai } from "@ai-sdk/openai";
-import { convertToModelMessages, streamText, type UIMessage } from "ai";
+import {
+  convertToModelMessages,
+  createUIMessageStreamResponse,
+  streamText,
+  toUIMessageStream,
+  validateUIMessages,
+  type UIMessage,
+} from "ai";
+
+import { SYSTEM_PROMPT } from "@/lib/chat-prompt";
 
 export const maxDuration = 30;
 
+const MODEL = "gpt-5-nano";
+const MAX_MESSAGES = 24;
+const MAX_INPUT_CHARS = 12_000;
+const MAX_OUTPUT_TOKENS = 800;
+const STREAM_ERROR_MESSAGE =
+  "Something went wrong generating that reply. Please try again.";
+
+function badRequest(message: string) {
+  return Response.json({ error: message }, { status: 400 });
+}
+
+function countTextChars(messages: UIMessage[]) {
+  let total = 0;
+  for (const message of messages) {
+    for (const part of message.parts) {
+      if (part.type === "text") total += part.text.length;
+    }
+  }
+  return total;
+}
+
 export async function POST(req: Request) {
+  let messages: UIMessage[];
+
   try {
     const body = await req.json();
-    const { messages } = body as { messages: UIMessage[] };
-
-    const result = streamText({
-      model: openai.chat("gpt-5.4-nano"),
-      system: aboutMe(),
-      messages: await convertToModelMessages(messages),
+    messages = await validateUIMessages({
+      messages: (body as { messages?: unknown })?.messages,
     });
-
-    return result.toUIMessageStreamResponse();
-  } catch (error) {
-    console.error("Chat API error:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to process chat request" }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      },
-    );
+  } catch {
+    return badRequest("Invalid request body.");
   }
+
+  if (messages.length > MAX_MESSAGES) {
+    messages = messages.slice(-MAX_MESSAGES);
+  }
+
+  if (countTextChars(messages) > MAX_INPUT_CHARS) {
+    return badRequest("Conversation is too long. Start a new chat.");
+  }
+
+  const result = streamText({
+    model: openai.chat(MODEL),
+    instructions: SYSTEM_PROMPT,
+    messages: await convertToModelMessages(messages),
+    abortSignal: req.signal,
+    maxOutputTokens: MAX_OUTPUT_TOKENS,
+    providerOptions: {
+      openai: {
+        reasoningEffort: "minimal",
+        textVerbosity: "low",
+        promptCacheKey: "rithix-system-v1",
+      },
+    },
+  });
+
+  return createUIMessageStreamResponse({
+    stream: toUIMessageStream({
+      stream: result.stream,
+      sendReasoning: false,
+      onError: (error) => {
+        console.error("[chat] stream error:", error);
+        return STREAM_ERROR_MESSAGE;
+      },
+    }),
+  });
 }

@@ -2,14 +2,14 @@ import Link from "next/link";
 import React from "react";
 
 import { cn } from "@/lib/utils";
-import type { NavItem } from "@/types";
+import type { NavItem as NavItemType } from "@/types";
 
 export function Nav({
   items,
   activeId,
   className,
 }: {
-  items: NavItem[];
+  items: NavItemType[];
   activeId?: string;
   className?: string;
 }) {
