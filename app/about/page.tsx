@@ -8,18 +8,24 @@ import { Beliefs } from "@/components/about-page/beliefs";
 import { BucketList } from "@/components/about-page/bucket-list";
 
 export const metadata: Metadata = {
-  title: "About me",
-  description: "All about me, my background, skills, and interests.",
+  title: "About",
+  description:
+    "How Rithvik Pallamreddy got into full stack development, the tools he uses daily, what he believes about building software, and what is on his bucket list.",
+  alternates: {
+    canonical: "/about",
+  },
   openGraph: {
     title: "About — Rithvik Pallamreddy",
-    description: "All about me, my background, skills, and interests.",
-    url: "https://rithvikpallamreddy.com/about",
+    description:
+      "How Rithvik Pallamreddy got into full stack development, the tools he uses daily, what he believes about building software, and what is on his bucket list.",
+    url: "/about",
   },
   twitter: {
     card: "summary_large_image",
     creator: "@rithvik1907",
     title: "About — Rithvik Pallamreddy",
-    description: "All about me, my background, skills, and interests.",
+    description:
+      "How Rithvik Pallamreddy got into full stack development, the tools he uses daily, what he believes about building software, and what is on his bucket list.",
   },
 };
 

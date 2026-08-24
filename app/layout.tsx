@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import {
   IBM_Plex_Mono as FontMono,
   IBM_Plex_Sans as FontSans,
+  Source_Serif_4 as FontSerif,
 } from "next/font/google";
 import "./globals.css";
 import ConsentManagerWrapper from "@/components/wrappers/consent-manager-wrapper";
@@ -14,12 +15,21 @@ import AppProgressWrapper from "@/components/wrappers/app-progress-wrapper";
 import { SiteHeader } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { personSchema, websiteSchema } from "@/lib/structured-data";
 
 const fontSans = FontSans({
   weight: ["400", "500", "600"],
   display: "swap",
   subsets: ["latin"],
   variable: "--font-sans",
+});
+
+const fontSerif = FontSerif({
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-serif",
 });
 
 const fontMono = FontMono({
@@ -30,8 +40,12 @@ const fontMono = FontMono({
 });
 
 export const metadata: Metadata = {
-  title: "Rithvik's Portfolio",
-  description: "Full Stack Engineer",
+  title: {
+    default: "Rithvik Pallamreddy — Full Stack Engineer",
+    template: "%s | Rithvik Pallamreddy",
+  },
+  description:
+    "Rithvik Pallamreddy is a full stack engineer in Louisville, KY, building web apps with Next.js, React, and TypeScript. See his projects, experience and stack.",
   keywords: [
     "Rithvik Pallamreddy",
     "Portfolio",
@@ -48,9 +62,13 @@ export const metadata: Metadata = {
     },
   ],
   metadataBase: new URL("https://rithvikpallamreddy.com"),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "Rithvik Pallamreddy — Full Stack Engineer",
-    description: "Full Stack Engineer",
+    description:
+      "Full stack engineer in Louisville, KY. Building web apps with Next.js, React and TypeScript.",
     url: "https://rithvikpallamreddy.com",
     siteName: "Rithvik's Portfolio",
     type: "website",
@@ -58,13 +76,9 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Rithvik Pallamreddy — Full Stack Engineer",
-    description: "Full Stack Engineer",
+    description:
+      "Full stack engineer in Louisville, KY. Building web apps with Next.js, React and TypeScript.",
     creator: "@rithvik1907",
-  },
-  icons: {
-    icon: "/icon.png",
-    shortcut: "/icon.png",
-    apple: "/icon.png",
   },
 };
 
@@ -76,8 +90,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fontSans.variable} ${fontMono.variable} ${fontSans.className} antialiased overflow-x-hidden`}
+        className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontSans.className} antialiased overflow-x-hidden`}
       >
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([personSchema(), websiteSchema()]),
+          }}
+        />
         <ThemeProvider
           enableSystem
           disableTransitionOnChange

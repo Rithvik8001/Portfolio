@@ -4,21 +4,24 @@ import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Rithix ⚡️",
+  title: "Rithix ⚡️ — My AI Assistant",
   description:
-    "Chat with my AI assistant to learn more about my work and experience.",
+    "Chat with Rithix, Rithvik Pallamreddy's AI assistant. Ask about his projects, experience, tech stack, and availability for full stack engineering work.",
+  alternates: {
+    canonical: "/rithix",
+  },
   openGraph: {
     title: "Rithix ⚡️ — Rithvik Pallamreddy",
     description:
-      "Chat with my AI assistant to learn more about my work and experience.",
-    url: "https://rithvikpallamreddy.com/rithix",
+      "Chat with Rithix, Rithvik Pallamreddy's AI assistant. Ask about his projects, experience, tech stack, and availability for full stack engineering work.",
+    url: "/rithix",
   },
   twitter: {
     card: "summary_large_image",
     creator: "@rithvik1907",
     title: "Rithix ⚡️ — Rithvik Pallamreddy",
     description:
-      "Chat with my AI assistant to learn more about my work and experience.",
+      "Chat with Rithix, Rithvik Pallamreddy's AI assistant. Ask about his projects, experience, tech stack, and availability for full stack engineering work.",
   },
 };
 

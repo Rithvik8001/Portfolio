@@ -15,7 +15,7 @@ export const maxDuration = 30;
 const MODEL = "gpt-5-nano";
 const MAX_MESSAGES = 24;
 const MAX_INPUT_CHARS = 12_000;
-const MAX_OUTPUT_TOKENS = 800;
+const MAX_OUTPUT_TOKENS = 1200;
 const STREAM_ERROR_MESSAGE =
   "Something went wrong generating that reply. Please try again.";
 
@@ -62,7 +62,7 @@ export async function POST(req: Request) {
     providerOptions: {
       openai: {
         reasoningEffort: "minimal",
-        textVerbosity: "low",
+        textVerbosity: "medium",
         promptCacheKey: "rithix-system-v1",
       },
     },
