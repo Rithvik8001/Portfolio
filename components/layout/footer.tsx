@@ -10,7 +10,7 @@ export function Footer() {
           Built by{" "}
           <a
             className="link"
-            href="https://x.com/Rithvik_1017"
+            href="https://x.com/rithvik1907"
             target="_blank"
             rel="noopener"
           >

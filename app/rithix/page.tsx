@@ -15,6 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
+    creator: "@rithvik1907",
     title: "Rithix ⚡️ — Rithvik Pallamreddy",
     description:
       "Chat with my AI assistant to learn more about my work and experience.",

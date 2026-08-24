@@ -60,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Rithvik Pallamreddy — Full Stack Engineer",
     description: "Full Stack Engineer",
-    creator: "@Rithvik_1017",
+    creator: "@rithvik1907",
   },
   icons: {
     icon: "/icon.png",
