@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import { Icons } from "@/components/ui/icons";
 
 import {
   Tooltip,
@@ -10,11 +11,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import Image from "next/image";
 
 type WakaTimeData = {
   isOnline: boolean;
-  editor: "Cursor" | null;
+  editor: "Zed" | null;
   status: string;
   yesterdayCodingTime: string;
   todayCodingTime: string;
@@ -90,19 +90,12 @@ export function EditorStatus() {
             />
             <span className="flex flex-wrap items-center gap-2 font-medium">
               {data.isOnline ? "Online" : "Offline"} in{" "}
-              <Image
-                src="/assets/tech-icons/cursor.svg"
-                alt="Cursor"
-                width={16}
-                height={16}
-                unoptimized
-              />
-              Cursor
+              <Icons.zed className="size-4" aria-hidden />
+              Zed
             </span>
           </div>
           <p className="text-xs text-muted-foreground">
-            Today{" "}
-            <span className="font-medium">{data.todayCodingTime}</span>
+            Today <span className="font-medium">{data.todayCodingTime}</span>
           </p>
           <p className="text-xs text-muted-foreground">
             Yesterday{" "}

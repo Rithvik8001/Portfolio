@@ -11,7 +11,16 @@ import {
 type IconProps = React.HTMLAttributes<SVGElement>;
 
 export const Icons = {
-  // Source: https://simpleicons.org
+  zed: (props: IconProps) => (
+    <svg viewBox="0 0 96 96" {...props}>
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M9 6a3 3 0 0 0-3 3v66H0V9a9 9 0 0 1 9-9h80.379c4.009 0 6.016 4.847 3.182 7.682L43.055 57.187H57V51h6v7.688a4.5 4.5 0 0 1-4.5 4.5H37.055L26.743 73.5H73.5V36h6v37.5a6 6 0 0 1-6 6H20.743L10.243 90H87a3 3 0 0 0 3-3V21h6v66a9 9 0 0 1-9 9H6.621c-4.009 0-6.016-4.847-3.182-7.682L52.757 39H39v6h-6v-7.5a4.5 4.5 0 0 1 4.5-4.5h21.257l10.5-10.5H22.5V60h-6V22.5a6 6 0 0 1 6-6h52.757L85.757 6H9Z"
+        fill="currentColor"
+      />
+    </svg>
+  ),
   json: (props: IconProps) => (
     <svg viewBox="0 0 24 24" {...props}>
       <path
@@ -96,9 +105,6 @@ export const Icons = {
     <svg viewBox="0 0 24 24" {...props}>
       <path d="m12 3 10 17H2L12 3Z" fill="currentColor" />
     </svg>
-    // <svg viewBox="0 0 24 24" {...props}>
-    //   <path d="m12 1.608 12 20.784H0Z" fill="currentColor" />
-    // </svg>
   ),
   meta: (props: IconProps) => (
     <svg viewBox="0 0 24 24" {...props}>
@@ -123,12 +129,6 @@ export const Icons = {
         fill="currentColor"
       />
     </svg>
-    // <svg viewBox="0 0 24 24" {...props}>
-    //   <path
-    //     d="M0 0v11.408h11.408V0zm12.594 0v11.408H24V0zM0 12.594V24h11.408V12.594zm12.594 0V24H24V12.594z"
-    //     fill="currentColor"
-    //   />
-    // </svg>
   ),
   accenture: (props: IconProps) => (
     <svg viewBox="0 0 24 24" {...props}>
@@ -137,12 +137,6 @@ export const Icons = {
         fill="currentColor"
       />
     </svg>
-    // <svg viewBox="0 0 24 24" {...props}>
-    //   <path
-    //     d="m.66 16.95 13.242-4.926L.66 6.852V0l22.68 9.132v5.682L.66 24Z"
-    //     fill="currentColor"
-    //   />
-    // </svg>
   ),
   coursera: (props: IconProps) => (
     <svg viewBox="0 0 24 24" {...props}>
@@ -280,7 +274,6 @@ export const Icons = {
     </svg>
   ),
 
-  // Source: https://ui.shadcn.com
   contrast: (props: IconProps) => (
     <svg
       viewBox="0 0 24 24"

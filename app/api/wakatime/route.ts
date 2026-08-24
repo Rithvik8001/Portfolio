@@ -2,16 +2,16 @@ import { NextResponse } from "next/server";
 import { USER } from "@/constants/user";
 
 export const runtime = "edge";
-const EDITOR_NAME = "Cursor";
+const EDITOR_NAME = "Zed";
+const ONLINE_WINDOW_MS = 15 * 60 * 1000;
 
-function getDateInTimezone(timezone: string): string {
-  const now = new Date();
+function getDateInTimezone(timezone: string, date: Date = new Date()): string {
   return new Intl.DateTimeFormat("en-CA", {
     timeZone: timezone,
     year: "numeric",
     month: "2-digit",
     day: "2-digit",
-  }).format(now);
+  }).format(date);
 }
 
 export async function GET() {
@@ -37,52 +37,26 @@ export async function GET() {
 
   try {
     const today = getDateInTimezone(USER.timeZone);
-    const heartbeatsRes = await fetch(
-      `https://wakatime.com/api/v1/users/current/heartbeats?date=${today}`,
-      { headers },
+    const yesterday = getDateInTimezone(
+      USER.timeZone,
+      new Date(Date.now() - 24 * 60 * 60 * 1000),
     );
 
-    if (!heartbeatsRes.ok) {
+    const [userAgentsRes, summariesRes] = await Promise.all([
+      fetch("https://wakatime.com/api/v1/users/current/user_agents", {
+        headers,
+      }),
+      fetch(
+        `https://wakatime.com/api/v1/users/current/summaries?start=${yesterday}&end=${today}`,
+        { headers },
+      ),
+    ]);
+
+    if (!userAgentsRes.ok) {
       throw new Error(
-        `WakaTime Heartbeats API error: ${heartbeatsRes.statusText}`,
+        `WakaTime User Agents API error: ${userAgentsRes.statusText}`,
       );
     }
-
-    const heartbeatsData = (await heartbeatsRes.json()) as {
-      data: { time: number; editor?: string }[];
-    };
-    const heartbeats = heartbeatsData.data || [];
-
-    const fifteenMinutesAgo = Date.now() - 15 * 60 * 1000;
-
-    let isOnline = false;
-
-    // Check if there's any heartbeat in the last 15 minutes
-    if (heartbeats.length > 0) {
-      const mostRecentHeartbeat = heartbeats[heartbeats.length - 1];
-      if (mostRecentHeartbeat) {
-        const lastHeartbeatTime = new Date(
-          mostRecentHeartbeat.time * 1000,
-        ).getTime();
-        if (lastHeartbeatTime > fifteenMinutesAgo) {
-          isOnline = true;
-        }
-      }
-    }
-
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = new Intl.DateTimeFormat("en-CA", {
-      timeZone: USER.timeZone,
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    }).format(yesterday);
-
-    const summariesRes = await fetch(
-      `https://wakatime.com/api/v1/users/current/summaries?start=${yesterdayStr}&end=${today}`,
-      { headers },
-    );
 
     if (!summariesRes.ok) {
       throw new Error(
@@ -90,36 +64,38 @@ export async function GET() {
       );
     }
 
+    const userAgentsData = (await userAgentsRes.json()) as {
+      data: { editor?: string | null; last_seen_at?: string | null }[];
+    };
+
+    const lastSeenInEditor = (userAgentsData.data || [])
+      .filter((agent) => agent.editor === EDITOR_NAME && agent.last_seen_at)
+      .reduce((latest, agent) => {
+        const seenAt = Date.parse(agent.last_seen_at as string);
+        return Number.isNaN(seenAt) ? latest : Math.max(latest, seenAt);
+      }, 0);
+
+    const isOnline = lastSeenInEditor > Date.now() - ONLINE_WINDOW_MS;
+
     const summariesData = (await summariesRes.json()) as {
       data: {
-        grand_total: { text: string };
         editors?: { name: string; text: string }[];
         range: { date: string };
       }[];
     };
 
-    const yesterdaySummary = summariesData.data.find(
-      (d) => d.range.date === yesterdayStr,
-    );
-    const todaySummary = summariesData.data.find((d) => d.range.date === today);
-
-    const getTotalTime = (
-      summary:
-        | {
-            grand_total: { text: string };
-          }
-        | undefined,
-    ) => summary?.grand_total?.text || "0 mins";
-
-    const yesterdayCodingTime = getTotalTime(yesterdaySummary);
-    const todayCodingTime = getTotalTime(todaySummary);
+    const getEditorTime = (date: string) =>
+      summariesData.data
+        .find((summary) => summary.range.date === date)
+        ?.editors?.find((editor) => editor.name === EDITOR_NAME)?.text ??
+      "0 mins";
 
     const responseData = {
       isOnline,
-      editor: EDITOR_NAME as "Cursor",
+      editor: EDITOR_NAME as "Zed",
       status: isOnline ? `Online in ${EDITOR_NAME}` : "Offline",
-      yesterdayCodingTime,
-      todayCodingTime,
+      yesterdayCodingTime: getEditorTime(yesterday),
+      todayCodingTime: getEditorTime(today),
     };
     return NextResponse.json(responseData);
   } catch (error) {

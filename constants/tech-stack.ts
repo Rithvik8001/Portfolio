@@ -23,11 +23,11 @@ export const TECH_STACK: TechStack[] = [
     theme: false,
   },
   {
-    key: "cursor",
-    title: "Tried many editors but this is the OG: Cursor",
-    href: "https://cursor.com/",
+    key: "zed",
+    title: "Tried many editors but this is the OG: Zed",
+    href: "https://zed.dev/",
     categories: ["Editor"],
-    theme: false,
+    theme: true,
   },
   {
     key: "ghostty",
