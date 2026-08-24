@@ -9,16 +9,21 @@ import { SunMediumIcon } from "../animated-icons/sun-medium";
 import { Button } from "./button";
 
 export function ThemeToggle() {
-  const { resolvedTheme, setTheme } = useTheme();
+  const { resolvedTheme, systemTheme, setTheme } = useTheme();
 
   const playClick = useSound("/audio/ui-sounds/click.wav");
 
   const switchTheme = useCallback(() => {
     const next = resolvedTheme === "dark" ? "light" : "dark";
+    const shouldFollowSystem = next === systemTheme;
+
     playClick();
-    captureEvent(ANALYTICS_EVENTS.themeChanged, { theme: next });
-    setTheme(next);
-  }, [resolvedTheme, setTheme, playClick]);
+    captureEvent(ANALYTICS_EVENTS.themeChanged, {
+      theme: next,
+      follows_system: shouldFollowSystem,
+    });
+    setTheme(shouldFollowSystem ? "system" : next);
+  }, [resolvedTheme, systemTheme, setTheme, playClick]);
 
   return (
     <Button variant="ghost" size="icon" onClick={switchTheme}>

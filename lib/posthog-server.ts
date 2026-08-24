@@ -1,7 +1,7 @@
 import { PostHog } from "posthog-node";
 
 import {
-  POSTHOG_HOST,
+  POSTHOG_UPSTREAM_HOST,
   POSTHOG_MISSING_TOKEN_MESSAGE,
   POSTHOG_TOKEN,
 } from "@/lib/posthog-env";
@@ -20,7 +20,7 @@ export function getPostHogServer() {
 
   if (!client) {
     client = new PostHog(key, {
-      host: POSTHOG_HOST,
+      host: POSTHOG_UPSTREAM_HOST,
       flushAt: 1,
       flushInterval: 0,
     });

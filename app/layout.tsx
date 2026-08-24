@@ -92,12 +92,14 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontSans.className} antialiased overflow-x-hidden`}
       >
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify([personSchema(), websiteSchema()]),
-          }}
-        />
+        <div hidden>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify([personSchema(), websiteSchema()]),
+            }}
+          />
+        </div>
         <ThemeProvider
           enableSystem
           disableTransitionOnChange
