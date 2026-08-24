@@ -45,6 +45,7 @@ export const TECH_STACK: TechStack[] = [
   },
   {
     key: "cleanshot",
+    ext: "webp",
     title: "Favorite Screenshot Tool: CleanShot X",
     href: "https://cleanshot.com",
     categories: ["Tools", "Productivity"],

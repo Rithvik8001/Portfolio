@@ -31,7 +31,7 @@ export function Skills() {
                 {tech.theme ? (
                   <>
                     <Image
-                      src={`/assets/tech-icons/${tech.key}-light.svg`}
+                      src={`/assets/tech-icons/${tech.key}-light.${tech.ext ?? "svg"}`}
                       alt={`${tech.title} light icon`}
                       width={32}
                       height={32}
@@ -39,7 +39,7 @@ export function Skills() {
                       unoptimized
                     />
                     <Image
-                      src={`/assets/tech-icons/${tech.key}-dark.svg`}
+                      src={`/assets/tech-icons/${tech.key}-dark.${tech.ext ?? "svg"}`}
                       alt={`${tech.title} dark icon`}
                       width={32}
                       height={32}
@@ -52,7 +52,7 @@ export function Skills() {
                     {index === 0 ? (
                       /* Debug: Use standard img tag for first item */
                       <img
-                        src={`/assets/tech-icons/${tech.key}.svg`}
+                        src={`/assets/tech-icons/${tech.key}.${tech.ext ?? "svg"}`}
                         alt={`${tech.title} icon`}
                         width={32}
                         height={32}
@@ -60,7 +60,7 @@ export function Skills() {
                       />
                     ) : (
                       <Image
-                        src={`/assets/tech-icons/${tech.key}.svg`}
+                        src={`/assets/tech-icons/${tech.key}.${tech.ext ?? "svg"}`}
                         alt={`${tech.title} icon`}
                         width={32}
                         height={32}

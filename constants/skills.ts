@@ -81,6 +81,7 @@ export const SKILLS: Skill[] = [
   },
   {
     key: "zustand",
+    ext: "webp",
     title: "Zustand",
     href: "https://zustand.docs.pmnd.rs/",
     categories: ["State Management"],

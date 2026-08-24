@@ -41,6 +41,7 @@ export type Skill = {
   href: string;
   categories: string[];
   theme?: boolean;
+  ext?: string;
 };
 
 export type GitHubContributionsResponse = {
@@ -52,11 +53,7 @@ export type GitHubContributionsResponse = {
 };
 
 export type ExperiencePositionIcon =
-  | "code"
-  | "design"
-  | "education"
-  | "business"
-  | "idea";
+  "code" | "design" | "education" | "business" | "idea";
 
 export type ExperiencePosition = {
   id: string;
@@ -106,6 +103,7 @@ export type TechStack = {
   href: string;
   categories: string[];
   theme?: boolean;
+  ext?: string;
 };
 
 export type BucketList = {

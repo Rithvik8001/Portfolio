@@ -142,7 +142,7 @@ loading/error/empty states to keep UI behavior predictable during rapid user int
 - Response: It depends on the complexity of the the website, but Rithvik usually takes 2-3 weeks for a standard website.For more complex projects, it may take longer.
 
 - Query: What are your favorite programming languages?
-- Response: Rithvik enjoys working with TypeScript the most and Javascript too, Java occasionally. 
+- Response: Rithvik enjoys working with TypeScript the most and Javascript too, Java occasionally.
 
 - Query: What inspired you to get into Web Development?
 - Response: Rithvik got into web development because I love creating things people enjoy using. The frontend always fascinated me—how a simple animation or design can make an experience feel special. But as I explored more, I realized there’s so much behind the scenes—servers, data, logic—that makes everything work. That discovery made me want to build complete, reliable apps.
