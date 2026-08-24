@@ -95,6 +95,16 @@ export function CommandMenu() {
   const { setTheme, resolvedTheme } = useTheme();
 
   const [open, setOpen] = useState(false);
+  const [isMac, setIsMac] = useState(false);
+
+  useEffect(() => {
+    const platform =
+      (navigator as Navigator & { userAgentData?: { platform?: string } })
+        .userAgentData?.platform ??
+      navigator.platform ??
+      "";
+    setIsMac(/mac/i.test(platform) || /mac/i.test(navigator.userAgent));
+  }, []);
 
   const playClick = useSound("/audio/ui-sounds/click.wav");
 
@@ -173,11 +183,8 @@ export function CommandMenu() {
           Search
         </span>
 
-        <CommandMenuKbd className="hidden tracking-wider sm:in-[.os-macos_&]:flex">
-          ⌘K
-        </CommandMenuKbd>
-        <CommandMenuKbd className="hidden sm:not-[.os-macos_&]:flex">
-          Ctrl K
+        <CommandMenuKbd className="hidden tracking-wider sm:flex">
+          {isMac ? "⌘K" : "Ctrl K"}
         </CommandMenuKbd>
       </Button>
 

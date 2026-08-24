@@ -3,9 +3,11 @@
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
 import { SendIcon } from "lucide-react";
+import Image from "next/image";
 import * as React from "react";
 
 import { Button } from "@/components/ui/button";
+import { USER } from "@/constants/user";
 import { Input } from "@/components/ui/input";
 
 import { ChatMessage } from "./chat-message";
@@ -68,18 +70,24 @@ export function ChatInterface() {
               role="assistant"
               content="Hello! I'm Rithix ⚡, Rithvik's Portfolio Assistant. How can I help you?"
               avatar={
-                <div className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-                  R
-                </div>
+                <Image
+                  src={USER.avatar}
+                  alt={`${USER.fullName} avatar`}
+                  width={32}
+                  height={32}
+                  className="size-8 rounded-full object-cover ring-1 ring-border"
+                  loading="eager"
+                  unoptimized
+                />
               }
             />
             <div className="flex flex-col gap-2">
               <p className="text-xs text-muted-foreground">Quick questions:</p>
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-3">
+              <div className="flex flex-wrap gap-2">
                 {QUICK_QUESTIONS.map((question, index) => (
                   <button
                     key={index}
-                    className="rounded-lg border border-input bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                    className="max-w-full truncate rounded-full border border-input bg-background px-4 py-1.5 text-xs whitespace-nowrap transition-colors hover:bg-accent hover:text-accent-foreground"
                     onClick={() => handleQuickQuestion(question)}
                     disabled={isLoading}
                   >
@@ -111,9 +119,15 @@ export function ChatInterface() {
                   })}
                   avatar={
                     message.role === "assistant" ? (
-                      <div className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-                        R
-                      </div>
+                      <Image
+                  src={USER.avatar}
+                  alt={`${USER.fullName} avatar`}
+                  width={32}
+                  height={32}
+                  className="size-8 rounded-full object-cover ring-1 ring-border"
+                  loading="eager"
+                  unoptimized
+                />
                     ) : undefined
                   }
                 />

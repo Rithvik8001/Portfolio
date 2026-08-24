@@ -1,8 +1,10 @@
 "use client";
 
 import { SendIcon, XIcon } from "lucide-react";
+import Image from "next/image";
 import * as React from "react";
 import { Button } from "@/components/ui/button";
+import { USER } from "@/constants/user";
 import { cn } from "@/lib/utils";
 import { ChatMessage } from "./chat-message";
 import { useChat } from "@ai-sdk/react";
@@ -71,9 +73,15 @@ export function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
       <div className="flex items-center justify-between border-b border-border p-4">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="flex size-10 items-center justify-center rounded-full bg-primary text-lg font-semibold text-primary-foreground">
-              R
-            </div>
+            <Image
+              src={USER.avatar}
+              alt={`${USER.fullName} avatar`}
+              width={40}
+              height={40}
+              className="size-10 rounded-full object-cover ring-1 ring-border"
+              loading="eager"
+              unoptimized
+            />
             <div className="absolute right-0 bottom-0 size-3 rounded-full bg-success ring-2 ring-popover" />
           </div>
           <div>
@@ -103,9 +111,15 @@ export function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
               role="assistant"
               content="Hello! I'm Rithvik's Portfolio Assistant. How can I help you?"
               avatar={
-                <div className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-                  R
-                </div>
+                <Image
+                  src={USER.avatar}
+                  alt={`${USER.fullName} avatar`}
+                  width={32}
+                  height={32}
+                  className="size-8 rounded-full object-cover ring-1 ring-border"
+                  loading="eager"
+                  unoptimized
+                />
               }
             />
 
@@ -115,7 +129,7 @@ export function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
               {QUICK_QUESTIONS.map((question, index) => (
                 <button
                   key={index}
-                  className="rounded-lg border border-input bg-background px-3 py-2 text-left text-sm transition-colors hover:bg-accent hover:text-accent-foreground"
+                  className="max-w-full truncate rounded-full border border-input bg-background px-4 py-1.5 text-xs whitespace-nowrap transition-colors hover:bg-accent hover:text-accent-foreground"
                   onClick={() => handleQuickQuestion(question)}
                   disabled={isLoading}
                 >
@@ -146,9 +160,15 @@ export function ChatDialog({ isOpen, onClose }: ChatDialogProps) {
                   })}
                   avatar={
                     message.role === "assistant" ? (
-                      <div className="flex size-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-primary-foreground">
-                        R
-                      </div>
+                      <Image
+                  src={USER.avatar}
+                  alt={`${USER.fullName} avatar`}
+                  width={32}
+                  height={32}
+                  className="size-8 rounded-full object-cover ring-1 ring-border"
+                  loading="eager"
+                  unoptimized
+                />
                     ) : undefined
                   }
                 />
