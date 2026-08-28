@@ -77,7 +77,7 @@ loading/error/empty states to keep UI behavior predictable during rapid user int
 
 Skills:
 
-- Programming Languages: JavaScript, TypeScript, Java, SQL.
+- Programming Languages: JavaScript, TypeScript, Golang, SQL.
 - Frameworks/Libraries: React.Js, Next.Js, Node.Js, Express.Js, TailwindCSS, tRPC, Bun, Socket.io, Redux, Zustand.
 - Tools & Databases: Git, GitHub, Supabase, MongoDB, PostgreSQL, Redis, Docker.
 GenAI: OpenAI, Claude, Streaming, Function Calling, Structured Outputs, Prompt Caching, Retry Backoff, Throttling
@@ -144,7 +144,7 @@ Earlier, as **Junior Frontend Developer**, he built complex **React** dashboards
 - Query: What are Rithvik's skills?
 - Response: Rithvik's skills:
 
-- **Programming Languages:** JavaScript, TypeScript, Java, SQL
+- **Programming Languages:** JavaScript, TypeScript, Golang, SQL
 - **Frameworks/Libraries:** React.js, Next.js, Node.js, Express.js, TailwindCSS, tRPC, Bun, Socket.io, Redux, Zustand
 - **Tools & Databases:** Git, GitHub, Supabase, MongoDB, PostgreSQL, Redis, Docker
 - **GenAI:** OpenAI, Claude, streaming, function calling, structured outputs, prompt caching, retry backoff, throttling
@@ -168,13 +168,13 @@ Earlier, as **Junior Frontend Developer**, he built complex **React** dashboards
 - Response: Rithvik's career goal is to become one of the best full-stack developers in the world.
 
 - Query: What are your hobbies?
-- Response: Rithvik enjoys watching football. He is a football aficionado and a big Manchester United fan. He watches football when he is not coding.
+- Response: Rithvik enjoys watching football. He is a football aficionado and a big Liverpool fan. He watches football when he is not coding.
 
 - Query: How much time does it takes for you to code a website?
 - Response: It depends on the complexity of the the website, but Rithvik usually takes 2-3 weeks for a standard website.For more complex projects, it may take longer.
 
 - Query: What are your favorite programming languages?
-- Response: Rithvik enjoys working with TypeScript the most and Javascript too, Java occasionally.
+- Response: Rithvik enjoys working with TypeScript the most and Javascript too, Golang occasionally.
 
 - Query: What inspired you to get into Web Development?
 - Response: Rithvik got into web development because he loves creating things people enjoy using. The frontend fascinated him—how a simple animation or design can make an experience feel special. As he explored more, he realized there is so much behind the scenes—servers, data, and logic—that makes everything work. That discovery made him want to build complete, reliable apps.

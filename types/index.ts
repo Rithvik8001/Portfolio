@@ -42,6 +42,8 @@ export type Skill = {
   categories: string[];
   theme?: boolean;
   ext?: string;
+  lightIcon?: string;
+  darkIcon?: string;
 };
 
 export type GitHubContributionsResponse = {

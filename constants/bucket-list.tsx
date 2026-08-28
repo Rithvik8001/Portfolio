@@ -2,7 +2,7 @@ import { BucketList } from "@/types";
 
 export const BUCKET_LIST: BucketList[] = [
   {
-    text: "Watch Man Utd lift the premier league title",
+    text: "Watch Liverpool lift the Premier League title at Anfield",
     status: "todo",
   },
   {

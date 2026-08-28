@@ -27,10 +27,13 @@ export const SKILLS: Skill[] = [
     categories: ["Language"],
   },
   {
-    key: "java",
-    title: "Java",
-    href: "https://www.java.com/",
+    key: "golang",
+    title: "Golang",
+    href: "https://go.dev/",
     categories: ["Language"],
+    theme: true,
+    lightIcon: "Go_light.svg",
+    darkIcon: "Go_dark.svg",
   },
 
   // Runtimes

@@ -27,11 +27,12 @@ export function Skills() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={tech.title}
+                className="flex size-8 items-center justify-center"
               >
                 {tech.theme ? (
                   <>
                     <Image
-                      src={`/assets/tech-icons/${tech.key}-light.${tech.ext ?? "svg"}`}
+                      src={`/assets/tech-icons/${tech.lightIcon ?? `${tech.key}-light.${tech.ext ?? "svg"}`}`}
                       alt={`${tech.title} light icon`}
                       width={32}
                       height={32}
@@ -39,7 +40,7 @@ export function Skills() {
                       unoptimized
                     />
                     <Image
-                      src={`/assets/tech-icons/${tech.key}-dark.${tech.ext ?? "svg"}`}
+                      src={`/assets/tech-icons/${tech.darkIcon ?? `${tech.key}-dark.${tech.ext ?? "svg"}`}`}
                       alt={`${tech.title} dark icon`}
                       width={32}
                       height={32}

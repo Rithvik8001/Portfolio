@@ -67,9 +67,9 @@ export default function Page() {
               <p>
                 Outside of coding, I'm a dedicated football fanatic. I've been
                 watching the beautiful game since I was 16, and my heart beats
-                for Manchester United — the biggest club in England. Their
+                 for Liverpool — the biggest club in England. Their
                 resilience, teamwork, and legacy inspire me every day, on and
-                off the field. GGMU! ❤️
+                 off the field. YNWA! ❤️
               </p>
               <p>
                 I'm also a huge Apple fan — their innovation, design philosophy,

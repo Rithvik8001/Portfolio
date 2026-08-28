@@ -102,12 +102,6 @@ export default function RootLayout({
         >
           <AppProgressWrapper>
             <ConsentManagerWrapper>
-              <a
-                href="#content"
-                className="skip-link z-[100]"
-              >
-                Skip to content
-              </a>
               <SiteHeader />
               <main
                 id="content"
