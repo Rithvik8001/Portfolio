@@ -11,6 +11,7 @@ interface ChatMessageProps {
   content: string;
   timestamp?: string;
   avatar?: React.ReactNode;
+  ariaHidden?: boolean;
 }
 
 export function ChatMessage({
@@ -18,11 +19,13 @@ export function ChatMessage({
   content,
   timestamp,
   avatar,
+  ariaHidden = false,
 }: ChatMessageProps) {
   const isAssistant = role === "assistant";
 
   return (
     <div
+      aria-hidden={ariaHidden || undefined}
       className={cn(
         "flex gap-3",
         isAssistant ? "items-start" : "items-end justify-end"

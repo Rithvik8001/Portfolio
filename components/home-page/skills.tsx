@@ -20,7 +20,7 @@ export function Skills() {
         )}
       >
         <ul className="flex flex-wrap gap-4 select-none">
-          {SKILLS.map((tech, index) => {
+          {SKILLS.map((tech) => {
             const content = (
               <a
                 href={tech.href}
@@ -48,26 +48,13 @@ export function Skills() {
                     />
                   </>
                 ) : (
-                  <>
-                    {index === 0 ? (
-                      /* Debug: Use standard img tag for first item */
-                      <img
-                        src={`/assets/tech-icons/${tech.key}.${tech.ext ?? "svg"}`}
-                        alt={`${tech.title} icon`}
-                        width={32}
-                        height={32}
-                        style={{ display: "block" }}
-                      />
-                    ) : (
-                      <Image
-                        src={`/assets/tech-icons/${tech.key}.${tech.ext ?? "svg"}`}
-                        alt={`${tech.title} icon`}
-                        width={32}
-                        height={32}
-                        unoptimized
-                      />
-                    )}
-                  </>
+                  <Image
+                    src={`/assets/tech-icons/${tech.key}.${tech.ext ?? "svg"}`}
+                    alt={`${tech.title} icon`}
+                    width={32}
+                    height={32}
+                    unoptimized
+                  />
                 )}
                 <span className="sr-only">{tech.title}</span>
               </a>

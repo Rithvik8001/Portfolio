@@ -19,7 +19,6 @@ export const EXPERIENCES: Experience[] = [
 - Implemented frontend data/state management using Redux Toolkit and RTK Query patterns (cache + invalidation + predictable loading/error handling) to keep UI data consistent and reduce repeated fetching across screens.
 - Built an API client layer with Axios interceptors to handle token refresh flow, normalize errors, and prevent repeated failure loops—improving session stability and reducing auth-related UI breakages.`,
         skills: ["Node.js", "Express", "Redux Toolkit", "RTK Query", "MongoDB", "Axios", "REST APIs"],
-        isExpanded: true,
       },
     ],
     isCurrentEmployer: true,

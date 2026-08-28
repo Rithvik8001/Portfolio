@@ -92,14 +92,6 @@ export default function RootLayout({
       <body
         className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontSans.className} antialiased overflow-x-hidden`}
       >
-        <div hidden>
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify([personSchema(), websiteSchema()]),
-            }}
-          />
-        </div>
         <ThemeProvider
           enableSystem
           disableTransitionOnChange
@@ -110,8 +102,18 @@ export default function RootLayout({
         >
           <AppProgressWrapper>
             <ConsentManagerWrapper>
+              <a
+                href="#content"
+                className="skip-link z-[100]"
+              >
+                Skip to content
+              </a>
               <SiteHeader />
-              <main className="max-w-screen overflow-x-hidden px-2">
+              <main
+                id="content"
+                tabIndex={-1}
+                className="max-w-screen scroll-mt-20 overflow-x-hidden px-2 outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+              >
                 {children}
               </main>
               <Footer />
@@ -122,6 +124,17 @@ export default function RootLayout({
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>
+        <script
+          id="structured-data"
+          type="application/ld+json"
+          suppressHydrationWarning
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([personSchema(), websiteSchema()]).replace(
+              /</g,
+              "\\u003c",
+            ),
+          }}
+        />
       </body>
     </html>
   );

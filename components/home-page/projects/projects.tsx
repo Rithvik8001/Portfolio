@@ -7,6 +7,10 @@ import { SOCIAL_LINKS } from "@/constants/social-links";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
+const GITHUB_PROFILE_HREF =
+  SOCIAL_LINKS.find((link) => link.title === "GitHub")?.href ??
+  "https://github.com/Rithvik8001";
+
 export function Projects() {
   return (
     <Panel id="projects">
@@ -23,16 +27,14 @@ export function Projects() {
         max={3}
         renderItem={(item) => <ProjectItem project={item} />}
       />
-      <Link
-        href={SOCIAL_LINKS[1].href}
-        target="_blank"
-        className="mx-auto flex h-12 w-max cursor-pointer items-center justify-center pb-px"
-      >
-        <Button className="flex cursor-pointer" variant="default">
-          <span className="block">See more on GitHub</span>
-          <ArrowUpRight />
+      <div className="mx-auto flex h-12 w-max items-center justify-center pb-px">
+        <Button asChild variant="default">
+          <Link href={GITHUB_PROFILE_HREF} target="_blank" rel="noopener noreferrer">
+            <span className="block">See more on GitHub</span>
+            <ArrowUpRight />
+          </Link>
         </Button>
-      </Link>
+      </div>
     </Panel>
   );
 }

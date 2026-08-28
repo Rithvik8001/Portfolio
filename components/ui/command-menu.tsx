@@ -6,6 +6,7 @@ import {
   BriefcaseBusinessIcon,
   CircleUserIcon,
   CornerDownLeftIcon,
+  FileTextIcon,
   LetterTextIcon,
   MoonStarIcon,
   SunMediumIcon,
@@ -36,6 +37,7 @@ import { Icons } from "./icons";
 import { Button } from "./button";
 import { Separator } from "./separator";
 import { SOCIAL_LINKS } from "@/constants/social-links";
+import { RESUME } from "@/constants/resume";
 
 type CommandLinkItem = {
   title: string;
@@ -80,6 +82,12 @@ const PORTFOLIO_LINKS: CommandLinkItem[] = [
     title: "Download vCard",
     href: "/api/vcard",
     icon: CircleUserIcon,
+  },
+  {
+    title: "View Resume",
+    href: RESUME.href,
+    icon: FileTextIcon,
+    openInNewTab: true,
   },
 ];
 
@@ -148,6 +156,9 @@ export function CommandMenu() {
       captureEvent(ANALYTICS_EVENTS.commandMenuItemSelected, { href });
       if (href === "/api/vcard") {
         captureEvent(ANALYTICS_EVENTS.vcardDownloaded, { source: "command_menu" });
+      }
+      if (href === RESUME.href) {
+        captureEvent(ANALYTICS_EVENTS.resumeOpened, { source: "command_menu" });
       }
       setOpen(false);
 
@@ -347,6 +358,7 @@ function buildCommandMetaMap() {
   const commandMetaMap: CommandMetaMap = new Map();
 
   commandMetaMap.set("Download vCard", { commandKind: "command" });
+  commandMetaMap.set("View Resume", { commandKind: "link" });
 
   commandMetaMap.set("Light", { commandKind: "command" });
   commandMetaMap.set("Dark", { commandKind: "command" });

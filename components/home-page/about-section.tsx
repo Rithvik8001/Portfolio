@@ -21,14 +21,13 @@ export function AboutSection() {
         <ProseMono>
           <Markdown>{USER.about}</Markdown>
         </ProseMono>
-        <Link
-          href="/about"
-          className="mx-auto flex w-max cursor-pointer items-center justify-center pb-px"
-        >
-          <Button className="flex cursor-pointer" variant="default">
-            <span className="block">See more about me</span>
+        <div className="mx-auto flex w-max items-center justify-center pb-px">
+          <Button asChild variant="default">
+            <Link href="/about">
+              <span className="block">See more about me</span>
+            </Link>
           </Button>
-        </Link>
+        </div>
       </PanelContent>
     </Panel>
   );

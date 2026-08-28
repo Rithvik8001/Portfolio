@@ -1,18 +1,25 @@
+import Image from "next/image";
+
 import { EditorStatus } from "@/components/home-page/header-cover/editor-status";
 import { FlipSentences } from "@/components/ui/flip-sentences";
 import { VerifiedIcon } from "./verified-icon";
 import { FLIP_SENTENCES } from "@/constants/flip-sentences";
+import { USER } from "@/constants/user";
 
 export function ProfileHeader() {
   return (
     <div className="screen-line-after flex border-x border-edge">
       <div className="shrink-0 border-r border-edge">
         <div className="relative mx-0.5 my-[3px]">
-          <img
-            className="size-32 rounded-full ring-1 ring-border ring-offset-2 ring-offset-background select-none sm:size-40"
+          <Image
+            className="size-32 rounded-full object-cover ring-1 ring-border ring-offset-2 ring-offset-background select-none sm:size-40"
             alt="Rithvik's avatar"
-            src="/images/avatar.jpeg"
+            src={USER.avatar}
+            width={320}
+            height={320}
+            sizes="(max-width: 639px) 128px, 160px"
             fetchPriority="high"
+            loading="eager"
           />
           <EditorStatus />
         </div>

@@ -11,26 +11,38 @@ import {
 } from "ai";
 import { z } from "zod";
 
+import {
+  MAX_CHAT_BODY_BYTES,
+  MAX_CHAT_INPUT_CHARS,
+  MAX_CHAT_MESSAGE_CHARS,
+  MAX_CHAT_MESSAGES,
+  MAX_CHAT_OUTPUT_TOKENS,
+} from "@/lib/chat-limits";
 import { SYSTEM_PROMPT } from "@/lib/chat-prompt";
 
-export const CHAT_MODEL = "gpt-5-nano";
-export const MAX_CHAT_MESSAGES = 24;
-export const MAX_CHAT_INPUT_CHARS = 12_000;
-export const MAX_CHAT_MESSAGE_CHARS = 2_000;
-export const MAX_CHAT_OUTPUT_TOKENS = 1_200;
+export const CHAT_MODEL = "gpt-5.6-luna";
+export {
+  MAX_CHAT_BODY_BYTES,
+  MAX_CHAT_INPUT_CHARS,
+  MAX_CHAT_MESSAGE_CHARS,
+  MAX_CHAT_MESSAGES,
+  MAX_CHAT_OUTPUT_TOKENS,
+};
 
 export const CHAT_STREAM_ERROR_MESSAGE =
   "Something went wrong generating that reply. Please try again.";
 
-const chatRequestSchema = z
-  .object({
-    messages: z.unknown(),
-  })
-  .passthrough();
+const chatRequestSchema = z.object({
+  id: z.string().optional(),
+  messages: z.array(z.unknown()),
+  trigger: z.enum(["submit-message", "regenerate-message"]).optional(),
+  messageId: z.string().optional(),
+});
 
 type ChatValidationFailureReason =
   | "invalid_body"
   | "empty_conversation"
+  | "empty_message"
   | "invalid_role"
   | "unsupported_part"
   | "message_too_long"
@@ -51,13 +63,51 @@ export type ChatValidationSuccess = {
 };
 
 export type ChatValidationResult =
-  ChatValidationFailure | ChatValidationSuccess;
+  | ChatValidationFailure
+  | ChatValidationSuccess;
+
+type TextPart = Extract<UIMessage["parts"][number], { type: "text" }>;
 
 function validationFailure(
   reason: ChatValidationFailureReason,
   message: string,
 ): ChatValidationFailure {
   return { ok: false, status: 400, message, reason };
+}
+
+function isTextPart(part: UIMessage["parts"][number]): part is TextPart {
+  return part.type === "text";
+}
+
+function isAssistantProtocolPart(part: UIMessage["parts"][number]): boolean {
+  return (
+    part.type === "text" ||
+    part.type === "step-start" ||
+    part.type === "reasoning"
+  );
+}
+
+function hasUnsupportedParts(message: UIMessage): boolean {
+  if (message.role === "assistant") {
+    return message.parts.some((part) => !isAssistantProtocolPart(part));
+  }
+
+  return message.parts.some((part) => part.type !== "text");
+}
+
+function getMessageText(message: UIMessage): string {
+  return message.parts.filter(isTextPart).map((part) => part.text).join("");
+}
+
+function normalizeMessage(message: UIMessage): UIMessage {
+  return {
+    id: message.id,
+    role: message.role,
+    parts: message.parts.filter(isTextPart).map((part) => ({
+      type: "text" as const,
+      text: part.text,
+    })),
+  };
 }
 
 export async function validateChatRequest(
@@ -83,25 +133,30 @@ export async function validateChatRequest(
     return validationFailure("empty_conversation", "Conversation is empty.");
   }
 
-  const retainedMessages = messages.slice(-MAX_CHAT_MESSAGES);
-  let inputChars = 0;
-
-  for (const message of retainedMessages) {
+  for (const message of messages) {
     if (message.role !== "user" && message.role !== "assistant") {
       return validationFailure("invalid_role", "Invalid message role.");
     }
 
-    if (message.parts.some((part) => part.type !== "text")) {
+    if (hasUnsupportedParts(message)) {
       return validationFailure(
         "unsupported_part",
         "Only text messages are supported.",
       );
     }
 
-    const messageChars = message.parts.reduce(
-      (total, part) => total + (part.type === "text" ? part.text.length : 0),
-      0,
-    );
+    if (message.role === "user" && getMessageText(message).trim() === "") {
+      return validationFailure("empty_message", "Message cannot be empty.");
+    }
+  }
+
+  const retainedMessages = messages
+    .slice(-MAX_CHAT_MESSAGES)
+    .map(normalizeMessage);
+  let inputChars = 0;
+
+  for (const message of retainedMessages) {
+    const messageChars = getMessageText(message).length;
 
     if (messageChars > MAX_CHAT_MESSAGE_CHARS) {
       return validationFailure("message_too_long", "Message is too long.");
@@ -150,9 +205,9 @@ export async function createChatResponse({
     maxOutputTokens: MAX_CHAT_OUTPUT_TOKENS,
     providerOptions: {
       openai: {
-        reasoningEffort: "minimal",
-        textVerbosity: "medium",
-        promptCacheKey: "rithix-system-v1",
+        reasoningEffort: "none",
+        textVerbosity: "low",
+        promptCacheKey: "rithix-system-v2",
       },
     },
   });

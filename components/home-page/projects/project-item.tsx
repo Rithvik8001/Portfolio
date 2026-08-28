@@ -35,12 +35,21 @@ export function ProjectItem({
           </div>
 
           <div className="flex-1 border-l border-dashed border-edge">
-            <CollapsibleTrigger className="flex w-full items-center gap-4 p-4 pr-2 text-left select-none">
-              <div className="flex-1">
-                <h3 className="mb-1 leading-snug font-medium text-balance">
-                  {project.title}
-                </h3>
-              </div>
+            <div className="flex w-full items-center gap-4 p-4 pr-2">
+              <CollapsibleTrigger className="flex flex-1 items-center gap-4 text-left select-none">
+                <div className="flex-1">
+                  <h3 className="mb-1 leading-snug font-medium text-balance">
+                    {project.title}
+                  </h3>
+                </div>
+
+                <div
+                  className="shrink-0 text-muted-foreground [&_svg]:size-4"
+                  aria-hidden
+                >
+                  <CollapsibleChevronsIcon />
+                </div>
+              </CollapsibleTrigger>
 
               <SimpleTooltip content="Open Project Link">
                 <TrackedLink
@@ -49,20 +58,13 @@ export function ProjectItem({
                   className="relative flex size-6 shrink-0 items-center justify-center text-muted-foreground after:absolute after:-inset-2 hover:text-foreground"
                   href={addQueryParams(project.link, UTM_PARAMS)}
                   target="_blank"
-                  rel="noopener"
+                  rel="noopener noreferrer"
                 >
                   <LinkIcon className="pointer-events-none size-4" />
                   <span className="sr-only">Open Project Link</span>
                 </TrackedLink>
               </SimpleTooltip>
-
-              <div
-                className="shrink-0 text-muted-foreground [&_svg]:size-4"
-                aria-hidden
-              >
-                <CollapsibleChevronsIcon />
-              </div>
-            </CollapsibleTrigger>
+            </div>
           </div>
         </div>
 

@@ -5,7 +5,13 @@ import { SocialLink } from "@/types";
 import { TrackedLink } from "@/components/analytics/tracked-link";
 import { ANALYTICS_EVENTS } from "@/lib/analytics";
 
-export function SocialLinkItem({ icon, title, description, href }: SocialLink) {
+export function SocialLinkItem({
+  icon,
+  title,
+  description,
+  href,
+  rel = "noopener",
+}: SocialLink & { rel?: string }) {
   return (
     <TrackedLink
       event={ANALYTICS_EVENTS.socialLinkClicked}
@@ -17,7 +23,7 @@ export function SocialLinkItem({ icon, title, description, href }: SocialLink) {
       )}
       href={href}
       target="_blank"
-      rel="noopener"
+      rel={rel}
     >
       <div className="relative size-12 shrink-0">
         <Image
@@ -42,7 +48,10 @@ export function SocialLinkItem({ icon, title, description, href }: SocialLink) {
         )}
       </div>
 
-      <ArrowUpRightIcon className="size-4 text-muted-foreground" />
+      <ArrowUpRightIcon
+        className="size-4 text-muted-foreground"
+        aria-hidden="true"
+      />
     </TrackedLink>
   );
 }
