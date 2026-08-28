@@ -52,6 +52,14 @@ export type GitHubContributionsResponse = {
   contributions: Activity[];
 };
 
+export type WakaTimeStatus = {
+  isOnline: boolean;
+  editor: "Zed";
+  status: string;
+  yesterdayCodingTime: string;
+  todayCodingTime: string;
+};
+
 export type ExperiencePositionIcon =
   "code" | "design" | "education" | "business" | "idea";
 

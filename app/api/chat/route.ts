@@ -1,38 +1,11 @@
-import { openai } from "@ai-sdk/openai";
 import {
-  convertToModelMessages,
-  createUIMessageStreamResponse,
-  streamText,
-  toUIMessageStream,
-  validateUIMessages,
-  type UIMessage,
-} from "ai";
-
-import { SYSTEM_PROMPT } from "@/lib/chat-prompt";
+  CHAT_MODEL,
+  createChatResponse,
+  validateChatRequest,
+} from "@/lib/server/chat";
 import { getPostHogServer, readAnalyticsHeaders } from "@/lib/posthog-server";
 
 export const maxDuration = 30;
-
-const MODEL = "gpt-5-nano";
-const MAX_MESSAGES = 24;
-const MAX_INPUT_CHARS = 12_000;
-const MAX_OUTPUT_TOKENS = 1200;
-const STREAM_ERROR_MESSAGE =
-  "Something went wrong generating that reply. Please try again.";
-
-function badRequest(message: string) {
-  return Response.json({ error: message }, { status: 400 });
-}
-
-function countTextChars(messages: UIMessage[]) {
-  let total = 0;
-  for (const message of messages) {
-    for (const part of message.parts) {
-      if (part.type === "text") total += part.text.length;
-    }
-  }
-  return total;
-}
 
 export async function POST(req: Request) {
   const posthog = getPostHogServer();
@@ -46,57 +19,40 @@ export async function POST(req: Request) {
     });
   };
 
-  let messages: UIMessage[];
+  let body: unknown;
 
   try {
-    const body = await req.json();
-    messages = await validateUIMessages({
-      messages: (body as { messages?: unknown })?.messages,
-    });
+    body = await req.json();
   } catch (error) {
     posthog?.captureException(error, distinctId, { route: "/api/chat" });
-    return badRequest("Invalid request body.");
+    return Response.json(
+      { error: "Invalid request body." },
+      { status: 400 },
+    );
   }
 
-  if (messages.length > MAX_MESSAGES) {
-    messages = messages.slice(-MAX_MESSAGES);
-  }
+  const validation = await validateChatRequest(body);
 
-  if (countTextChars(messages) > MAX_INPUT_CHARS) {
-    capture("chat_request_rejected", { reason: "conversation_too_long" });
-    return badRequest("Conversation is too long. Start a new chat.");
+  if (!validation.ok) {
+    capture("chat_request_rejected", { reason: validation.reason });
+    return Response.json(
+      { error: validation.message },
+      { status: validation.status },
+    );
   }
 
   capture("chat_completion_requested", {
-    model: MODEL,
-    turn: messages.length,
-    input_chars: countTextChars(messages),
+    model: CHAT_MODEL,
+    turn: validation.messages.length,
+    input_chars: validation.inputChars,
   });
 
-  const result = streamText({
-    model: openai.chat(MODEL),
-    instructions: SYSTEM_PROMPT,
-    messages: await convertToModelMessages(messages),
+  return createChatResponse({
+    messages: validation.messages,
     abortSignal: req.signal,
-    maxOutputTokens: MAX_OUTPUT_TOKENS,
-    providerOptions: {
-      openai: {
-        reasoningEffort: "minimal",
-        textVerbosity: "medium",
-        promptCacheKey: "rithix-system-v1",
-      },
+    onError: (error) => {
+      console.error("[chat] stream error:", error);
+      posthog?.captureException(error, distinctId, { route: "/api/chat" });
     },
-  });
-
-  return createUIMessageStreamResponse({
-    stream: toUIMessageStream({
-      stream: result.stream,
-      sendReasoning: false,
-      onError: (error) => {
-        console.error("[chat] stream error:", error);
-        posthog?.captureException(error, distinctId, { route: "/api/chat" });
-        return STREAM_ERROR_MESSAGE;
-      },
-    }),
   });
 }

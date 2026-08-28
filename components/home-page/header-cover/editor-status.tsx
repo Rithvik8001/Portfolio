@@ -11,41 +11,67 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-
-type WakaTimeData = {
-  isOnline: boolean;
-  editor: "Zed" | null;
-  status: string;
-  yesterdayCodingTime: string;
-  todayCodingTime: string;
-};
+import type { WakaTimeStatus } from "@/types";
 
 export function EditorStatus() {
-  const [data, setData] = useState<WakaTimeData | null>(null);
+  const [data, setData] = useState<WakaTimeStatus | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let isActive = true;
+    let isFetching = false;
+    let intervalId: ReturnType<typeof setInterval> | undefined;
+
     const fetchData = async () => {
+      if (isFetching) return;
+      isFetching = true;
+
       try {
         const res = await fetch("/api/wakatime");
         if (res.ok) {
-          const json = (await res.json()) as WakaTimeData;
+          const json = (await res.json()) as WakaTimeStatus;
 
-          setData(json);
+          if (isActive) setData(json);
         } else {
           console.error("Failed to fetch WakaTime status:", res.statusText);
         }
       } catch (error) {
         console.error("Error fetching WakaTime status:", error);
       } finally {
-        setLoading(false);
+        isFetching = false;
+        if (isActive) setLoading(false);
       }
     };
 
-    fetchData();
+    const stopPolling = () => {
+      if (intervalId) clearInterval(intervalId);
+      intervalId = undefined;
+    };
 
-    const interval = setInterval(fetchData, 60000);
-    return () => clearInterval(interval);
+    const startPolling = () => {
+      stopPolling();
+      intervalId = setInterval(() => void fetchData(), 60_000);
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        stopPolling();
+        return;
+      }
+
+      void fetchData();
+      startPolling();
+    };
+
+    void fetchData();
+    if (document.visibilityState === "visible") startPolling();
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      isActive = false;
+      stopPolling();
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   if (loading || !data)
