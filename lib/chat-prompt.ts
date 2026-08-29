@@ -168,7 +168,7 @@ Earlier, as **Junior Frontend Developer**, he built complex **React** dashboards
 - Response: Rithvik's career goal is to become one of the best full-stack developers in the world.
 
 - Query: What are your hobbies?
-- Response: Rithvik enjoys watching football. He is a football aficionado and a big Liverpool fan. He watches football when he is not coding.
+- Response: Rithvik enjoys watching football. He is a football aficionado and a big Manchester United fan. He watches football when he is not coding.
 
 - Query: How much time does it takes for you to code a website?
 - Response: It depends on the complexity of the the website, but Rithvik usually takes 2-3 weeks for a standard website.For more complex projects, it may take longer.

@@ -65,21 +65,23 @@ export default function Page() {
                 the web.
               </p>
               <p>
-                Outside of coding, I'm a dedicated football fanatic. I've been
-                watching the beautiful game since I was 16, and my heart beats
-                 for Liverpool — the biggest club in England. Their
-                resilience, teamwork, and legacy inspire me every day, on and
-                 off the field. YNWA! ❤️
+                Away from the keyboard, it's football. I started watching at 16
+                and picked Manchester United, which means I've spent most of
+                that time being told I picked the wrong decade. I don't care.
+                I've watched us have seasons worth forgetting and still lost
+                sleep over a Tuesday night result. That's the whole thing,
+                really — you don't support a club because it's winning, you
+                support it because at some point it got under your skin and
+                never left. GGMU. ❤️
               </p>
               <p>
-                I'm also a huge Apple fan — their innovation, design philosophy,
-                and dedication to crafting seamless, human-centered experiences
-                have deeply inspired me. It's not just about loving their
-                products, but embracing the way Apple approaches technology:
-                with simplicity, elegance, and relentless attention to detail.
-                This mindset drives how I build software — aiming to create
-                experiences that feel natural, intuitive, and thoughtfully
-                crafted, just like the products I admire.
+                I'm also an Apple obsessive, and not in the buy-everything way —
+                in the way where I'll notice how a sheet settles when you
+                dismiss it, or that the haptic fires a beat before the animation
+                lands, and think about it for the rest of the day. Somebody
+                argued about that. Somebody said no to a hundred other versions
+                of it. That's the standard I hold my own work to: fewer things,
+                done properly, until using it feels obvious.
               </p>
               <p>
                 This journey of learning, creating, and growing keeps me
