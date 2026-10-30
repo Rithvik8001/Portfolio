@@ -65,6 +65,15 @@ export const SKILLS: Skill[] = [
     theme: true,
   },
   {
+    key: "tanstack",
+    title: "TanStack",
+    href: "https://tanstack.com/",
+    categories: ["Framework", "Library"],
+    theme: true,
+    lightIcon: "TanStack_light.svg",
+    darkIcon: "TanStack_dark.svg",
+  },
+  {
     key: "expressjs",
     title: "Express.js",
     href: "https://expressjs.com/",

@@ -1,14 +1,10 @@
-import { EXPERIENCES } from "@/constants/experiences";
+import { EDUCATION } from "@/constants/education";
 import { JOBS } from "@/constants/jobs";
 import { SOCIAL_LINKS } from "@/constants/social-links";
 import { USER } from "@/constants/user";
 
-const EDUCATION_ID = "education";
-
 function educationOrganizations() {
-  const education = EXPERIENCES.find((item) => item.id === EDUCATION_ID);
-
-  return (education?.positions ?? []).map((position) => ({
+  return EDUCATION.map((position) => ({
     "@type": "CollegeOrUniversity",
     name: position.title,
   }));

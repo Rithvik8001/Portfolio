@@ -4,7 +4,6 @@ import {
   createChatResponse,
   validateChatRequest,
 } from "@/lib/server/chat";
-import { enforceChatRateLimit } from "@/lib/server/chat-rate-limit";
 import { getPostHogServer, readAnalyticsHeaders } from "@/lib/posthog-server";
 
 export const maxDuration = 30;
@@ -70,39 +69,6 @@ export async function POST(req: Request) {
     return Response.json(
       { error: validation.message },
       { status: validation.status },
-    );
-  }
-
-  const rateLimit = await enforceChatRateLimit(req);
-
-  if (!rateLimit.ok) {
-    capture("chat_rate_limit_unavailable");
-    return Response.json(
-      { error: "Chat is temporarily unavailable." },
-      { status: 503 },
-    );
-  }
-
-  if (rateLimit.allowed && rateLimit.bypassed) {
-    capture("chat_rate_limit_bypassed", { reason: rateLimit.bypassed });
-  }
-
-  if (!rateLimit.allowed) {
-    capture("chat_request_rate_limited", { window: rateLimit.window });
-    return Response.json(
-      {
-        error: "Too many requests. Please try again later.",
-        retryAfterSeconds: rateLimit.retryAfterSeconds,
-      },
-      {
-        status: 429,
-        headers: {
-          "Retry-After": String(rateLimit.retryAfterSeconds),
-          "X-RateLimit-Limit": String(rateLimit.limit),
-          "X-RateLimit-Remaining": String(rateLimit.remaining),
-          "X-RateLimit-Reset": String(rateLimit.reset),
-        },
-      },
     );
   }
 

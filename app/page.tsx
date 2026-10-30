@@ -5,6 +5,7 @@ import { ProfileHeader } from "@/components/home-page/header-cover/profile-heade
 import { Skills } from "@/components/home-page/skills";
 import { SocialLinks } from "@/components/home-page/social-links/social-links";
 import SectionSeparator from "@/components/ui/section-separator";
+import { Education } from "@/components/home-page/education";
 import { Experiences } from "@/components/home-page/experiences";
 import { ProfileCover } from "@/components/home-page/header-cover/profile-cover";
 import { Projects } from "@/components/home-page/projects/projects";
@@ -33,6 +34,9 @@ const HomePage = () => {
       <SectionSeparator />
 
       <Experiences />
+      <SectionSeparator />
+
+      <Education />
       <SectionSeparator />
 
       <Projects />
