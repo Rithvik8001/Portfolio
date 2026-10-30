@@ -1,6 +1,6 @@
 import "server-only";
 
-import { openai } from "@ai-sdk/openai";
+import { anthropic } from "@ai-sdk/anthropic";
 import {
   convertToModelMessages,
   createUIMessageStreamResponse,
@@ -20,7 +20,7 @@ import {
 } from "@/lib/chat-limits";
 import { SYSTEM_PROMPT } from "@/lib/chat-prompt";
 
-export const CHAT_MODEL = "gpt-5.6-luna";
+export const CHAT_MODEL = "claude-haiku-5-5";
 export {
   MAX_CHAT_BODY_BYTES,
   MAX_CHAT_INPUT_CHARS,
@@ -198,18 +198,12 @@ export async function createChatResponse({
   onError,
 }: CreateChatResponseOptions): Promise<Response> {
   const result = streamText({
-    model: openai.chat(CHAT_MODEL),
+    model: anthropic(CHAT_MODEL),
     instructions: SYSTEM_PROMPT,
     messages: await convertToModelMessages(messages),
     abortSignal,
     maxOutputTokens: MAX_CHAT_OUTPUT_TOKENS,
-    providerOptions: {
-      openai: {
-        reasoningEffort: "none",
-        textVerbosity: "low",
-        promptCacheKey: "rithix-system-v2",
-      },
-    },
+    reasoning: "none",
   });
 
   return createUIMessageStreamResponse({

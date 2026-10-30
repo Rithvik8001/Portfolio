@@ -1,4 +1,4 @@
-import { Prose } from "@/components/ui/typography";
+import { ProseMono } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { Panel, PanelHeader, PanelTitle } from "@/components/ui/panel";
 import { BUCKET_LIST } from "@/constants/bucket-list";
@@ -12,7 +12,7 @@ export function BucketList() {
         <PanelHeader>
           <PanelTitle>Bucket List</PanelTitle>
         </PanelHeader>
-        <Prose className="col-span-2">
+        <ProseMono className="col-span-2">
           <div>
             <ul className="m-[0_!important]">
               {BUCKET_LIST.map((item, index) => (
@@ -33,7 +33,7 @@ export function BucketList() {
               ))}
             </ul>
           </div>
-        </Prose>
+        </ProseMono>
       </div>
     </Panel>
   );

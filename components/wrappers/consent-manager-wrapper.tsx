@@ -53,7 +53,7 @@ export default function ConsentManagerWrapper({
           },
           "banner.footer.customize-button": {
             noStyle: true,
-            className: buttonVariants({ variant: "secondary" }),
+            className: buttonVariants({ variant: "default" }),
           },
         }}
       />
@@ -152,7 +152,7 @@ export default function ConsentManagerWrapper({
           },
           "widget.footer.save-button": {
             noStyle: true,
-            className: buttonVariants({ variant: "secondary" }),
+            className: buttonVariants({ variant: "default" }),
           },
         }}
       />

@@ -1,21 +1,42 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import {
+  IBM_Plex_Mono as FontMono,
+  IBM_Plex_Sans as FontSans,
+  Source_Serif_4 as FontSerif,
+} from "next/font/google";
 import "./globals.css";
 import ConsentManagerWrapper from "@/components/wrappers/consent-manager-wrapper";
 import { ThemeProvider } from "next-themes";
+import { AppProgressProvider } from "@bprogress/next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import ToasterWrapper from "@/components/wrappers/toaster-wrapper";
 import AppProgressWrapper from "@/components/wrappers/app-progress-wrapper";
 import { SiteHeader } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { personSchema, websiteSchema } from "@/lib/structured-data";
 
-const inter = Inter({
-  subsets: ["latin"],
-  axes: ["opsz"],
+const fontSans = FontSans({
+  weight: ["400", "500", "600"],
   display: "swap",
-  variable: "--font-inter",
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const fontSerif = FontSerif({
+  weight: ["400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-serif",
+});
+
+const fontMono = FontMono({
+  weight: ["400", "500", "600"],
+  display: "swap",
+  subsets: ["latin"],
+  variable: "--font-mono",
 });
 
 export const metadata: Metadata = {
@@ -67,30 +88,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
-      <body className="overflow-x-hidden">
-        <a href="#main" className="skip-link">
-          Skip to content
-        </a>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${fontSans.variable} ${fontMono.variable} ${fontSerif.variable} ${fontSans.className} antialiased overflow-x-hidden`}
+      >
         <ThemeProvider
           enableSystem
           disableTransitionOnChange
           enableColorScheme
           storageKey="theme"
           defaultTheme="system"
-          attribute={["class", "data-theme"]}
+          attribute="class"
         >
           <AppProgressWrapper>
             <ConsentManagerWrapper>
               <SiteHeader />
               <main
-                id="main"
+                id="content"
                 tabIndex={-1}
-                className="max-w-screen scroll-mt-20 overflow-x-hidden px-2 outline-none"
+                className="max-w-screen scroll-mt-20 overflow-x-hidden px-2 outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
               >
                 {children}
               </main>
               <Footer />
+              <ScrollToTop />
             </ConsentManagerWrapper>
           </AppProgressWrapper>
           <ToasterWrapper />

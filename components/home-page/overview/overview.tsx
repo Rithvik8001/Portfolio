@@ -1,10 +1,10 @@
 import {
-  EnvelopeSimpleIcon as MailIcon,
-  GenderFemaleIcon as VenusIcon,
-  GenderMaleIcon as MarsIcon,
   GlobeIcon,
+  MailIcon,
   MapPinIcon,
-} from "@phosphor-icons/react/ssr";
+  MarsIcon,
+  VenusIcon,
+} from "lucide-react";
 import { JOBS } from "@/constants/jobs";
 import {
   IntroItem,

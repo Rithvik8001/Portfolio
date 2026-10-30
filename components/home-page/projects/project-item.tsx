@@ -1,14 +1,15 @@
-import { FolderIcon, LinkSimpleIcon as LinkIcon } from "@phosphor-icons/react/ssr";
+import { LinkIcon } from "lucide-react";
 import {
-  CollapsibleCaret,
+  CollapsibleChevronsIcon,
   CollapsibleContent,
   CollapsibleTrigger,
   CollapsibleWithContext,
 } from "@/components/ui/collapsible";
-import { Chip } from "@/components/ui/chip";
+import { Tag } from "@/components/ui/tag";
 import { SimpleTooltip } from "@/components/ui/tooltip";
-import { Prose } from "@/components/ui/typography";
+import { ProseMono } from "@/components/ui/typography";
 import { Project } from "@/types";
+import { Icons } from "@/components/ui/icons";
 import { addQueryParams } from "@/lib/utils";
 import { UTM_PARAMS } from "@/constants/utm-params";
 import { Markdown } from "@/components/ui/markdown";
@@ -30,7 +31,7 @@ export function ProjectItem({
             className="mx-4 flex size-6 shrink-0 items-center justify-center rounded-lg border border-muted-foreground/15 bg-muted text-muted-foreground ring-1 ring-edge ring-offset-1 ring-offset-background select-none"
             aria-hidden="true"
           >
-            <FolderIcon className="size-4" />
+            <Icons.project className="size-4" />
           </div>
 
           <div className="flex-1 border-l border-dashed border-edge">
@@ -46,7 +47,7 @@ export function ProjectItem({
                   className="shrink-0 text-muted-foreground [&_svg]:size-4"
                   aria-hidden
                 >
-                  <CollapsibleCaret />
+                  <CollapsibleChevronsIcon />
                 </div>
               </CollapsibleTrigger>
 
@@ -71,16 +72,16 @@ export function ProjectItem({
           <div className="border-t border-edge shadow-inner">
             <div className="space-y-4 p-4 duration-300 group-data-[state=closed]:animate-fade-out group-data-[state=open]:animate-fade-in">
               {project.description && (
-                <Prose>
+                <ProseMono>
                   <Markdown>{project.description}</Markdown>
-                </Prose>
+                </ProseMono>
               )}
 
               {project.skills.length > 0 && (
                 <ul className="flex flex-wrap gap-1.5">
                   {project.skills.map((skill, index) => (
                     <li key={index} className="flex">
-                      <Chip>{skill}</Chip>
+                      <Tag>{skill}</Tag>
                     </li>
                   ))}
                 </ul>

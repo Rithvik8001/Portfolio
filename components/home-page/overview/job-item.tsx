@@ -1,8 +1,8 @@
 import {
-  BriefcaseIcon,
-  CodeIcon,
+  BriefcaseBusinessIcon,
+  CodeXmlIcon,
   LightbulbIcon,
-} from "@phosphor-icons/react/ssr";
+} from "lucide-react";
 import { UTM_PARAMS } from "@/constants/utm-params";
 import { addQueryParams } from "@/lib/utils";
 import {
@@ -14,14 +14,14 @@ import {
 
 function getJobIcon(title: string) {
   if (/(developer|engineer)/i.test(title)) {
-    return <CodeIcon />;
+    return <CodeXmlIcon />;
   }
 
   if (/(founder|co-founder)/i.test(title)) {
     return <LightbulbIcon />;
   }
 
-  return <BriefcaseIcon />;
+  return <BriefcaseBusinessIcon />;
 }
 
 type JobItemProps = {

@@ -1,16 +1,16 @@
 import { Separator } from "@/components/ui/separator";
-import { Prose } from "@/components/ui/typography";
+import { ProseMono } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { ExperienceIcon } from "./experience-position-icon";
 import { ExperiencePosition } from "@/types";
 import {
-  CollapsibleCaret,
+  CollapsibleChevronsIcon,
   CollapsibleContent,
   CollapsibleTrigger,
   CollapsibleWithContext,
 } from "@/components/ui/collapsible";
 import { Markdown } from "@/components/ui/markdown";
-import { Chip } from "@/components/ui/chip";
+import { Tag } from "@/components/ui/tag";
 
 export function ExperiencePositionItem({
   position,
@@ -49,7 +49,7 @@ export function ExperiencePositionItem({
               className="shrink-0 text-muted-foreground [&_svg]:size-4"
               aria-hidden
             >
-              <CollapsibleCaret />
+              <CollapsibleChevronsIcon />
             </div>
           </div>
 
@@ -81,16 +81,16 @@ export function ExperiencePositionItem({
 
         <CollapsibleContent className="overflow-hidden duration-300 data-[state=closed]:animate-collapsible-fade-up data-[state=open]:animate-collapsible-fade-down">
           {position.description && (
-            <Prose className="pt-2 pl-9">
+            <ProseMono className="pt-2 pl-9">
               <Markdown>{position.description}</Markdown>
-            </Prose>
+            </ProseMono>
           )}
 
           {Array.isArray(position.skills) && position.skills.length > 0 && (
             <ul className="flex flex-wrap gap-1.5 pt-2 pl-9">
               {position.skills.map((skill, index) => (
                 <li key={index} className="flex">
-                  <Chip>{skill}</Chip>
+                  <Tag>{skill}</Tag>
                 </li>
               ))}
             </ul>

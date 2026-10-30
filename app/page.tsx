@@ -40,7 +40,7 @@ const HomePage = () => {
 
       {/*
         <Certifications />
-        <Separator />
+        <Separator /> 
         */}
 
       <Brand />

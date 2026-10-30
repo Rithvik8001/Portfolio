@@ -75,11 +75,11 @@ const DEFAULT_LABELS: Labels = {
 };
 
 const THEME = cn(
-  'data-[level="0"]:fill-fill-2',
-  'data-[level="1"]:fill-brand-tint',
-  'data-[level="2"]:fill-brand/40',
-  'data-[level="3"]:fill-brand/70',
-  'data-[level="4"]:fill-brand'
+  'data-[level="0"]:fill-muted-foreground/5',
+  'data-[level="1"]:fill-muted-foreground/20',
+  'data-[level="2"]:fill-muted-foreground/40',
+  'data-[level="3"]:fill-muted-foreground/60',
+  'data-[level="4"]:fill-muted-foreground/80'
 );
 
 type ContributionGraphContextType = {
@@ -458,7 +458,7 @@ export const ContributionGraphTotalCount = ({
   }
 
   return (
-    <div className={cn("text-small text-fg-2", className)} {...props}>
+    <div className={cn("text-muted-foreground", className)} {...props}>
       {labels.totalCount
         ? labels.totalCount
             .replace("{{count}}", String(totalCount))
@@ -487,7 +487,7 @@ export const ContributionGraphLegend = ({
       className={cn("ml-auto flex items-center gap-[3px]", className)}
       {...props}
     >
-      <span className="mr-1 text-small text-fg-2">
+      <span className="mr-1 text-muted-foreground">
         {labels.legend?.less || "Less"}
       </span>
       {new Array(maxLevel + 1).fill(undefined).map((_, level) =>
@@ -507,7 +507,7 @@ export const ContributionGraphLegend = ({
           </svg>
         )
       )}
-      <span className="ml-1 text-small text-fg-2">
+      <span className="ml-1 text-muted-foreground">
         {labels.legend?.more || "More"}
       </span>
     </div>
