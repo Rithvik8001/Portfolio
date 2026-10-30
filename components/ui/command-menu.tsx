@@ -1,21 +1,23 @@
 "use client";
 
-import { useCommandState } from "cmdk";
-import type { LucideProps } from "lucide-react";
+import type { IconProps } from "@phosphor-icons/react";
 import {
-  BriefcaseBusinessIcon,
-  CircleUserIcon,
-  CornerDownLeftIcon,
+  BriefcaseIcon,
+  CircleHalfIcon,
   FileTextIcon,
-  LetterTextIcon,
-  MoonStarIcon,
-  SunMediumIcon,
-  TypeIcon,
-} from "lucide-react";
+  FolderIcon,
+  HouseIcon,
+  MagnifyingGlassIcon,
+  MoonIcon,
+  SunIcon,
+  TextAlignLeftIcon,
+  TextTIcon,
+  UserCircleIcon,
+} from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -24,67 +26,49 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandItemText,
+  CommandItemTile,
   CommandList,
-  CommandSeparator,
+  CommandShortcut,
 } from "@/components/ui/command";
-// import { SOCIAL_LINKS } from "@/features/portfolio/data/social-links";
-import { useSound } from "@/hooks/use-sound";
-import { cn, copyText } from "@/lib/utils";
+import { Kbd } from "@/components/ui/kbd";
+import { RESUME } from "@/constants/resume";
+import { SOCIAL_LINKS } from "@/constants/social-links";
 import { captureEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
+import { copyText } from "@/lib/utils";
+import { Button } from "./button";
+import { Icons } from "./icons";
 import { RithvikMark, getMarkSVG } from "./rithvik-mark";
 import { getWordmarkSVG } from "./rithvik-wordmark";
-import { Icons } from "./icons";
-import { Button } from "./button";
-import { Separator } from "./separator";
-import { SOCIAL_LINKS } from "@/constants/social-links";
-import { RESUME } from "@/constants/resume";
 
 type CommandLinkItem = {
   title: string;
+  caption?: string;
   href: string;
-
-  icon?: React.ComponentType<LucideProps>;
+  icon?: React.ComponentType<IconProps>;
   iconImage?: string;
   keywords?: string[];
   openInNewTab?: boolean;
 };
 
 const MENU_LINKS: CommandLinkItem[] = [
-  {
-    title: "Home",
-    href: "/",
-    icon: RithvikMark,
-  },
+  { title: "Home", href: "/", icon: HouseIcon },
 ];
 
 const PORTFOLIO_LINKS: CommandLinkItem[] = [
-  {
-    title: "About",
-    href: "/about",
-    icon: LetterTextIcon,
-  },
-  {
-    title: "Tech Stack",
-    href: "/#stack",
-    icon: Icons.ts,
-  },
-  {
-    title: "Experience",
-    href: "/#experience",
-    icon: BriefcaseBusinessIcon,
-  },
-  {
-    title: "Projects",
-    href: "/#projects",
-    icon: Icons.project,
-  },
+  { title: "About", href: "/about", icon: TextAlignLeftIcon },
+  { title: "Tech stack", href: "/#stack", icon: Icons.ts },
+  { title: "Experience", href: "/#experience", icon: BriefcaseIcon },
+  { title: "Projects", href: "/#projects", icon: FolderIcon },
   {
     title: "Download vCard",
+    caption: "Save contact details",
     href: "/api/vcard",
-    icon: CircleUserIcon,
+    icon: UserCircleIcon,
   },
   {
-    title: "View Resume",
+    title: "View resume",
+    caption: "Opens in a new tab",
     href: RESUME.href,
     icon: FileTextIcon,
     openInNewTab: true,
@@ -93,6 +77,7 @@ const PORTFOLIO_LINKS: CommandLinkItem[] = [
 
 const SOCIAL_LINK_ITEMS: CommandLinkItem[] = SOCIAL_LINKS.map((item) => ({
   title: item.title,
+  caption: item.description,
   href: item.href,
   iconImage: item.icon,
   openInNewTab: true,
@@ -100,7 +85,6 @@ const SOCIAL_LINK_ITEMS: CommandLinkItem[] = SOCIAL_LINKS.map((item) => ({
 
 export function CommandMenu() {
   const router = useRouter();
-
   const { setTheme, resolvedTheme } = useTheme();
 
   const [open, setOpen] = useState(false);
@@ -114,8 +98,6 @@ export function CommandMenu() {
       "";
     setIsMac(/mac/i.test(platform) || /mac/i.test(navigator.userAgent));
   }, []);
-
-  const playClick = useSound("/audio/ui-sounds/click.wav");
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -145,7 +127,7 @@ export function CommandMenu() {
           });
         }
       },
-      { signal }
+      { signal },
     );
 
     return () => abortController.abort();
@@ -155,7 +137,9 @@ export function CommandMenu() {
     (href: string, openInNewTab = false) => {
       captureEvent(ANALYTICS_EVENTS.commandMenuItemSelected, { href });
       if (href === "/api/vcard") {
-        captureEvent(ANALYTICS_EVENTS.vcardDownloaded, { source: "command_menu" });
+        captureEvent(ANALYTICS_EVENTS.vcardDownloaded, {
+          source: "command_menu",
+        });
       }
       if (href === RESUME.href) {
         captureEvent(ANALYTICS_EVENTS.resumeOpened, { source: "command_menu" });
@@ -168,7 +152,7 @@ export function CommandMenu() {
         router.push(href);
       }
     },
-    [router]
+    [router],
   );
 
   const handleCopyText = useCallback((text: string, message: string) => {
@@ -180,45 +164,35 @@ export function CommandMenu() {
   const createThemeHandler = useCallback(
     (theme: "light" | "dark" | "system") => () => {
       setOpen(false);
-      playClick();
       setTheme(theme);
-
-      // if (!document.startViewTransition) {
-      //   setTheme(theme);
-      //   return;
-      // }
-
-      // document.startViewTransition(() => setTheme(theme));
     },
-    [playClick, setTheme]
+    [setTheme],
   );
+
+  const markColor = resolvedTheme === "dark" ? "#f2f1ee" : "#1a1917";
 
   return (
     <>
       <Button
-        variant="secondary"
-        className="h-8 gap-1.5 rounded-full border border-input bg-white px-2.5 text-muted-foreground shadow-xs select-none hover:bg-white dark:bg-input/30 dark:hover:bg-input/30"
+        variant="fill"
+        className="h-10 gap-2 px-3 text-fg-2"
         onClick={() => {
-          captureEvent(ANALYTICS_EVENTS.commandMenuOpened, { source: "button" });
+          captureEvent(ANALYTICS_EVENTS.commandMenuOpened, {
+            source: "button",
+          });
           setOpen(true);
         }}
       >
-        <Icons.search aria-hidden />
-
-        <span className="font-sans text-sm/4 font-medium sm:hidden">
-          Search
-        </span>
-
-        <CommandMenuKbd className="hidden tracking-wider sm:flex">
-          {isMac ? "⌘K" : "Ctrl K"}
-        </CommandMenuKbd>
+        <MagnifyingGlassIcon aria-hidden />
+        <span className="sm:hidden">Search</span>
+        <Kbd className="hidden sm:inline-flex">{isMac ? "⌘K" : "Ctrl K"}</Kbd>
       </Button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>
-        <CommandInput placeholder="Type a command or search..." />
+        <CommandInput placeholder="Search pages and actions" />
 
-        <CommandList className="min-h-80 supports-timeline-scroll:scroll-fade-y">
-          <CommandEmpty>No results found.</CommandEmpty>
+        <CommandList>
+          <CommandEmpty>Nothing matches that yet.</CommandEmpty>
 
           <CommandLinkGroup
             heading="Menu"
@@ -226,78 +200,75 @@ export function CommandMenu() {
             onLinkSelect={handleOpenLink}
           />
 
-          <CommandSeparator />
-
           <CommandLinkGroup
             heading="Portfolio"
             links={PORTFOLIO_LINKS}
             onLinkSelect={handleOpenLink}
           />
 
-          <CommandSeparator />
-
           <CommandLinkGroup
-            heading="Social Links"
+            heading="Social"
             links={SOCIAL_LINK_ITEMS}
             onLinkSelect={handleOpenLink}
           />
 
-          <CommandSeparator />
-
-          <CommandGroup heading="Brand Assets">
+          <CommandGroup heading="Brand assets">
             <CommandItem
-              onSelect={() => {
-                handleCopyText(
-                  getMarkSVG(resolvedTheme === "light" ? "#000" : "#fff"),
-                  "Copied Mark as SVG"
-                );
-              }}
+              onSelect={() =>
+                handleCopyText(getMarkSVG(markColor), "Copied the mark as SVG")
+              }
             >
-              <RithvikMark />
-              Copy Mark as SVG
+              <CommandItemTile>
+                <RithvikMark />
+              </CommandItemTile>
+              <CommandItemText>Copy mark as SVG</CommandItemText>
             </CommandItem>
 
             <CommandItem
-              onSelect={() => {
+              onSelect={() =>
                 handleCopyText(
-                  getWordmarkSVG(resolvedTheme === "light" ? "#000" : "#fff"),
-                  "Copied Logotype as SVG"
-                );
-              }}
+                  getWordmarkSVG(markColor),
+                  "Copied the logotype as SVG",
+                )
+              }
             >
-              <TypeIcon />
-              Copy Logotype as SVG
+              <CommandItemTile>
+                <TextTIcon />
+              </CommandItemTile>
+              <CommandItemText>Copy logotype as SVG</CommandItemText>
             </CommandItem>
           </CommandGroup>
-
-          <CommandSeparator />
 
           <CommandGroup heading="Theme">
             <CommandItem
               keywords={["theme"]}
               onSelect={createThemeHandler("light")}
             >
-              <SunMediumIcon />
-              Light
+              <CommandItemTile>
+                <SunIcon />
+              </CommandItemTile>
+              <CommandItemText>Light</CommandItemText>
             </CommandItem>
             <CommandItem
               keywords={["theme"]}
               onSelect={createThemeHandler("dark")}
             >
-              <MoonStarIcon />
-              Dark
+              <CommandItemTile>
+                <MoonIcon />
+              </CommandItemTile>
+              <CommandItemText>Dark</CommandItemText>
             </CommandItem>
             <CommandItem
               keywords={["theme"]}
               onSelect={createThemeHandler("system")}
             >
-              <Icons.contrast />
-              Auto
+              <CommandItemTile>
+                <CircleHalfIcon />
+              </CommandItemTile>
+              <CommandItemText>System</CommandItemText>
             </CommandItem>
           </CommandGroup>
         </CommandList>
-
-        <CommandMenuFooter />
       </CommandDialog>
     </>
   );
@@ -306,18 +277,16 @@ export function CommandMenu() {
 function CommandLinkGroup({
   heading,
   links,
-  fallbackIcon,
   onLinkSelect,
 }: {
   heading: string;
   links: CommandLinkItem[];
-  fallbackIcon?: React.ComponentType<LucideProps>;
   onLinkSelect: (href: string, openInNewTab?: boolean) => void;
 }) {
   return (
     <CommandGroup heading={heading}>
       {links.map((link) => {
-        const Icon = link?.icon ?? fallbackIcon ?? React.Fragment;
+        const Icon = link.icon;
 
         return (
           <CommandItem
@@ -325,104 +294,27 @@ function CommandLinkGroup({
             keywords={link.keywords}
             onSelect={() => onLinkSelect(link.href, link.openInNewTab)}
           >
-            {link?.iconImage ? (
-              <Image
-                className="rounded-sm"
-                src={link.iconImage}
-                alt={link.title}
-                width={16}
-                height={16}
-                unoptimized
-              />
-            ) : (
-              <Icon />
-            )}
-            {link.title}
+            <CommandItemTile>
+              {link.iconImage ? (
+                <Image
+                  className="rounded-[4px]"
+                  src={link.iconImage}
+                  alt=""
+                  width={18}
+                  height={18}
+                  unoptimized
+                />
+              ) : (
+                Icon && <Icon />
+              )}
+            </CommandItemTile>
+            <CommandItemText caption={link.caption}>
+              {link.title}
+            </CommandItemText>
+            {link.openInNewTab && <CommandShortcut>↗</CommandShortcut>}
           </CommandItem>
         );
       })}
     </CommandGroup>
-  );
-}
-
-type CommandKind = "command" | "page" | "link";
-
-type CommandMetaMap = Map<
-  string,
-  {
-    commandKind: CommandKind;
-  }
->;
-
-function buildCommandMetaMap() {
-  const commandMetaMap: CommandMetaMap = new Map();
-
-  commandMetaMap.set("Download vCard", { commandKind: "command" });
-  commandMetaMap.set("View Resume", { commandKind: "link" });
-
-  commandMetaMap.set("Light", { commandKind: "command" });
-  commandMetaMap.set("Dark", { commandKind: "command" });
-  commandMetaMap.set("Auto", { commandKind: "command" });
-
-  commandMetaMap.set("Copy Mark as SVG", {
-    commandKind: "command",
-  });
-  commandMetaMap.set("Copy Logotype as SVG", {
-    commandKind: "command",
-  });
-
-  SOCIAL_LINK_ITEMS.forEach((item) => {
-    commandMetaMap.set(item.title, {
-      commandKind: "link",
-    });
-  });
-
-  return commandMetaMap;
-}
-
-const COMMAND_META_MAP = buildCommandMetaMap();
-
-const ENTER_ACTION_LABELS: Record<CommandKind, string> = {
-  command: "Run Command",
-  page: "Go to Page",
-  link: "Open Link",
-};
-
-function CommandMenuFooter() {
-  const selectedCommandKind = useCommandState(
-    (state) => COMMAND_META_MAP.get(state.value)?.commandKind ?? "page"
-  );
-
-  return (
-    <>
-      <div className="flex h-10" />
-      <div className="absolute inset-x-0 bottom-0 flex h-10 items-center justify-between gap-2 border-t bg-zinc-100/30 px-4 text-xs font-medium dark:bg-zinc-800/30">
-        <RithvikMark className="size-6 text-muted-foreground" aria-hidden />
-        <div className="flex shrink-0 items-center gap-2">
-          <span>{ENTER_ACTION_LABELS[selectedCommandKind]}</span>
-          <CommandMenuKbd>
-            <CornerDownLeftIcon />
-          </CommandMenuKbd>
-          <Separator
-            orientation="vertical"
-            className="data-[orientation=vertical]:h-4"
-          />
-          <span className="text-muted-foreground">Exit</span>
-          <CommandMenuKbd>Esc</CommandMenuKbd>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function CommandMenuKbd({ className, ...props }: React.ComponentProps<"kbd">) {
-  return (
-    <kbd
-      className={cn(
-        "pointer-events-none flex h-5 min-w-6 items-center justify-center gap-1 rounded-sm bg-black/5 px-1 font-sans text-[13px] font-normal text-muted-foreground shadow-[inset_0_-1px_2px] shadow-black/10 select-none dark:bg-white/10 dark:shadow-white/10 dark:text-shadow-xs [&_svg:not([class*='size-'])]:size-3",
-        className
-      )}
-      {...props}
-    />
   );
 }

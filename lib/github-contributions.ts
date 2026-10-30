@@ -1,3 +1,5 @@
+import "server-only";
+
 import { USER } from "@/constants/user";
 import type { Activity } from "@/components/ui/contribution-graph";
 import { GitHubContributionsResponse } from "@/types";
@@ -14,9 +16,9 @@ const CONTRIBUTION_LEVELS: Record<string, number> = {
 };
 
 const CONTRIBUTIONS_QUERY = `
-  query ContributionCalendar($from: DateTime!, $to: DateTime!) {
-    viewer {
-      contributionsCollection(from: $from, to: $to) {
+  query ContributionCalendar($login: String!) {
+    user(login: $login) {
+      contributionsCollection {
         contributionCalendar {
           totalContributions
           weeks {
@@ -34,7 +36,7 @@ const CONTRIBUTIONS_QUERY = `
 
 type GraphQLCalendar = {
   data?: {
-    viewer?: {
+    user?: {
       contributionsCollection?: {
         contributionCalendar?: {
           totalContributions: number;
@@ -59,7 +61,6 @@ export type ContributionsResult = {
 };
 
 async function fetchFromGraphQL(
-  year: number,
   token: string,
 ): Promise<ContributionsResult | null> {
   const response = await fetch(GITHUB_GRAPHQL_URL, {
@@ -71,8 +72,7 @@ async function fetchFromGraphQL(
     body: JSON.stringify({
       query: CONTRIBUTIONS_QUERY,
       variables: {
-        from: `${year}-01-01T00:00:00Z`,
-        to: `${year}-12-31T23:59:59Z`,
+        login: USER.github,
       },
     }),
     next: { revalidate: REVALIDATE_SECONDS },
@@ -86,18 +86,17 @@ async function fetchFromGraphQL(
   const payload = (await response.json()) as GraphQLCalendar;
 
   if (payload.errors?.length) {
-    console.error("[github] GraphQL errors:", payload.errors);
+    console.error("[github] GraphQL returned errors");
     return null;
   }
 
   const calendar =
-    payload.data?.viewer?.contributionsCollection?.contributionCalendar;
+    payload.data?.user?.contributionsCollection?.contributionCalendar;
 
   if (!calendar) return null;
 
   const contributions = calendar.weeks
     .flatMap((week) => week.contributionDays)
-    .filter((day) => day.date.startsWith(String(year)))
     .map((day) => ({
       date: day.date,
       count: day.contributionCount,
@@ -111,9 +110,9 @@ async function fetchFromGraphQL(
   };
 }
 
-async function fetchFromPublicApi(year: number): Promise<ContributionsResult> {
+async function fetchFromPublicApi(): Promise<ContributionsResult> {
   const response = await fetch(
-    `https://github-contributions-api.jogruber.de/v4/${USER.github}?y=${year}`,
+    `https://github-contributions-api.jogruber.de/v4/${USER.github}?y=last`,
     { next: { revalidate: REVALIDATE_SECONDS } },
   );
 
@@ -128,21 +127,24 @@ async function fetchFromPublicApi(year: number): Promise<ContributionsResult> {
   return {
     contributions: data.contributions,
     total:
-      data.total?.[year] ??
+      data.total?.lastYear ??
       data.contributions.reduce((sum, activity) => sum + activity.count, 0),
     includesPrivate: false,
   };
 }
 
 export async function getGitHubContributions(): Promise<ContributionsResult> {
-  const year = new Date().getFullYear();
   const token = process.env.GITHUB_TOKEN;
 
   if (token) {
-    const result = await fetchFromGraphQL(year, token);
-    if (result) return result;
+    try {
+      const result = await fetchFromGraphQL(token);
+      if (result) return result;
+    } catch {
+      console.error("[github] GraphQL request unavailable");
+    }
     console.error("[github] falling back to the public contributions API");
   }
 
-  return fetchFromPublicApi(year);
+  return fetchFromPublicApi();
 }

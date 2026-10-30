@@ -1,10 +1,10 @@
 "use client";
 
+import { CaretDownIcon } from "@phosphor-icons/react/ssr";
 import { Collapsible as CollapsiblePrimitive } from "radix-ui";
-import { createContext, useContext, useEffect, useRef, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
-import type { ChevronsDownUpIconHandle } from "../animated-icons/chevrons-down-up-icon";
-import { ChevronsDownUpIcon } from "../animated-icons/chevrons-down-up-icon";
+import { cn } from "@/lib/utils";
 
 const Collapsible = CollapsiblePrimitive.Root;
 
@@ -23,7 +23,7 @@ const useCollapsible = () => {
 
   if (!context) {
     throw new Error(
-      "Collapsible components must be used within a CollapsibleWithContext"
+      "Collapsible components must be used within a CollapsibleWithContext",
     );
   }
 
@@ -43,29 +43,26 @@ function CollapsibleWithContext({
   );
 }
 
-function CollapsibleChevronsIcon() {
+function CollapsibleCaret({ className }: { className?: string }) {
   const { open } = useCollapsible();
 
-  const ref = useRef<ChevronsDownUpIconHandle>(null);
-
-  useEffect(() => {
-    const controls = ref.current;
-    if (!controls) return;
-
-    if (open) {
-      controls.startAnimation();
-    } else {
-      controls.stopAnimation();
-    }
-  }, [open]);
-
-  return <ChevronsDownUpIcon ref={ref} />;
+  return (
+    <CaretDownIcon
+      aria-hidden
+      className={cn(
+        "size-4 text-fg-2 transition-transform duration-ui ease-std",
+        open && "rotate-180",
+        className,
+      )}
+    />
+  );
 }
 
 export {
   Collapsible,
-  CollapsibleChevronsIcon,
+  CollapsibleCaret,
   CollapsibleContent,
   CollapsibleTrigger,
   CollapsibleWithContext,
+  useCollapsible,
 };

@@ -1,4 +1,4 @@
-import { ArrowUpRightIcon } from "lucide-react";
+import { ArrowUpRightIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SocialLink } from "@/types";

@@ -1,6 +1,6 @@
 "use client";
 
-import { TypeIcon } from "lucide-react";
+import { TextTIcon as TypeIcon } from "@phosphor-icons/react/ssr";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import { copyText } from "@/lib/utils";
@@ -16,6 +16,7 @@ import {
 
 export function BrandContextMenu({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
+  const markColor = resolvedTheme === "dark" ? "#f2f1ee" : "#1a1917";
 
   return (
     <ContextMenu>
@@ -24,27 +25,25 @@ export function BrandContextMenu({ children }: { children: React.ReactNode }) {
       <ContextMenuContent className="w-64">
         <ContextMenuItem
           onClick={() => {
-            const svg = getMarkSVG(resolvedTheme === "light" ? "#000" : "#fff");
+            const svg = getMarkSVG(markColor);
             copyText(svg);
             captureEvent(ANALYTICS_EVENTS.brandAssetCopied, { asset: "mark" });
-            toast.success("Copied Mark as SVG");
+            toast.success("Copied the mark as SVG");
           }}
         >
           <RithvikMark />
-          Copy Mark as SVG
+          Copy mark as SVG
         </ContextMenuItem>
         <ContextMenuItem
           onClick={() => {
-            const svg = getWordmarkSVG(
-              resolvedTheme === "light" ? "#000" : "#fff"
-            );
+            const svg = getWordmarkSVG(markColor);
             copyText(svg);
             captureEvent(ANALYTICS_EVENTS.brandAssetCopied, { asset: "wordmark" });
-            toast.success("Copied Logotype as SVG");
+            toast.success("Copied the logotype as SVG");
           }}
         >
           <TypeIcon />
-          Copy Logotype as SVG
+          Copy logotype as SVG
         </ContextMenuItem>
       </ContextMenuContent>
     </ContextMenu>

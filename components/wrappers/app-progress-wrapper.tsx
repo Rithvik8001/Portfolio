@@ -6,7 +6,7 @@ import { ReactNode } from "react";
 const AppProgressWrapper = ({ children }: { children: ReactNode }) => {
   return (
     <AppProgressProvider
-      color="var(--foreground)"
+      color="var(--brand)"
       height="2px"
       delay={500}
       options={{ showSpinner: false }}

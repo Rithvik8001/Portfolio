@@ -1,4 +1,4 @@
-import { ChevronDownIcon } from "lucide-react";
+import { CaretDownIcon } from "@phosphor-icons/react/ssr";
 import { Slot as SlotPrimitive } from "radix-ui";
 import React from "react";
 
@@ -55,7 +55,7 @@ export function CollapsibleList<T>({
           <CollapsibleTrigger asChild>
             <Button
               className="group/collapsible-trigger flex"
-              variant="default"
+              variant="text"
             >
               <span className="hidden group-data-[state=closed]/collapsible-trigger:block">
                 Show More
@@ -65,8 +65,8 @@ export function CollapsibleList<T>({
                 Show Less
               </span>
 
-              <ChevronDownIcon
-                className="group-data-[state=open]/collapsible-trigger:rotate-180"
+              <CaretDownIcon
+                className="transition-transform duration-ui ease-std group-data-[state=open]/collapsible-trigger:rotate-180"
                 aria-hidden
               />
             </Button>

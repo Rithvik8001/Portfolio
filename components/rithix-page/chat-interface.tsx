@@ -2,7 +2,7 @@
 
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { SendIcon } from "lucide-react";
+import { PaperPlaneRightIcon } from "@phosphor-icons/react/ssr";
 import Image from "next/image";
 import * as React from "react";
 
@@ -232,12 +232,13 @@ export function ChatInterface() {
             autoComplete="off"
           />
           <Button
-            size="icon"
+            variant="primary"
             type="submit"
+            busy={isLoading}
             disabled={!input.trim() || isLoading}
             className="shrink-0"
           >
-            <SendIcon className="size-4" />
+            <PaperPlaneRightIcon className="size-4" />
             <span className="sr-only">Send message</span>
           </Button>
         </form>

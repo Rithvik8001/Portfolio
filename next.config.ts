@@ -9,6 +9,12 @@ import {
 
 const nextConfig: NextConfig = {
   skipTrailingSlashRedirect: true,
+  experimental: {
+    optimizePackageImports: [
+      "@phosphor-icons/react",
+      "@phosphor-icons/react/ssr",
+    ],
+  },
   async rewrites() {
     return [
       ...Object.entries(POSTHOG_SCRIPT_ALIASES).map(([file, alias]) => ({

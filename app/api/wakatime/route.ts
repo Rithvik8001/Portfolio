@@ -6,7 +6,7 @@ export async function GET() {
   const result = await getWakaTimeStatus();
 
   if (!result.ok) {
-    console.error("[wakatime] failed to build status:", result);
+    console.error("[wakatime] failed to build status:", result.reason);
     return NextResponse.json(
       { error: "WakaTime status is temporarily unavailable." },
       {

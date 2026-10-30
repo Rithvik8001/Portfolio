@@ -4,7 +4,7 @@ import { CollapsibleList } from "@/components/ui/collapsible-list";
 import { Panel, PanelHeader, PanelTitle } from "@/components/ui/panel";
 import { PROJECTS } from "@/constants/projects";
 import { SOCIAL_LINKS } from "@/constants/social-links";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRightIcon as ArrowUpRight } from "@phosphor-icons/react/ssr";
 import Link from "next/link";
 
 const GITHUB_PROFILE_HREF =
@@ -28,7 +28,7 @@ export function Projects() {
         renderItem={(item) => <ProjectItem project={item} />}
       />
       <div className="mx-auto flex h-12 w-max items-center justify-center pb-px">
-        <Button asChild variant="default">
+        <Button asChild variant="secondary">
           <Link href={GITHUB_PROFILE_HREF} target="_blank" rel="noopener noreferrer">
             <span className="block">See more on GitHub</span>
             <ArrowUpRight />

@@ -1,7 +1,6 @@
 "use client";
 
 import dayjs from "dayjs";
-import { LoaderIcon } from "lucide-react";
 import { use } from "react";
 
 import type { Activity } from "./contribution-graph";
@@ -18,6 +17,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Skeleton } from "@/components/ui/skeleton";
 import { USER } from "@/constants/user";
 
 export function GitHubContributionGraph({
@@ -37,7 +37,7 @@ export function GitHubContributionGraph({
       data={data}
       blockSize={11}
       blockMargin={3}
-      blockRadius={0}
+      blockRadius={3}
       totalCount={totalCount}
     >
       <ContributionGraphCalendar
@@ -56,7 +56,7 @@ export function GitHubContributionGraph({
               </g>
             </TooltipTrigger>
 
-            <TooltipContent className="font-sans" sideOffset={0}>
+            <TooltipContent sideOffset={2}>
               <p>
                 {activity.count} contribution{activity.count > 1 ? "s" : null}{" "}
                 on {dayjs(activity.date).format("DD.MM.YYYY")}
@@ -68,9 +68,9 @@ export function GitHubContributionGraph({
 
       <ContributionGraphFooter className="px-2">
         <ContributionGraphTotalCount>
-          {({ totalCount, year }) => (
+          {({ totalCount }) => (
             <div className="text-muted-foreground">
-              {totalCount.toLocaleString("en")} contributions in {year} on{" "}
+              {totalCount.toLocaleString("en")} contributions in the last year on{" "}
               <a
                 className="font-medium underline underline-offset-4"
                 href={`https://github.com/${USER.github}`}
@@ -92,8 +92,6 @@ export function GitHubContributionGraph({
 
 export function GitHubContributionFallback() {
   return (
-    <div className="flex h-[162px] w-full items-center justify-center">
-      <LoaderIcon className="animate-spin text-muted-foreground" />
-    </div>
+    <Skeleton className="h-[162px] w-full rounded-card" />
   );
 }

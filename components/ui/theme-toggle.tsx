@@ -1,35 +1,56 @@
 "use client";
 
+import { CircleHalfIcon, MoonIcon, SunIcon } from "@phosphor-icons/react/ssr";
 import { useTheme } from "next-themes";
-import { useCallback } from "react";
-import { useSound } from "@/hooks/use-sound";
+
 import { captureEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
-import { MoonIcon } from "../animated-icons/moon";
-import { SunMediumIcon } from "../animated-icons/sun-medium";
 import { Button } from "./button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "./dropdown-menu";
+
+const OPTIONS = [
+  { value: "light", label: "Light", Icon: SunIcon },
+  { value: "dark", label: "Dark", Icon: MoonIcon },
+  { value: "system", label: "System", Icon: CircleHalfIcon },
+] as const;
 
 export function ThemeToggle() {
-  const { resolvedTheme, systemTheme, setTheme } = useTheme();
+  const { theme, systemTheme, setTheme } = useTheme();
 
-  const playClick = useSound("/audio/ui-sounds/click.wav");
-
-  const switchTheme = useCallback(() => {
-    const next = resolvedTheme === "dark" ? "light" : "dark";
-    const shouldFollowSystem = next === systemTheme;
-
-    playClick();
+  const handleChange = (next: string) => {
     captureEvent(ANALYTICS_EVENTS.themeChanged, {
-      theme: next,
-      follows_system: shouldFollowSystem,
+      theme: next === "system" ? (systemTheme ?? "system") : next,
+      follows_system: next === "system",
     });
-    setTheme(shouldFollowSystem ? "system" : next);
-  }, [resolvedTheme, systemTheme, setTheme, playClick]);
+    setTheme(next);
+  };
 
   return (
-    <Button variant="ghost" size="icon" onClick={switchTheme}>
-      <MoonIcon className="relative hidden after:absolute after:-inset-2 [html.dark_&]:block" />
-      <SunMediumIcon className="relative hidden after:absolute after:-inset-2 [html.light_&]:block" />
-      <span className="sr-only">Theme Toggle</span>
-    </Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="icon" aria-label="Change theme">
+          <SunIcon className="size-5 dark:hidden" />
+          <MoonIcon className="hidden size-5 dark:block" />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-44">
+        <DropdownMenuRadioGroup
+          value={theme ?? "system"}
+          onValueChange={handleChange}
+        >
+          {OPTIONS.map(({ value, label, Icon }) => (
+            <DropdownMenuRadioItem key={value} value={value}>
+              <Icon />
+              {label}
+            </DropdownMenuRadioItem>
+          ))}
+        </DropdownMenuRadioGroup>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

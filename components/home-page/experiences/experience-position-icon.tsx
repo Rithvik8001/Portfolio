@@ -1,21 +1,21 @@
 import { ExperiencePositionIcon } from "@/types";
-import type { LucideProps } from "lucide-react";
+import type { IconProps } from "@phosphor-icons/react";
 import {
-  BriefcaseBusinessIcon,
-  CodeXmlIcon,
-  DraftingCompassIcon,
+  BriefcaseIcon,
+  CodeIcon,
+  CompassToolIcon,
   GraduationCapIcon,
   LightbulbIcon,
-} from "lucide-react";
+} from "@phosphor-icons/react/ssr";
 
 const iconMap: Record<
   ExperiencePositionIcon,
-  React.ComponentType<LucideProps>
+  React.ComponentType<IconProps>
 > = {
-  code: CodeXmlIcon,
-  design: DraftingCompassIcon,
+  code: CodeIcon,
+  design: CompassToolIcon,
   education: GraduationCapIcon,
-  business: BriefcaseBusinessIcon,
+  business: BriefcaseIcon,
   idea: LightbulbIcon,
 };
 
@@ -24,7 +24,7 @@ export function ExperienceIcon({
   ...props
 }: {
   icon: ExperiencePositionIcon | undefined;
-} & LucideProps) {
-  const IconComponent = icon ? iconMap[icon] : BriefcaseBusinessIcon;
+} & IconProps) {
+  const IconComponent = icon ? iconMap[icon] : BriefcaseIcon;
   return <IconComponent {...props} />;
 }

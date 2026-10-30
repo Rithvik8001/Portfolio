@@ -1,4 +1,4 @@
-import { ProseMono } from "@/components/ui/typography";
+import { Prose } from "@/components/ui/typography";
 import { Panel, PanelHeader, PanelTitle } from "@/components/ui/panel";
 import { BELIEFS } from "@/constants/beliefs";
 
@@ -11,7 +11,7 @@ export function Beliefs() {
         <PanelHeader>
           <PanelTitle>Beliefs</PanelTitle>
         </PanelHeader>
-        <ProseMono className="col-span-2">
+        <Prose className="col-span-2">
           <div>
             <ul className="m-[0_!important]">
               {BELIEFS.map((belief, index) => (
@@ -25,7 +25,7 @@ export function Beliefs() {
               ))}
             </ul>
           </div>
-        </ProseMono>
+        </Prose>
       </div>
     </Panel>
   );

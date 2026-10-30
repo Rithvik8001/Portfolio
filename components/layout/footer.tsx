@@ -27,7 +27,3 @@ export function Footer() {
     </footer>
   );
 }
-
-function Separator() {
-  return <div className="flex h-11 w-px bg-edge" />;
-}

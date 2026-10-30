@@ -1,5 +1,5 @@
 import { Panel, PanelContent } from "@/components/ui/panel";
-import { ProseMono } from "@/components/ui/typography";
+import { Prose } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import SectionSeparator from "@/components/ui/section-separator";
@@ -51,7 +51,7 @@ export default function Page() {
         </div>
         <Panel id="about">
           <PanelContent>
-            <ProseMono>
+            <Prose>
               <p>
                 Hey, I'm Rithvik — welcome to my space on the internet! I'm a
                 self-taught Full Stack Web Developer who discovered the power of
@@ -89,7 +89,7 @@ export default function Page() {
                 refining user experiences, or cheering for a Man U goal, I bring
                 passion and dedication to everything I do.
               </p>
-            </ProseMono>
+            </Prose>
           </PanelContent>
         </Panel>
         <SectionSeparator />

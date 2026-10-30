@@ -1,9 +1,7 @@
 import Image from "next/image";
 
 import { EditorStatus } from "@/components/home-page/header-cover/editor-status";
-import { FlipSentences } from "@/components/ui/flip-sentences";
 import { VerifiedIcon } from "./verified-icon";
-import { FLIP_SENTENCES } from "@/constants/flip-sentences";
 import { USER } from "@/constants/user";
 
 export function ProfileHeader() {
@@ -44,9 +42,7 @@ export function ProfileHeader() {
           </h1>
 
           <div className="h-12 border-t border-edge py-1 pl-4 sm:h-auto">
-            <FlipSentences className="font-mono text-sm text-balance text-muted-foreground">
-              {FLIP_SENTENCES}
-            </FlipSentences>
+            <p className="text-caption text-fg-2">{USER.bio}</p>
           </div>
         </div>
       </div>
