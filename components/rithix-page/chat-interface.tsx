@@ -21,6 +21,8 @@ import {
 import { MAX_CHAT_MESSAGE_CHARS } from "@/lib/chat-limits";
 import { Input } from "@/components/ui/input";
 
+import { useSmoothText } from "@/hooks/use-smooth-text";
+
 import { ChatMessage } from "./chat-message";
 
 const QUICK_QUESTIONS = [
@@ -66,12 +68,12 @@ export function ChatInterface() {
   const parsedError = error ? parseChatRequestError(error) : null;
   const isLoading = status === "submitted" || status === "streaming";
 
-  const scrollToBottom = () => {
+  const scrollToBottom = React.useCallback(() => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTop =
         messagesContainerRef.current.scrollHeight;
     }
-  };
+  }, []);
 
   React.useEffect(() => {
     scrollToBottom();
@@ -161,33 +163,46 @@ export function ChatInterface() {
                 message.role === "assistant" &&
                 message.id === lastVisibleMessage?.id;
 
+              const avatar =
+                message.role === "assistant" ? (
+                  <Image
+                    src={USER.avatar}
+                    alt={`${USER.fullName} avatar`}
+                    width={32}
+                    height={32}
+                    className="size-8 rounded-full object-cover ring-1 ring-border"
+                    loading="eager"
+                    unoptimized
+                  />
+                ) : undefined;
+              const timestamp = new Date().toLocaleTimeString([], {
+                hour: "2-digit",
+                minute: "2-digit",
+              });
+
+              if (message.role === "assistant") {
+                return (
+                  <StreamedAssistantMessage
+                    key={message.id}
+                    content={getMessageText(message.parts)}
+                    streaming={isStreamingBubble}
+                    timestamp={timestamp}
+                    avatar={avatar}
+                    onGrow={scrollToBottom}
+                  />
+                );
+              }
+
               return (
                 <ChatMessage
                   key={message.id}
-                  role={message.role as "user" | "assistant"}
+                  role="user"
                   content={getMessageText(message.parts)}
-                  timestamp={new Date().toLocaleTimeString([], {
-                    hour: "2-digit",
-                    minute: "2-digit",
-                  })}
-                  ariaHidden={isStreamingBubble}
-                  avatar={
-                    message.role === "assistant" ? (
-                      <Image
-                        src={USER.avatar}
-                        alt={`${USER.fullName} avatar`}
-                        width={32}
-                        height={32}
-                        className="size-8 rounded-full object-cover ring-1 ring-border"
-                        loading="eager"
-                        unoptimized
-                      />
-                    ) : undefined
-                  }
+                  timestamp={timestamp}
                 />
               );
             })}
-            {isLoading && (
+            {status === "submitted" && (
               <div
                 className="flex w-fit items-center gap-1 rounded-lg bg-accent px-4 py-2"
                 aria-hidden="true"
@@ -243,5 +258,36 @@ export function ChatInterface() {
         </form>
       </div>
     </div>
+  );
+}
+
+function StreamedAssistantMessage({
+  content,
+  streaming,
+  timestamp,
+  avatar,
+  onGrow,
+}: {
+  content: string;
+  streaming: boolean;
+  timestamp: string;
+  avatar?: React.ReactNode;
+  onGrow: () => void;
+}) {
+  const { text, settled } = useSmoothText(content, streaming);
+
+  React.useEffect(() => {
+    if (!settled) onGrow();
+  }, [text, settled, onGrow]);
+
+  return (
+    <ChatMessage
+      role="assistant"
+      content={text}
+      timestamp={settled ? timestamp : undefined}
+      avatar={avatar}
+      ariaHidden={!settled}
+      streaming={!settled}
+    />
   );
 }

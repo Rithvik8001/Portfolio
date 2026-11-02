@@ -10,15 +10,16 @@ export const EXPERIENCES: Experience[] = [
         id: "tcs-associate-web-dev",
         title: "Associate Web Developer",
         employmentPeriod: {
-          start: "07.2024",
+          start: "03.2024",
         },
         employmentType: "Full-time",
         icon: "code",
-        description: `- Built and maintained REST APIs for reporting/analytics workflows, implementing pagination, filtering, sorting, and aggregation to support dashboard use cases.
-- Optimized data access in MongoDB by refining aggregation pipelines (match early, projection trimming, stage ordering) and adding compound indexes aligned to query patterns to reduce slow queries and improve consistency under large datasets.
-- Implemented frontend data/state management using Redux Toolkit and RTK Query patterns (cache + invalidation + predictable loading/error handling) to keep UI data consistent and reduce repeated fetching across screens.
-- Built an API client layer with Axios interceptors to handle token refresh flow, normalize errors, and prevent repeated failure loops—improving session stability and reducing auth-related UI breakages.`,
-        skills: ["Node.js", "Express", "Redux Toolkit", "RTK Query", "MongoDB", "Axios", "REST APIs"],
+        description: `- Reduced p95 latency on core reporting endpoints by analyzing PostgreSQL query plans, replacing sequential scans with composite and covering indexes matched to filter and sort columns, and pre-aggregating large tables before joins.
+- Built and maintained Node.js/Express REST APIs behind six analytics dashboards, using keyset pagination with server-side filtering, sorting and SQL aggregation over PostgreSQL.
+- Implemented server-side CSV and Excel exports for large reports using PostgreSQL cursors and Node.js streams, enabling downloads of 100K+ rows without request timeouts or memory spikes.
+- Resolved a token-refresh race condition causing unexpected logouts under concurrent 401s by implementing a single-flight refresh in the Axios interceptor, replaying queued requests once with the new token.
+- Migrated dashboard data fetching to RTK Query with tag-based cache invalidation, eliminating redundant network requests during view navigation.`,
+        skills: ["Node.js", "Express", "PostgreSQL", "REST APIs", "RTK Query", "Axios"],
       },
     ],
     isCurrentEmployer: true,

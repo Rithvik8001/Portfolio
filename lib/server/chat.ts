@@ -18,7 +18,7 @@ import {
   MAX_CHAT_MESSAGES,
   MAX_CHAT_OUTPUT_TOKENS,
 } from "@/lib/chat-limits";
-import { SYSTEM_PROMPT } from "@/lib/chat-prompt";
+import { buildSystemPrompt } from "@/lib/chat-prompt";
 
 export const CHAT_MODEL = "claude-haiku-5-5";
 export {
@@ -79,17 +79,9 @@ function isTextPart(part: UIMessage["parts"][number]): part is TextPart {
   return part.type === "text";
 }
 
-function isAssistantProtocolPart(part: UIMessage["parts"][number]): boolean {
-  return (
-    part.type === "text" ||
-    part.type === "step-start" ||
-    part.type === "reasoning"
-  );
-}
-
 function hasUnsupportedParts(message: UIMessage): boolean {
   if (message.role === "assistant") {
-    return message.parts.some((part) => !isAssistantProtocolPart(part));
+    return !message.parts.some(isTextPart);
   }
 
   return message.parts.some((part) => part.type !== "text");
@@ -199,7 +191,7 @@ export async function createChatResponse({
 }: CreateChatResponseOptions): Promise<Response> {
   const result = streamText({
     model: anthropic(CHAT_MODEL),
-    instructions: SYSTEM_PROMPT,
+    instructions: buildSystemPrompt(),
     messages: await convertToModelMessages(messages),
     abortSignal,
     maxOutputTokens: MAX_CHAT_OUTPUT_TOKENS,

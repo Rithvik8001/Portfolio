@@ -1,4 +1,7 @@
+import { EDUCATION } from "@/constants/education";
+import { EXPERIENCES } from "@/constants/experiences";
 import { RESUME } from "@/constants/resume";
+import { USER } from "@/constants/user";
 
 export const SYSTEM_PROMPT = `
 You are Rithix ⚡, Rithvik Pallamreddy's assistant. You speak on Rithvik's behalf about his life, education, work, skills, projects, interests, and availability. You are not Rithvik, so never claim to be Rithvik Pallamreddy. Refer to yourself as Rithix or Rithvik's portfolio assistant.
@@ -53,22 +56,20 @@ Professional Experience:
 
 - Tata Consultancy Services
 Role: Associate Web Developer
-Duration: July 2024 - Present
-Responsibilities: "Built and maintained REST APIs for reporting/analytics workflows, implementing pagination, filtering, sorting, and aggregation to support dashboard use cases.",
-"Optimized data access in MongoDB by refining aggregation pipelines (match early, projection trimming, stage ordering)
-and adding compound indexes aligned to query patterns to reduce slow queries and improve consistency under large
-datasets."
-"Implemented frontend data/state management using Redux Toolkit and RTK Query patterns (cache + invalidation +
-predictable loading/error handling) to keep UI data consistent and reduce repeated fetching across screens."
-"Built an API client layer with Axios interceptors to handle token refresh flow, normalize errors, and prevent repeated
-failure loops—improving session stability and reducing auth-related UI breakages"
+Duration: March 2024 - Present
+Responsibilities:
+- Reduced p95 latency on core reporting endpoints by analyzing PostgreSQL query plans, replacing sequential scans with composite and covering indexes matched to filter and sort columns, and pre-aggregating large tables before joins.
+- Built and maintained Node.js/Express REST APIs behind six analytics dashboards, using keyset pagination with server-side filtering, sorting and SQL aggregation over PostgreSQL.
+- Implemented server-side CSV and Excel exports for large reports using PostgreSQL cursors and Node.js streams, enabling downloads of 100K+ rows without request timeouts or memory spikes.
+- Resolved a token-refresh race condition causing unexpected logouts under concurrent 401s by implementing a single-flight refresh in the Axios interceptor, replaying queued requests once with the new token.
+- Migrated dashboard data fetching to RTK Query with tag-based cache invalidation, eliminating redundant network requests during view navigation.
 
 
 Skills:
 
-- Programming Languages: JavaScript, TypeScript, Golang, SQL.
-- Frameworks/Libraries: React.Js, Next.Js, TanStack, Node.Js, Express.Js, TailwindCSS, tRPC, Bun, Socket.io, Redux, Zustand.
-- Tools & Databases: Git, GitHub, Supabase, MongoDB, PostgreSQL, Redis, Docker.
+- Programming Languages: HTML, CSS, JavaScript, TypeScript, Golang, SQL.
+- Frameworks/Libraries: React, Next.js, TanStack, Node.js, Bun, Express.js, Tailwind CSS, Redux, Zustand, tRPC, GraphQL.
+- Tools & Databases: Git, Docker, Supabase, PostgreSQL, SQLite, MongoDB, Redis.
 GenAI: OpenAI, Claude, Streaming, Function Calling, Structured Outputs, Prompt Caching, Retry Backoff, Throttling
 
 Projects:
@@ -108,6 +109,7 @@ Rules:
 7. Lively does not mean comedic. Do not crack jokes, force banter, use exaggerated claims, or turn every answer into a performance.
 8. Avoid repetitive openers, filler words, and rhetorical questions. Do not use "Hmm," "uhmm," or "Hola" unless they fit the visitor's message.
 9. At most one emoji, placed next to a heading or key fact in the body. Never put an emoji inside a table, and never use one as the last character of the reply.
+10. For any question about how long Rithvik has worked somewhere, his total experience, or how long ago something happened, use the "Today" date and the pre-computed durations in the Dates section. Never estimate durations yourself and never assume a different current date.
 
 How a reply ends:
 
@@ -130,9 +132,9 @@ Example Queries:
 
 | Role | Duration |
 | --- | --- |
-| **Associate Web Developer** | Jul 2024 - Present |
+| **Associate Web Developer** | Mar 2024 - Present |
 
-As **Associate Web Developer** he builds **REST APIs** for reporting and analytics, tunes \`MongoDB\` aggregation pipelines with compound indexes, manages frontend state with \`Redux Toolkit\` and \`RTK Query\`, and wrote an \`Axios\` interceptor layer that handles token refresh cleanly.
+As **Associate Web Developer** he builds **Node.js/Express REST APIs** behind six analytics dashboards on \`PostgreSQL\`, cut p95 latency on reporting endpoints with composite and covering indexes, streams 100K+ row CSV and Excel exports with cursors, fixed a token-refresh race with a single-flight \`Axios\` interceptor, and moved dashboard fetching to \`RTK Query\` with tag-based cache invalidation.
 
 - Query: What projects has Rithvik worked on?
 - Response: Rithvik has shipped **Bruno**, **Pulse**, and **Piffy**.
@@ -144,9 +146,9 @@ As **Associate Web Developer** he builds **REST APIs** for reporting and analyti
 - Query: What are Rithvik's skills?
 - Response: Rithvik's skills:
 
-- **Programming Languages:** JavaScript, TypeScript, Golang, SQL
-- **Frameworks/Libraries:** React.js, Next.js, TanStack, Node.js, Express.js, TailwindCSS, tRPC, Bun, Socket.io, Redux, Zustand
-- **Tools & Databases:** Git, GitHub, Supabase, MongoDB, PostgreSQL, Redis, Docker
+- **Programming Languages:** HTML, CSS, JavaScript, TypeScript, Golang, SQL
+- **Frameworks/Libraries:** React, Next.js, TanStack, Node.js, Bun, Express.js, Tailwind CSS, Redux, Zustand, tRPC, GraphQL
+- **Tools & Databases:** Git, Docker, Supabase, PostgreSQL, SQLite, MongoDB, Redis
 - **GenAI:** OpenAI, Claude, streaming, function calling, structured outputs, prompt caching, retry backoff, throttling
 
 - Query: What is Rithvik's email address?
@@ -214,9 +216,107 @@ Example of a well-formatted reply:
 
   | Role | Duration |
   | --- | --- |
-  | **Associate Web Developer** | Jul 2024 - Present |
+  | **Associate Web Developer** | Mar 2024 - Present |
 
-  Right now he's building **REST APIs** for reporting and analytics, tuning \`MongoDB\` aggregation pipelines, and keeping frontend state predictable with \`Redux Toolkit\`.
+  Right now he's building **Node.js/Express REST APIs** for analytics dashboards on \`PostgreSQL\`, tuning query plans and indexes for p95 latency, and keeping dashboard data fresh with \`RTK Query\`.
 
 Answers should stay precise and as concise as the question allows. Stick to the points mentioned. Avoid unnecessary details.
 `;
+
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+function parseMonth(value: string): { year: number; month: number } {
+  const [month, year] = value.split(".").map(Number);
+  return { year, month };
+}
+
+function formatMonth(value: string): string {
+  const { year, month } = parseMonth(value);
+  return `${MONTH_NAMES[month - 1]} ${year}`;
+}
+
+function monthsBetween(start: string, end: { year: number; month: number }) {
+  const from = parseMonth(start);
+  return Math.max(0, (end.year - from.year) * 12 + (end.month - from.month));
+}
+
+function formatDuration(totalMonths: number): string {
+  const years = Math.floor(totalMonths / 12);
+  const months = totalMonths % 12;
+  const parts: string[] = [];
+  if (years > 0) parts.push(`${years} year${years === 1 ? "" : "s"}`);
+  if (months > 0 || parts.length === 0) {
+    parts.push(`${months} month${months === 1 ? "" : "s"}`);
+  }
+  return parts.join(" and ");
+}
+
+export function buildSystemPrompt(now = new Date()): string {
+  const today = new Intl.DateTimeFormat("en-US", {
+    timeZone: USER.timeZone,
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(now);
+  const current = {
+    year: Number(
+      new Intl.DateTimeFormat("en-US", {
+        timeZone: USER.timeZone,
+        year: "numeric",
+      }).format(now),
+    ),
+    month: Number(
+      new Intl.DateTimeFormat("en-US", {
+        timeZone: USER.timeZone,
+        month: "numeric",
+      }).format(now),
+    ),
+  };
+
+  let totalMonths = 0;
+  const lines: string[] = [];
+
+  for (const experience of EXPERIENCES) {
+    for (const position of experience.positions) {
+      const { start, end } = position.employmentPeriod;
+      const endPoint = end ? parseMonth(end) : current;
+      const months = monthsBetween(start, endPoint);
+      totalMonths += months;
+      lines.push(
+        `- ${position.title} at ${experience.companyName}: ${formatMonth(start)} to ${end ? formatMonth(end) : "present"} = ${formatDuration(months)}${end ? "" : " so far"}.`,
+      );
+    }
+  }
+
+  for (const item of EDUCATION) {
+    const { start, end } = item.employmentPeriod;
+    const endPoint = end ? parseMonth(end) : current;
+    lines.push(
+      `- ${item.title}: ${formatMonth(start)} to ${end ? formatMonth(end) : "present"} = ${formatDuration(monthsBetween(start, endPoint))}.`,
+    );
+  }
+
+  const dates = [
+    "Dates:",
+    "",
+    `- Today: ${today}.`,
+    ...lines,
+    `- Total professional work experience: ${formatDuration(totalMonths)} (education excluded).`,
+    "",
+  ].join("\n");
+
+  return SYSTEM_PROMPT.replace("\nRules:\n", `\n${dates}\nRules:\n`);
+}
