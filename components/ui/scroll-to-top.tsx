@@ -5,6 +5,7 @@ import { useMotionValueEvent, useScroll } from "motion/react";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import { ANALYTICS_EVENTS, track } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 export function ScrollToTop({
@@ -37,7 +38,10 @@ export function ScrollToTop({
       )}
       variant="secondary"
       size="icon-lg"
-      onClick={() => window.scrollTo({ top: 0 })}
+      onClick={() => {
+        track(ANALYTICS_EVENTS.scrollToTop);
+        window.scrollTo({ top: 0 });
+      }}
       {...props}
     >
       <ArrowUpIcon className="size-5" />

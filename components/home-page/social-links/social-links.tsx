@@ -2,15 +2,30 @@ import { Panel } from "../../ui/panel";
 import { SocialLinkItem } from "./social-link-item";
 import { RESUME } from "@/constants/resume";
 import { SOCIAL_LINKS } from "@/constants/social-links";
+import {
+  ANALYTICS_EVENTS,
+  getSocialPlatform,
+  trackingAttributes,
+} from "@/lib/analytics";
 
 const GRID_LINKS = [
-  ...SOCIAL_LINKS.map((link) => ({ ...link, rel: "noopener" as const })),
+  ...SOCIAL_LINKS.map((link) => ({
+    ...link,
+    rel: "noopener" as const,
+    event: trackingAttributes(ANALYTICS_EVENTS.socialClick, {
+      platform: getSocialPlatform(link.href),
+      source: "social_tile",
+    }),
+  })),
   {
     icon: RESUME.icon,
     title: RESUME.title,
     description: RESUME.description,
     href: RESUME.href,
     rel: "noopener noreferrer" as const,
+    event: trackingAttributes(ANALYTICS_EVENTS.resumeOpen, {
+      source: "social_tile",
+    }),
   },
 ];
 

@@ -3,7 +3,8 @@ import rehypeExternalLinks from "rehype-external-links";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
 import { UTM_PARAMS } from "@/constants/utm-params";
-import { rehypeAddQueryParams } from "@/lib/utils";
+import { ANALYTICS_EVENTS } from "@/lib/analytics";
+import { rehypeAddQueryParams, rehypeTrackLinks } from "@/lib/utils";
 
 export function Markdown(props: React.ComponentProps<typeof MarkdownAsync>) {
   return (
@@ -15,6 +16,7 @@ export function Markdown(props: React.ComponentProps<typeof MarkdownAsync>) {
           rehypeExternalLinks,
           { target: "_blank", rel: "nofollow noopener noreferrer" },
         ],
+        [rehypeTrackLinks, ANALYTICS_EVENTS.markdownLinkClick],
         [rehypeAddQueryParams, UTM_PARAMS],
       ]}
       {...props}

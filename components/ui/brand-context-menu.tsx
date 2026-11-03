@@ -4,7 +4,7 @@ import { TypeIcon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { toast } from "sonner";
 import { copyText } from "@/lib/utils";
-import { captureEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
+import { ANALYTICS_EVENTS, track } from "@/lib/analytics";
 import { RithvikMark, getMarkSVG } from "./rithvik-mark";
 import { getWordmarkSVG } from "./rithvik-wordmark";
 import {
@@ -26,7 +26,10 @@ export function BrandContextMenu({ children }: { children: React.ReactNode }) {
           onClick={() => {
             const svg = getMarkSVG(resolvedTheme === "light" ? "#000" : "#fff");
             copyText(svg);
-            captureEvent(ANALYTICS_EVENTS.brandAssetCopied, { asset: "mark" });
+            track(ANALYTICS_EVENTS.brandCopy, {
+              asset: "mark",
+              source: "context_menu",
+            });
             toast.success("Copied Mark as SVG");
           }}
         >
@@ -39,7 +42,10 @@ export function BrandContextMenu({ children }: { children: React.ReactNode }) {
               resolvedTheme === "light" ? "#000" : "#fff"
             );
             copyText(svg);
-            captureEvent(ANALYTICS_EVENTS.brandAssetCopied, { asset: "wordmark" });
+            track(ANALYTICS_EVENTS.brandCopy, {
+              asset: "logotype",
+              source: "context_menu",
+            });
             toast.success("Copied Logotype as SVG");
           }}
         >

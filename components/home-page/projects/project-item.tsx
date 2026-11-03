@@ -13,8 +13,7 @@ import { Icons } from "@/components/ui/icons";
 import { addQueryParams } from "@/lib/utils";
 import { UTM_PARAMS } from "@/constants/utm-params";
 import { Markdown } from "@/components/ui/markdown";
-import { TrackedLink } from "@/components/analytics/tracked-link";
-import { ANALYTICS_EVENTS } from "@/lib/analytics";
+import { ANALYTICS_EVENTS, trackingAttributes } from "@/lib/analytics";
 
 export function ProjectItem({
   className,
@@ -24,7 +23,12 @@ export function ProjectItem({
   project: Project;
 }) {
   return (
-    <CollapsibleWithContext defaultOpen={project.isExpanded} asChild>
+    <CollapsibleWithContext
+      defaultOpen={project.isExpanded}
+      trackEvent={ANALYTICS_EVENTS.projectToggle}
+      trackData={{ project: project.title }}
+      asChild
+    >
       <div className={className}>
         <div className="flex items-center hover:bg-accent2">
           <div
@@ -52,17 +56,18 @@ export function ProjectItem({
               </CollapsibleTrigger>
 
               <SimpleTooltip content="Open Project Link">
-                <TrackedLink
-                  event={ANALYTICS_EVENTS.projectLinkOpened}
-                  eventProperties={{ project: project.title }}
+                <a
                   className="relative flex size-6 shrink-0 items-center justify-center text-muted-foreground after:absolute after:-inset-2 hover:text-foreground"
                   href={addQueryParams(project.link, UTM_PARAMS)}
                   target="_blank"
                   rel="noopener noreferrer"
+                  {...trackingAttributes(ANALYTICS_EVENTS.projectOpen, {
+                    project: project.title,
+                  })}
                 >
                   <LinkIcon className="pointer-events-none size-4" />
                   <span className="sr-only">Open Project Link</span>
-                </TrackedLink>
+                </a>
               </SimpleTooltip>
             </div>
           </div>

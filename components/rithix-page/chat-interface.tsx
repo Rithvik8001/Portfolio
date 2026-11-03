@@ -8,12 +8,7 @@ import * as React from "react";
 
 import { Button } from "@/components/ui/button";
 import { USER } from "@/constants/user";
-import {
-  ANALYTICS_EVENTS,
-  captureError,
-  captureEvent,
-  getAnalyticsContext,
-} from "@/lib/analytics";
+import { ANALYTICS_EVENTS, track } from "@/lib/analytics";
 import {
   formatChatRetryMessage,
   parseChatRequestError,
@@ -26,10 +21,14 @@ import { useSmoothText } from "@/hooks/use-smooth-text";
 import { ChatMessage } from "./chat-message";
 
 const QUICK_QUESTIONS = [
-  "What technologies do you work with?",
-  "Tell me about your recent projects",
-  "How can I contact you for work?",
+  { id: "technologies", text: "What technologies do you work with?" },
+  { id: "projects", text: "Tell me about your recent projects" },
+  { id: "contact", text: "How can I contact you for work?" },
 ];
+
+function countUserTurns(messages: { role: string }[]): number {
+  return messages.filter((message) => message.role === "user").length;
+}
 
 function getMessageText(
   parts: { type: string; text?: string }[],
@@ -44,23 +43,22 @@ export function ChatInterface() {
   const [input, setInput] = React.useState("");
 
   const { messages, sendMessage, status, error, clearError } = useChat({
-    transport: new DefaultChatTransport({
-      api: "/api/chat",
-      headers: (): Record<string, string> => {
-        const context = getAnalyticsContext();
-        if (!context) return {};
-        return {
-          "x-posthog-distinct-id": context.distinctId,
-          "x-posthog-session-id": context.sessionId ?? "",
-        };
-      },
-    }),
-    onError: (chatError) => {
-      captureError(chatError, { surface: "rithix_chat" });
-    },
-    onFinish: ({ isAbort, isDisconnect, isError }) => {
+    transport: new DefaultChatTransport({ api: "/api/chat" }),
+    onFinish: ({ messages, isAbort, isDisconnect, isError, finishReason }) => {
       if (isAbort || isDisconnect || isError) return;
-      captureEvent(ANALYTICS_EVENTS.chatResponseReceived);
+      track(ANALYTICS_EVENTS.chatResponseFinished, {
+        turn: countUserTurns(messages),
+        finish_reason: finishReason ?? "unknown",
+      });
+    },
+    onError: (chatError) => {
+      const { retryAfterSeconds } = parseChatRequestError(chatError);
+      track(
+        ANALYTICS_EVENTS.chatError,
+        retryAfterSeconds
+          ? { type: "rate_limited", retry_after: retryAfterSeconds }
+          : { type: "request_failed" },
+      );
     },
   });
 
@@ -79,13 +77,17 @@ export function ChatInterface() {
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = (text: string) => {
+  const handleSend = (
+    text: string,
+    source: "input" | "quick_question" = "input",
+  ) => {
     if (!text.trim() || isLoading) return;
 
     clearError();
-    captureEvent(ANALYTICS_EVENTS.chatMessageSent, {
-      length: text.length,
-      turn: messages.length + 1,
+    track(ANALYTICS_EVENTS.chatMessageSent, {
+      source,
+      length: text.trim().length,
+      turn: countUserTurns(messages) + 1,
     });
     sendMessage({ text });
     setInput("");
@@ -96,9 +98,9 @@ export function ChatInterface() {
     handleSend(input);
   };
 
-  const handleQuickQuestion = (question: string) => {
-    captureEvent(ANALYTICS_EVENTS.chatQuickQuestionClicked, { question });
-    handleSend(question);
+  const handleQuickQuestion = (question: (typeof QUICK_QUESTIONS)[number]) => {
+    track(ANALYTICS_EVENTS.chatQuickQuestion, { question: question.id });
+    handleSend(question.text, "quick_question");
   };
 
   const visibleMessages = messages.filter((message) => message.role !== "system");
@@ -142,14 +144,14 @@ export function ChatInterface() {
             <div className="flex flex-col gap-2">
               <p className="text-xs text-muted-foreground">Quick questions:</p>
               <div className="flex flex-wrap gap-2">
-                {QUICK_QUESTIONS.map((question, index) => (
+                {QUICK_QUESTIONS.map((question) => (
                   <button
-                    key={index}
+                    key={question.id}
                     className="max-w-full truncate rounded-full border border-input bg-background px-4 py-1.5 text-xs whitespace-nowrap transition-colors hover:bg-accent hover:text-accent-foreground"
                     onClick={() => handleQuickQuestion(question)}
                     disabled={isLoading}
                   >
-                    {question}
+                    {question.text}
                   </button>
                 ))}
               </div>

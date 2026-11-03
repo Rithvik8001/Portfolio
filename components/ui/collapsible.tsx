@@ -3,6 +3,8 @@
 import { Collapsible as CollapsiblePrimitive } from "radix-ui";
 import { createContext, useContext, useEffect, useRef, useState } from "react";
 
+import { track, type AnalyticsEvent } from "@/lib/analytics";
+
 import type { ChevronsDownUpIconHandle } from "../animated-icons/chevrons-down-up-icon";
 import { ChevronsDownUpIcon } from "../animated-icons/chevrons-down-up-icon";
 
@@ -32,13 +34,25 @@ const useCollapsible = () => {
 
 function CollapsibleWithContext({
   defaultOpen,
+  trackEvent,
+  trackData,
   ...props
-}: React.ComponentProps<typeof Collapsible>) {
+}: React.ComponentProps<typeof Collapsible> & {
+  trackEvent?: AnalyticsEvent;
+  trackData?: Record<string, string>;
+}) {
   const [open, setOpen] = useState(defaultOpen ?? false);
+
+  const handleOpenChange = (next: boolean) => {
+    setOpen(next);
+    if (trackEvent) {
+      track(trackEvent, { ...trackData, state: next ? "open" : "closed" });
+    }
+  };
 
   return (
     <CollapsibleContext.Provider value={{ open }}>
-      <Collapsible open={open} onOpenChange={setOpen} {...props} />
+      <Collapsible open={open} onOpenChange={handleOpenChange} {...props} />
     </CollapsibleContext.Provider>
   );
 }

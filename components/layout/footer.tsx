@@ -1,3 +1,5 @@
+import { ANALYTICS_EVENTS, trackingAttributes } from "@/lib/analytics";
+
 export function Footer() {
   return (
     <footer className="max-w-screen overflow-x-hidden px-2">
@@ -9,6 +11,10 @@ export function Footer() {
             href="https://x.com/rithvik1907"
             target="_blank"
             rel="noopener"
+            {...trackingAttributes(ANALYTICS_EVENTS.socialClick, {
+              platform: "x",
+              source: "footer",
+            })}
           >
             Rithvik
           </a>

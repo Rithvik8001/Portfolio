@@ -4,6 +4,8 @@ import dayjs from "dayjs";
 import { LoaderIcon } from "lucide-react";
 import { use } from "react";
 
+import { ANALYTICS_EVENTS, trackingAttributes } from "@/lib/analytics";
+
 import type { Activity } from "./contribution-graph";
 import {
   ContributionGraph,
@@ -76,6 +78,10 @@ export function GitHubContributionGraph({
                 href={`https://github.com/${USER.github}`}
                 target="_blank"
                 rel="noopener"
+                {...trackingAttributes(ANALYTICS_EVENTS.socialClick, {
+                  platform: "github",
+                  source: "contributions",
+                })}
               >
                 GitHub
               </a>

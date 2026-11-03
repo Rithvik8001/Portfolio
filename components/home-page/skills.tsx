@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { SimpleTooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { ANALYTICS_EVENTS, trackingAttributes } from "@/lib/analytics";
 import { Panel, PanelContent, PanelHeader, PanelTitle } from "../ui/panel";
 import { SKILLS } from "@/constants/skills";
 
@@ -27,6 +28,10 @@ export function Skills() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={tech.title}
+                {...trackingAttributes(ANALYTICS_EVENTS.skillClick, {
+                  skill: tech.title,
+                  source: "skills",
+                })}
                 className="flex size-8 items-center justify-center"
               >
                 {tech.theme ? (

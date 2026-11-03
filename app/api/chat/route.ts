@@ -1,29 +1,15 @@
 import {
-  CHAT_MODEL,
   MAX_CHAT_BODY_BYTES,
   createChatResponse,
   validateChatRequest,
 } from "@/lib/server/chat";
-import { getPostHogServer, readAnalyticsHeaders } from "@/lib/posthog-server";
 
 export const maxDuration = 30;
 
 export async function POST(req: Request) {
-  const posthog = getPostHogServer();
-  const { distinctId, sessionId } = readAnalyticsHeaders(req);
-
-  const capture = (event: string, properties: Record<string, unknown> = {}) => {
-    posthog?.capture({
-      distinctId,
-      event,
-      properties: { ...properties, $session_id: sessionId },
-    });
-  };
-
   const contentLength = Number(req.headers.get("content-length"));
 
   if (Number.isFinite(contentLength) && contentLength > MAX_CHAT_BODY_BYTES) {
-    capture("chat_request_rejected", { reason: "payload_too_large" });
     return Response.json(
       { error: "Request is too large." },
       { status: 413 },
@@ -34,8 +20,7 @@ export async function POST(req: Request) {
 
   try {
     rawBody = await req.text();
-  } catch (error) {
-    posthog?.captureException(error, distinctId, { route: "/api/chat" });
+  } catch {
     return Response.json(
       { error: "Invalid request body." },
       { status: 400 },
@@ -43,7 +28,6 @@ export async function POST(req: Request) {
   }
 
   if (rawBody.length > MAX_CHAT_BODY_BYTES) {
-    capture("chat_request_rejected", { reason: "payload_too_large" });
     return Response.json(
       { error: "Request is too large." },
       { status: 413 },
@@ -54,8 +38,7 @@ export async function POST(req: Request) {
 
   try {
     body = JSON.parse(rawBody) as unknown;
-  } catch (error) {
-    posthog?.captureException(error, distinctId, { route: "/api/chat" });
+  } catch {
     return Response.json(
       { error: "Invalid request body." },
       { status: 400 },
@@ -65,25 +48,17 @@ export async function POST(req: Request) {
   const validation = await validateChatRequest(body);
 
   if (!validation.ok) {
-    capture("chat_request_rejected", { reason: validation.reason });
     return Response.json(
       { error: validation.message },
       { status: validation.status },
     );
   }
 
-  capture("chat_completion_requested", {
-    model: CHAT_MODEL,
-    turn: validation.messages.length,
-    input_chars: validation.inputChars,
-  });
-
   return createChatResponse({
     messages: validation.messages,
     abortSignal: req.signal,
     onError: (error) => {
       console.error("[chat] stream error:", error);
-      posthog?.captureException(error, distinctId, { route: "/api/chat" });
     },
   });
 }

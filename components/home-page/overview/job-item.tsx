@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import { UTM_PARAMS } from "@/constants/utm-params";
 import { addQueryParams } from "@/lib/utils";
+import { ANALYTICS_EVENTS, trackingAttributes } from "@/lib/analytics";
 import {
   IntroItem,
   IntroItemContent,
@@ -41,6 +42,7 @@ export function JobItem({ title, company, website }: JobItemProps) {
           className="ml-0.5 font-medium"
           href={addQueryParams(website, UTM_PARAMS)}
           aria-label={`${company} website`}
+          {...trackingAttributes(ANALYTICS_EVENTS.companyClick, { company })}
         >
           {company}
         </IntroItemLink>

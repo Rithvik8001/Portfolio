@@ -4,6 +4,7 @@ import { CollapsibleList } from "@/components/ui/collapsible-list";
 import { Panel, PanelHeader, PanelTitle } from "@/components/ui/panel";
 import { PROJECTS } from "@/constants/projects";
 import { SOCIAL_LINKS } from "@/constants/social-links";
+import { ANALYTICS_EVENTS, trackingAttributes } from "@/lib/analytics";
 import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 
@@ -26,10 +27,19 @@ export function Projects() {
         items={PROJECTS}
         max={3}
         renderItem={(item) => <ProjectItem project={item} />}
+        trackEvent={ANALYTICS_EVENTS.projectsListToggle}
       />
       <div className="mx-auto flex h-12 w-max items-center justify-center pb-px">
         <Button asChild variant="default">
-          <Link href={GITHUB_PROFILE_HREF} target="_blank" rel="noopener noreferrer">
+          <Link
+            href={GITHUB_PROFILE_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            {...trackingAttributes(ANALYTICS_EVENTS.socialClick, {
+              platform: "github",
+              source: "projects",
+            })}
+          >
             <span className="block">See more on GitHub</span>
             <ArrowUpRight />
           </Link>

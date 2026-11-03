@@ -3,7 +3,7 @@
 import { useTheme } from "next-themes";
 import { useCallback } from "react";
 import { useSound } from "@/hooks/use-sound";
-import { captureEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
+import { ANALYTICS_EVENTS, track } from "@/lib/analytics";
 import { MoonIcon } from "../animated-icons/moon";
 import { SunMediumIcon } from "../animated-icons/sun-medium";
 import { Button } from "./button";
@@ -18,9 +18,9 @@ export function ThemeToggle() {
     const shouldFollowSystem = next === systemTheme;
 
     playClick();
-    captureEvent(ANALYTICS_EVENTS.themeChanged, {
-      theme: next,
-      follows_system: shouldFollowSystem,
+    track(ANALYTICS_EVENTS.themeChange, {
+      theme: shouldFollowSystem ? "system" : next,
+      source: "toggle",
     });
     setTheme(shouldFollowSystem ? "system" : next);
   }, [resolvedTheme, systemTheme, setTheme, playClick]);

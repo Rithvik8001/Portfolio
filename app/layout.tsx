@@ -5,17 +5,23 @@ import {
   Source_Serif_4 as FontSerif,
 } from "next/font/google";
 import "./globals.css";
-import ConsentManagerWrapper from "@/components/wrappers/consent-manager-wrapper";
 import { ThemeProvider } from "next-themes";
 import { AppProgressProvider } from "@bprogress/next";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import Script from "next/script";
 import ToasterWrapper from "@/components/wrappers/toaster-wrapper";
 import AppProgressWrapper from "@/components/wrappers/app-progress-wrapper";
 import { SiteHeader } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { personSchema, websiteSchema } from "@/lib/structured-data";
+import {
+  UMAMI_DOMAINS,
+  UMAMI_HOST_URL,
+  UMAMI_SCRIPT_SRC,
+  UMAMI_WEBSITE_ID,
+} from "@/lib/analytics";
 
 const fontSans = FontSans({
   weight: ["400", "500", "600"],
@@ -101,22 +107,30 @@ export default function RootLayout({
           attribute="class"
         >
           <AppProgressWrapper>
-            <ConsentManagerWrapper>
-              <SiteHeader />
-              <main
-                id="content"
-                tabIndex={-1}
-                className="max-w-screen scroll-mt-20 overflow-x-hidden px-2 outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
-              >
-                {children}
-              </main>
-              <Footer />
-              <ScrollToTop />
-            </ConsentManagerWrapper>
+            <SiteHeader />
+            <main
+              id="content"
+              tabIndex={-1}
+              className="max-w-screen scroll-mt-20 overflow-x-hidden px-2 outline-none focus-visible:ring-2 focus-visible:ring-ring/60"
+            >
+              {children}
+            </main>
+            <Footer />
+            <ScrollToTop />
           </AppProgressWrapper>
           <ToasterWrapper />
           <Analytics />
           <SpeedInsights />
+          {UMAMI_WEBSITE_ID && (
+            <Script
+              src={UMAMI_SCRIPT_SRC}
+              strategy="afterInteractive"
+              data-website-id={UMAMI_WEBSITE_ID}
+              data-host-url={UMAMI_HOST_URL}
+              data-domains={UMAMI_DOMAINS}
+              data-exclude-hash="true"
+            />
+          )}
         </ThemeProvider>
         <script
           id="structured-data"

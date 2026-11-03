@@ -58,3 +58,23 @@ export function rehypeAddQueryParams(params: Record<string, string>) {
     });
   };
 }
+
+export function rehypeTrackLinks(event: string) {
+  return (tree: any) => {
+    visit(tree, (node: any) => {
+      const href = node?.properties?.href;
+
+      if (
+        node.type !== "element" ||
+        node.tagName !== "a" ||
+        typeof href !== "string" ||
+        !/^https?:\/\//.test(href)
+      ) {
+        return;
+      }
+
+      node.properties.dataUmamiEvent = event;
+      node.properties.dataUmamiEventUrl = href;
+    });
+  };
+}

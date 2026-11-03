@@ -15,7 +15,7 @@ import {
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import {
@@ -30,7 +30,7 @@ import {
 // import { SOCIAL_LINKS } from "@/features/portfolio/data/social-links";
 import { useSound } from "@/hooks/use-sound";
 import { cn, copyText } from "@/lib/utils";
-import { captureEvent, ANALYTICS_EVENTS } from "@/lib/analytics";
+import { ANALYTICS_EVENTS, getSocialPlatform, track } from "@/lib/analytics";
 import { RithvikMark, getMarkSVG } from "./rithvik-mark";
 import { getWordmarkSVG } from "./rithvik-wordmark";
 import { Icons } from "./icons";
@@ -105,6 +105,15 @@ export function CommandMenu() {
 
   const [open, setOpen] = useState(false);
   const [isMac, setIsMac] = useState(false);
+  const openMethodRef = useRef<"button" | "shortcut">("button");
+
+  useEffect(() => {
+    if (open) {
+      track(ANALYTICS_EVENTS.commandMenuOpen, {
+        method: openMethodRef.current,
+      });
+    }
+  }, [open]);
 
   useEffect(() => {
     const platform =
@@ -135,14 +144,8 @@ export function CommandMenu() {
           }
 
           e.preventDefault();
-          setOpen((open) => {
-            if (!open) {
-              captureEvent(ANALYTICS_EVENTS.commandMenuOpened, {
-                source: "shortcut",
-              });
-            }
-            return !open;
-          });
+          openMethodRef.current = "shortcut";
+          setOpen((open) => !open);
         }
       },
       { signal }
@@ -152,14 +155,21 @@ export function CommandMenu() {
   }, []);
 
   const handleOpenLink = useCallback(
-    (href: string, openInNewTab = false) => {
-      captureEvent(ANALYTICS_EVENTS.commandMenuItemSelected, { href });
+    (link: CommandLinkItem, group: string) => {
+      const { href, openInNewTab } = link;
+
+      track(ANALYTICS_EVENTS.commandMenuSelect, { item: link.title, group });
       if (href === "/api/vcard") {
-        captureEvent(ANALYTICS_EVENTS.vcardDownloaded, { source: "command_menu" });
+        track(ANALYTICS_EVENTS.vcardDownload, { source: "command_menu" });
+      } else if (href === RESUME.href) {
+        track(ANALYTICS_EVENTS.resumeOpen, { source: "command_menu" });
+      } else if (SOCIAL_LINKS.some((social) => social.href === href)) {
+        track(ANALYTICS_EVENTS.socialClick, {
+          platform: getSocialPlatform(href),
+          source: "command_menu",
+        });
       }
-      if (href === RESUME.href) {
-        captureEvent(ANALYTICS_EVENTS.resumeOpened, { source: "command_menu" });
-      }
+
       setOpen(false);
 
       if (openInNewTab) {
@@ -171,14 +181,24 @@ export function CommandMenu() {
     [router]
   );
 
-  const handleCopyText = useCallback((text: string, message: string) => {
-    setOpen(false);
-    copyText(text);
-    toast.success(message);
-  }, []);
+  const handleCopyBrandAsset = useCallback(
+    (asset: "mark" | "logotype", text: string, message: string) => {
+      track(ANALYTICS_EVENTS.commandMenuSelect, {
+        item: asset,
+        group: "Brand Assets",
+      });
+      track(ANALYTICS_EVENTS.brandCopy, { asset, source: "command_menu" });
+      setOpen(false);
+      copyText(text);
+      toast.success(message);
+    },
+    []
+  );
 
   const createThemeHandler = useCallback(
     (theme: "light" | "dark" | "system") => () => {
+      track(ANALYTICS_EVENTS.commandMenuSelect, { item: theme, group: "Theme" });
+      track(ANALYTICS_EVENTS.themeChange, { theme, source: "command_menu" });
       setOpen(false);
       playClick();
       setTheme(theme);
@@ -199,7 +219,7 @@ export function CommandMenu() {
         variant="secondary"
         className="h-8 gap-1.5 rounded-full border border-input bg-white px-2.5 text-muted-foreground shadow-xs select-none hover:bg-white dark:bg-input/30 dark:hover:bg-input/30"
         onClick={() => {
-          captureEvent(ANALYTICS_EVENTS.commandMenuOpened, { source: "button" });
+          openMethodRef.current = "button";
           setOpen(true);
         }}
       >
@@ -247,7 +267,8 @@ export function CommandMenu() {
           <CommandGroup heading="Brand Assets">
             <CommandItem
               onSelect={() => {
-                handleCopyText(
+                handleCopyBrandAsset(
+                  "mark",
                   getMarkSVG(resolvedTheme === "light" ? "#000" : "#fff"),
                   "Copied Mark as SVG"
                 );
@@ -259,7 +280,8 @@ export function CommandMenu() {
 
             <CommandItem
               onSelect={() => {
-                handleCopyText(
+                handleCopyBrandAsset(
+                  "logotype",
                   getWordmarkSVG(resolvedTheme === "light" ? "#000" : "#fff"),
                   "Copied Logotype as SVG"
                 );
@@ -312,7 +334,7 @@ function CommandLinkGroup({
   heading: string;
   links: CommandLinkItem[];
   fallbackIcon?: React.ComponentType<LucideProps>;
-  onLinkSelect: (href: string, openInNewTab?: boolean) => void;
+  onLinkSelect: (link: CommandLinkItem, group: string) => void;
 }) {
   return (
     <CommandGroup heading={heading}>
@@ -323,7 +345,7 @@ function CommandLinkGroup({
           <CommandItem
             key={link.href}
             keywords={link.keywords}
-            onSelect={() => onLinkSelect(link.href, link.openInNewTab)}
+            onSelect={() => onLinkSelect(link, heading)}
           >
             {link?.iconImage ? (
               <Image

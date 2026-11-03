@@ -4,10 +4,11 @@ import React from "react";
 
 import { Button } from "@/components/ui/button";
 import {
-  Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  CollapsibleWithContext,
 } from "@/components/ui/collapsible";
+import type { AnalyticsEvent } from "@/lib/analytics";
 
 const Slot = SlotPrimitive.Slot;
 
@@ -17,15 +18,17 @@ export function CollapsibleList<T>({
 
   keyExtractor,
   renderItem,
+  trackEvent,
 }: {
   items: T[];
   max?: number;
 
   keyExtractor?: (item: T) => string;
   renderItem: (item: T) => React.ReactNode;
+  trackEvent?: AnalyticsEvent;
 }) {
   return (
-    <Collapsible>
+    <CollapsibleWithContext trackEvent={trackEvent}>
       {items.slice(0, max).map((award, index) => (
         <Slot
           key={typeof keyExtractor === "function" ? keyExtractor(award) : index}
@@ -73,6 +76,6 @@ export function CollapsibleList<T>({
           </CollapsibleTrigger>
         </div>
       )}
-    </Collapsible>
+    </CollapsibleWithContext>
   );
 }

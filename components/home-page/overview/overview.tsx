@@ -17,7 +17,7 @@ import { JobItem } from "./job-item";
 import { Panel, PanelContent } from "../../ui/panel";
 import { USER } from "@/constants/user";
 import { CurrentLocalTimeItem } from "./current-local-time-item";
-import { TrackedIntroLink } from "./tracked-intro-link";
+import { ANALYTICS_EVENTS, trackingAttributes } from "@/lib/analytics";
 
 export function Overview() {
   return (
@@ -52,13 +52,15 @@ export function Overview() {
             </IntroItemIcon>
 
             <IntroItemContent>
-              <TrackedIntroLink
-                event="contact_email_clicked"
+              <IntroItemLink
                 href={`mailto:${USER.email}`}
                 aria-label={`Send email to ${USER.email}`}
+                {...trackingAttributes(ANALYTICS_EVENTS.emailClick, {
+                  source: "overview",
+                })}
               >
                 {USER.email}
-              </TrackedIntroLink>
+              </IntroItemLink>
             </IntroItemContent>
           </IntroItem>
 
@@ -67,13 +69,12 @@ export function Overview() {
               <GlobeIcon />
             </IntroItemIcon>
             <IntroItemContent>
-              <TrackedIntroLink
-                event="website_link_clicked"
+              <IntroItemLink
                 href={USER.website}
                 aria-label={`Personal website: ${urlToName(USER.website)}`}
               >
                 {urlToName(USER.website)}
-              </TrackedIntroLink>
+              </IntroItemLink>
             </IntroItemContent>
           </IntroItem>
 

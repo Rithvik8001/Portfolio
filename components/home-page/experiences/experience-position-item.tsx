@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/collapsible";
 import { Markdown } from "@/components/ui/markdown";
 import { Tag } from "@/components/ui/tag";
+import { ANALYTICS_EVENTS } from "@/lib/analytics";
 
 export function ExperiencePositionItem({
   position,
@@ -21,7 +22,12 @@ export function ExperiencePositionItem({
   const isOngoing = !end;
 
   return (
-    <CollapsibleWithContext defaultOpen={position.isExpanded} asChild>
+    <CollapsibleWithContext
+      defaultOpen={position.isExpanded}
+      trackEvent={ANALYTICS_EVENTS.experienceToggle}
+      trackData={{ position: position.title }}
+      asChild
+    >
       <div className="relative last:before:absolute last:before:h-full last:before:w-4 last:before:bg-background">
         <CollapsibleTrigger
           className={cn(

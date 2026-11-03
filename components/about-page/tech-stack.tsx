@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { SimpleTooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { ANALYTICS_EVENTS, trackingAttributes } from "@/lib/analytics";
 import {
   Panel,
   PanelContent,
@@ -31,6 +32,10 @@ export function TechStack() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={tech.title}
+                {...trackingAttributes(ANALYTICS_EVENTS.skillClick, {
+                  skill: tech.title,
+                  source: "tech_stack",
+                })}
                 className="block size-8"
               >
                 {tech.theme ? (

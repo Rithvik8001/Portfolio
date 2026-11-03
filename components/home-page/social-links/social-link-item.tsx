@@ -2,8 +2,6 @@ import { ArrowUpRightIcon } from "lucide-react";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { SocialLink } from "@/types";
-import { TrackedLink } from "@/components/analytics/tracked-link";
-import { ANALYTICS_EVENTS } from "@/lib/analytics";
 
 export function SocialLinkItem({
   icon,
@@ -11,11 +9,10 @@ export function SocialLinkItem({
   description,
   href,
   rel = "noopener",
-}: SocialLink & { rel?: string }) {
+  event,
+}: SocialLink & { rel?: string; event?: Record<string, string> }) {
   return (
-    <TrackedLink
-      event={ANALYTICS_EVENTS.socialLinkClicked}
-      eventProperties={{ platform: title }}
+    <a
       className={cn(
         "group/link flex cursor-pointer items-center gap-4 p-4 pr-2 transition-colors select-none hover:bg-accent2",
         "max-sm:screen-line-before max-sm:screen-line-after",
@@ -24,6 +21,7 @@ export function SocialLinkItem({
       href={href}
       target="_blank"
       rel={rel}
+      {...event}
     >
       <div className="relative size-12 shrink-0">
         <Image
@@ -52,6 +50,6 @@ export function SocialLinkItem({
         className="size-4 text-muted-foreground"
         aria-hidden="true"
       />
-    </TrackedLink>
+    </a>
   );
 }
